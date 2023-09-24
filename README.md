@@ -10,3 +10,9 @@
 
 
 ### User Stories
+
+### Contributors
+- Xiaoran David Meng
+- Koye Fatoki
+- Eddie Wat
+- Jared Castillo
