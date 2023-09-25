@@ -16,3 +16,5 @@
 - Koye Fatoki
 - Eddie Wat
 - Jared Castillo
+
+### [Meetings](meetings.md)
