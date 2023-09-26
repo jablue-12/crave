@@ -5,6 +5,11 @@
 
 ### Technologies
 
+| Front End       | Back End   | Database  | DevOps       |
+|-----------------|------------|-----------|--------------|
+| React           | Spring Boot| Postgres  | Docker       |
+| React Bootstrap |            |           | Maven        |
+|                 |            |           | Github Actions|
 
 ### Features
 
