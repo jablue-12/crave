@@ -1,4 +1,13 @@
-# COMP 4350 Proposal for Team Crave
+# COMP 4350 - Crave Project
+
+## Wiki Page
+- [Home Page](https://github.com/xiaoran-MENG/crave/wiki)
+- [Coding Standard and Guidelines](https://github.com/xiaoran-MENG/crave/wiki/Coding-Standards-and-Guidelines)
+- [Diagrams/Mockups](https://github.com/xiaoran-MENG/crave/wiki/Diagrams)
+- [Meetings](https://github.com/xiaoran-MENG/crave/wiki/Meetings)
+- [Project Setup](https://github.com/xiaoran-MENG/crave/wiki/Project-Setup)
+
+## COMP 4350 Proposal for Team Crave
 
 ### Summary and Vision
 
@@ -57,17 +66,10 @@ One of the main problems we aim to tackle with this application is maximizing us
 - **As** a registered restaurant admin, **I want to be able to** know what items are being ordered in high volumes, **so that** I can manage stock and food prep more effectively.
 
 
-### Contributors
-| Name       			| Email   					| Github Username  	| Role				|
-|-----------------------|---------------------------|-------------------|-------------------|
-| Xiaoran (David) Meng	| mengx5@myumanitoba.ca		| 			  		|					|
-| Koye Fatoki 			| fatokioo@myumanitoba.ca  	|           		|					|
-| Eddie Wat        		| wate@myumanitoba.ca		|	          		|					|
-| Jared Castillo        | castil13@myumanitoba.ca   |	           		|					|
-
-### Wiki Page
-- ![Home Page](https://github.com/xiaoran-MENG/crave/wiki)
-- ![Coding Standard and Guidelines Page](https://github.com/xiaoran-MENG/crave/wiki/Coding-Standards-and-Guidelines)
-- ![Diagrams Page](https://github.com/xiaoran-MENG/crave/wiki/Diagrams)
-- ![Meetings Page](https://github.com/xiaoran-MENG/crave/wiki/Meetings)
-- ![Project Setup Page](https://github.com/xiaoran-MENG/crave/wiki/Project-Setup)
+## Contributors
+| Name       		| Email   		  | Role                  |
+|-----------------------|-------------------------|-----------------------|
+| Xiaoran (David) Meng	| mengx5@myumanitoba.ca	  | Frontend Developer 	  |			
+| Koye Fatoki 	        | fatokioo@myumanitoba.ca | Backend Developer     |    	      					
+| Eddie Wat        	| wate@myumanitoba.ca	  | Frontend Developer	  |  
+| Jared Castillo        | castil13@myumanitoba.ca | Full Stack Developer  |
