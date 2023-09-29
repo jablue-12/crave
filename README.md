@@ -8,8 +8,6 @@ We want to give restaurants the information that they need to improve efficiency
 #### For consumers:
 One of the main problems we aim to tackle with this application is maximizing user satisfaction through data. Through analyzing customer data such as past orders, preferences, and dietary restrictions, we want to give users recommendations that we know they want. Through analyzing restaurant data to identify top-performing dishes and menus among users with similar preferences, we plan to give users recommendations that they don't even know they want. Using data-driven applications,  we believe we can vastly improve the appeal of restaurants to users. 
 
-
-
 ### Technologies
 
 | Front End       | Back End   | Database  | DevOps       |
@@ -17,6 +15,9 @@ One of the main problems we aim to tackle with this application is maximizing us
 | React           | Spring Boot| Postgres  | Docker       |
 | React Bootstrap |            |           | Maven        |
 |                 |            |           | Github Actions|
+
+### Architecture
+![](Crave.png)
 
 ### Features
 1. Account 
