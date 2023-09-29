@@ -2,6 +2,8 @@
 
 ### Summary and Vision
 
+Crave is a food ordering application that allows users to conveniently order dishes from a diverse range of eateries. It analyzes customers' past orders, preferences and dietary restrictions to offer better meal suggestions. Additionally, Crave assists restaurant owners in forecasting busy periods, optimizing promotions and enhancing the menu list based on the valuable customer feedback obtained through comments and ratings.
+
 #### For Restaurants:
 We want to give restaurants the information that they need to improve efficiency. Through the data we provide to restaurants,  they can streamline their operations by using data to predict peak hours, plan promotions and improve menus and offerings to better serve their users. Through comments, restaurants will be able to get feedback and improve their workflows. Overall, we hope that the data we make available to restaurants can help them make decisions that improve their operations. 
 
@@ -63,4 +65,9 @@ One of the main problems we aim to tackle with this application is maximizing us
 | Eddie Wat        		| wate@myumanitoba.ca		|	          		|					|
 | Jared Castillo        | castil13@myumanitoba.ca   |	           		|					|
 
-### [Meetings](Meetings.md)
+### Wiki Page
+- ![Home Page](https://github.com/xiaoran-MENG/crave/wiki)
+- ![Coding Standard and Guidelines Page](https://github.com/xiaoran-MENG/crave/wiki/Coding-Standards-and-Guidelines)
+- ![Diagrams Page](https://github.com/xiaoran-MENG/crave/wiki/Diagrams)
+- ![Meetings Page](https://github.com/xiaoran-MENG/crave/wiki/Meetings)
+- ![Project Setup Page](https://github.com/xiaoran-MENG/crave/wiki/Project-Setup)
