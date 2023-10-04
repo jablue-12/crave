@@ -15,7 +15,6 @@
         "react"
     ],
     "rules": {
-        "react/prop-types": "off",
 		"indent": ["error", "tab"],
         "no-tabs": ["error", {"allowIndentationTabs":true}],
         "semi": ["error", "always"],

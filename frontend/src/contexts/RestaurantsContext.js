@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { createContext } from 'react';
 import { restaurantsData } from './../restaurantsData';
 
@@ -13,4 +14,8 @@ export const RestaurantsProvider = ({ children }) => {
 	return <RestaurantsContext.Provider value={value}>
 		{children}
 	</RestaurantsContext.Provider>;
+};
+
+RestaurantsProvider.propTypes = {
+	children: PropTypes.nodes
 };

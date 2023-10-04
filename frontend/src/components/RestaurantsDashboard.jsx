@@ -3,7 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import { RestaurantsContext } from '../contexts/RestaurantsContext';
 import RestaurantCard from './RestaurantCard';
 
-export default function RestaurantsDashboard () {
+const RestaurantsDashboard = () => {
 	const { restaurants } = useContext(RestaurantsContext);
 
 	return <Row className="g-4" xs={1} md={2} lg={3}>
@@ -11,4 +11,6 @@ export default function RestaurantsDashboard () {
 			<RestaurantCard restaurant={restaurant} />
 		</Col>)}
 	</Row>;
-}
+};
+
+export default RestaurantsDashboard;
