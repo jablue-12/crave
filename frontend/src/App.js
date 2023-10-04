@@ -1,21 +1,14 @@
 import React from 'react';
 import './App.css';
+import RestaurantsDashboard from './components/RestaurantsDashboard';
+import { RestaurantsProvider } from './contexts/RestaurantsContext';
 
 function App () {
-	const buttonClick = () => {
-		alert('Hello world!');
-	};
-
-	return (
-		<div className="App">
-			<header className="App-header">
-				Crave Application
-				<div>
-					<button className="btn btn-primary" onClick={buttonClick}>Bootstrap Button</button>
-				</div>
-			</header>
-		</div>
-	);
+	return <div className="container">
+		<RestaurantsProvider>
+			<RestaurantsDashboard />
+		</RestaurantsProvider>
+	</div>;
 }
 
 export default App;
