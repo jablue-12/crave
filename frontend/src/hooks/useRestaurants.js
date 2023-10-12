@@ -1,13 +1,12 @@
+import { DASHBOARD_URL } from '../constants/urls';
 import useStorageOperations from './useStorageOperations';
 
 function useRestaurants () {
-	const PATH = '/restaurants';
-
 	const {
 		records,
 		error,
 		requestStatus
-	} = useStorageOperations(PATH);
+	} = useStorageOperations(DASHBOARD_URL);
 
 	return {
 		records,

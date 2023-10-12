@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { requestState } from '../constants/requestState';
-
-const BASE_URL = 'http://localhost:3500';
+import { BASE_URL } from '../constants/urls';
 
 function useStorageOperations (path) {
 	const [records, setRecords] = useState();
