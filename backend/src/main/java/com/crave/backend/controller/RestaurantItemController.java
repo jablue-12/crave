@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "restaurantItem")
+@RequestMapping(path = "restaurantItems")
 public class RestaurantItemController {
     private final RestaurantItemService restaurantItemService;
 
@@ -34,7 +34,7 @@ public class RestaurantItemController {
     public ResponseEntity<RestaurantItem> createRestaurantItem(@RequestBody RestaurantItem restaurantItem) {
         RestaurantItem newRestaurantItem = restaurantItemService.createRestaurantItem(restaurantItem);
         return new ResponseEntity<>(newRestaurantItem, HttpStatus.CREATED);
-       
+
     }
 
     @PutMapping("/{id}")
