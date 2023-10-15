@@ -3,21 +3,6 @@ package com.crave.backend;
 import com.crave.backend.model.Restaurant;
 import com.crave.backend.repository.RestaurantRepository;
 
-import com.crave.backend.model.Account;
-import com.crave.backend.repository.AccountRepository;
-
-import com.crave.backend.model.RestaurantItem;
-import com.crave.backend.repository.RestaurantItemRepository;
-
-import com.crave.backend.model.Comment;
-import com.crave.backend.repository.CommentRepository;
-
-import com.crave.backend.model.Order;
-import com.crave.backend.repository.OrderRepository;
-
-import com.crave.backend.model.OrderItem;
-import com.crave.backend.repository.OrderItemRepository;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

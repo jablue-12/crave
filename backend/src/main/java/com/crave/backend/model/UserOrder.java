@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Order {
+public class UserOrder {
     @Id
     @SequenceGenerator(
             name = "order_sequence",

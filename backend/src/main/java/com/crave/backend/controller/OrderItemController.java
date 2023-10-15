@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "orderItem")
+@RequestMapping(path = "orderItems")
 public class OrderItemController {
     private final OrderItemService orderItemService;
 
@@ -34,7 +34,7 @@ public class OrderItemController {
     public ResponseEntity<OrderItem> createOrderItem(@RequestBody OrderItem orderItem) {
         OrderItem newOrderItem = orderItemService.createOrderItem(orderItem);
         return new ResponseEntity<>(newOrderItem, HttpStatus.CREATED);
-       
+
     }
 
     @PutMapping("/{id}")

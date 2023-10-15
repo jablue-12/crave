@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "account")
+@RequestMapping(path = "accounts")
 public class AccountController {
     private final AccountService accountService;
 
@@ -34,7 +34,7 @@ public class AccountController {
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         Account newAccount = accountService.createAccount(account);
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
-       
+
     }
 
     @PutMapping("/{id}")

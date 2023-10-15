@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "comment")
+@RequestMapping(path = "comments")
 public class CommentController {
     private final CommentService commentService;
 
@@ -34,7 +34,7 @@ public class CommentController {
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
         Comment newComment = commentService.createComment(comment);
         return new ResponseEntity<>(newComment, HttpStatus.CREATED);
-       
+
     }
 
     @PutMapping("/{id}")
