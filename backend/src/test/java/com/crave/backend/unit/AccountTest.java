@@ -16,12 +16,11 @@ public class AccountTest {
 
     @Test
     void testGetters() {
-        assertEquals(1, user.getId());
+        assertEquals(1L, user.getId());
         assertEquals("Dushane Hill", user.getName());
         assertEquals("Summerhouse estates", user.getAddress());
         assertEquals("dhill@gmail.co.uk", user.getEmail());
         assertEquals("idkruhfaminnit", user.getPassword());
-
     }
 
     @Test

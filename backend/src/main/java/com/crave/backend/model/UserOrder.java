@@ -1,5 +1,6 @@
 package com.crave.backend.model;
 
+import com.crave.backend.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,6 @@ public class UserOrder {
     @NonNull
     private Long restaurant_id;
     @NonNull
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 }
