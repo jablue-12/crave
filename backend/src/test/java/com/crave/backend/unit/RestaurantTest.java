@@ -1,5 +1,6 @@
-package com.crave.backend.model;
+package com.crave.backend.unit;
 
+import com.crave.backend.model.Restaurant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
