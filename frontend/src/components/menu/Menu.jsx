@@ -3,7 +3,7 @@ import React from 'react';
 import { Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link, useParams } from 'react-router-dom';
-import useRestaurant from '../../hooks/useRestaurant';
+import useRestaurant from '../../hooks/useRestaurant.js';
 import DishCard from '../dish/DishCard';
 import Loader from '../loader/Loader';
 import Rating from '../rating/Rating';
