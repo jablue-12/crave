@@ -35,7 +35,7 @@ public class AccountService {
             existingAccount.setName(updatedAccount.getName());
             existingAccount.setAddress(updatedAccount.getAddress());
             existingAccount.setEmail(updatedAccount.getEmail());
-            existingAccount.setPassword(updatedAccount.getEmail());
+            existingAccount.setPassword(updatedAccount.getPassword());
 
 
             accountRepository.save(existingAccount);
