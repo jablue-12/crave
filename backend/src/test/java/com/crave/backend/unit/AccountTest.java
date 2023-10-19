@@ -1,5 +1,6 @@
-package com.crave.backend.model;
+package com.crave.backend.unit;
 
+import com.crave.backend.model.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ public class AccountTest {
         assertEquals("Summerhouse estates", user.getAddress());
         assertEquals("dhill@gmail.co.uk", user.getEmail());
         assertEquals("idkruhfaminnit", user.getPassword());
-        
+
     }
 
     @Test
@@ -30,7 +31,7 @@ public class AccountTest {
         user.setAddress("The London fields");
         user.setEmail("sully.gerrard@yahoo.co.uk");
         user.setPassword("icanneverbefood");
-        
+
         assertEquals(2L, user.getId());
         assertEquals("Gerrard sullivan", user.getName());
         assertEquals("The London fields", user.getAddress());
