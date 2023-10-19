@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { SlBasket } from 'react-icons/sl';
+import { TfiGift } from 'react-icons/tfi';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 
@@ -19,6 +20,7 @@ export default function Header () {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto">
+							<TfiGift style={{ marginRight: '25px', marginTop: '4px' }} />
 							<Link to="/cart" style={{ textDecoration: 'none', marginRight: '25px' }}>
 								{dishesInCart.length === 0
 									? <SlBasket />
