@@ -6,27 +6,37 @@ import App from './App';
 import Cart from './components/cart/Cart';
 import RestaurantsDashboard from './components/dashboard/RestaurantsDashboard';
 import Dish from './components/dish/Dish';
+import Login from './components/login/Login';
+import Register from './components/login/Register';
 import Menu from './components/menu/Menu';
 import reportWebVitals from './reportWebVitals';
 import './bootstrap.css';
 
 const router = createBrowserRouter(createRoutesFromElements(
-	<Route path="/" element={<App />}>
+	<Route path="/" element={<App/>}>
 		<Route
 			index={true}
-			element={<RestaurantsDashboard />}
+			element={<RestaurantsDashboard/>}
 		/>
 		<Route
 			path="/restaurants/:restaurantid"
-			element={<Menu />}
+			element={<Menu/>}
 		/>
 		<Route
 			path="/restaurants/:restaurantid/:dishid"
-			element={<Dish />}
+			element={<Dish/>}
 		/>
 		<Route
 			path="/cart"
-			element={<Cart />}
+			element={<Cart/>}
+		/>
+		<Route
+			path="/register"
+			element={<Register/>}
+		/>
+		<Route
+			path="/login"
+			element={<Login/>}
 		/>
 	</Route>
 ));
@@ -34,7 +44,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<RouterProvider router={router}/>
 	</React.StrictMode>
 );
 
