@@ -13,7 +13,7 @@ export default function Map () {
 	};
 
 	const { isLoaded } = useLoadScript({
-		googleMapsApiKey: ''
+		googleMapsApiKey: process.env.REACT_APP_MAP_API
 	});
 
 	return isLoaded && <GoogleMap
