@@ -36,3 +36,37 @@
 		transform: rotate(360deg);
 	}
 }
+
+.btn-inherit {
+	background-color: inherit !important;
+	border: inherit !important;
+}
+
+/* CSS to decolorize an image */
+.sold-out-img {
+	filter: grayscale(1) !important; /* 1 means full grayscale, 0 means full color */
+}
+
+.img-with-popout {
+    position: relative !important;
+    display: inline-block !important;
+}
+
+.popout {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid #000 !important;
+    text-align: center !important;
+    line-height: 50px !important;
+    display: none !important;
+	line-height: 1.5 !important;
+	z-index: 1;
+}
+
+.img-with-popout:hover .popout {
+    display: block !important;
+}
+
+  

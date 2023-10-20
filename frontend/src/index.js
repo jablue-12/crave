@@ -1,14 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import App from './App';
+import Cart from './components/cart/Cart';
+import RestaurantsDashboard from './components/dashboard/RestaurantsDashboard';
+import Dish from './components/dish/Dish';
+import Login from './components/login/Login';
+import Register from './components/login/Register';
+import Menu from './components/menu/Menu';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
+import './bootstrap.css';
+
+const router = createBrowserRouter(createRoutesFromElements(
+	<Route path="/" element={<App/>}>
+		<Route
+			index={true}
+			element={<RestaurantsDashboard/>}
+		/>
+		<Route
+			path="/restaurants/:restaurantid"
+			element={<Menu/>}
+		/>
+		<Route
+			path="/restaurants/:restaurantid/:dishid"
+			element={<Dish/>}
+		/>
+		<Route
+			path="/cart"
+			element={<Cart/>}
+		/>
+		<Route
+			path="/register"
+			element={<Register/>}
+		/>
+		<Route
+			path="/login"
+			element={<Login/>}
+		/>
+	</Route>
+));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		<App />
+		<RouterProvider router={router}/>
 	</React.StrictMode>
 );
 

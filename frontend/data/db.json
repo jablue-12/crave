@@ -1,0 +1,46 @@
+{
+    "restaurants": [
+        {
+            "id": 1,
+            "name": "R 1",
+            "location": "L 1",
+            "rating": 1.5,
+            "imageUrl": "./images/1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "R 2",
+            "location": "L 2",
+            "rating": 2.5,
+            "imageUrl": "./images/2.jpg"
+        },
+        {
+            "id": 3,
+            "name": "R 3",
+            "location": "L 3",
+            "rating": 4,
+            "imageUrl": "./images/3.jpg"
+        },
+        {
+            "id": 4,
+            "name": "R 4",
+            "location": "L 4",
+            "rating": 4.5,
+            "imageUrl": "./images/4.jpg"
+        },
+        {
+            "id": 5,
+            "name": "R 5",
+            "location": "L 5",
+            "rating": 2.5,
+            "imageUrl": "./images/5.jpg"
+        },
+        {
+            "id": 6,
+            "name": "R 6",
+            "location": "L 6",
+            "rating": 4,
+            "imageUrl": "./images/6.jpg"
+        }
+    ]
+}
