@@ -32,8 +32,8 @@ public class AccountService {
     public Account updateAccount(Account existingAccount, Account updatedAccount) {
 
         if (existingAccount != null) {
-            existingAccount.setName(updatedAccount.getName());
-            existingAccount.setAddress(updatedAccount.getAddress());
+            existingAccount.setFirstName(updatedAccount.getFirstName());
+            existingAccount.setLastName(updatedAccount.getLastName());
             existingAccount.setEmail(updatedAccount.getEmail());
             existingAccount.setPassword(updatedAccount.getPassword());
 

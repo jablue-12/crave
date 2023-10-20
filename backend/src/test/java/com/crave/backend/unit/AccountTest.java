@@ -1,5 +1,6 @@
 package com.crave.backend.unit;
 
+import com.crave.backend.enums.UserRole;
 import com.crave.backend.model.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,30 +12,33 @@ public class AccountTest {
 
     @BeforeEach
     public void setUp() {
-        user = new Account(1L, "Dushane Hill", "Summerhouse estates", "dhill@gmail.co.uk", "idkruhfaminnit");
+        user = new Account(1L, "Dushane", "Hill", "dhill@gmail.co.uk", "idkruhfaminnit", UserRole.USER);
     }
 
     @Test
     void testGetters() {
         assertEquals(1L, user.getId());
-        assertEquals("Dushane Hill", user.getName());
-        assertEquals("Summerhouse estates", user.getAddress());
+        assertEquals("Dushane", user.getFirstName());
+        assertEquals("Hill", user.getLastName());
         assertEquals("dhill@gmail.co.uk", user.getEmail());
         assertEquals("idkruhfaminnit", user.getPassword());
+        assertEquals(UserRole.USER, user.getUserRole());
     }
 
     @Test
     void testSetters() {
         user.setId(2L);
-        user.setName("Gerrard sullivan");
-        user.setAddress("The London fields");
+        user.setFirstName("Gerrard");
+        user.setLastName("Sullivan");
         user.setEmail("sully.gerrard@yahoo.co.uk");
         user.setPassword("icanneverbefood");
+        user.setUserRole(UserRole.ADMIN);
 
         assertEquals(2L, user.getId());
-        assertEquals("Gerrard sullivan", user.getName());
-        assertEquals("The London fields", user.getAddress());
+        assertEquals("Gerrard", user.getFirstName());
+        assertEquals("Sullivan", user.getLastName());
         assertEquals("sully.gerrard@yahoo.co.uk", user.getEmail());
         assertEquals("icanneverbefood", user.getPassword());
+        assertEquals(UserRole.ADMIN, user.getUserRole());
     }
 }
