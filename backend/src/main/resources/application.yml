@@ -1,6 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/crave
+    # Use this for docker environment
+    url: jdbc:postgresql://crave-postgres-container:5432/crave
+    # Use this for local
+    # url: jdbc:postgresql://localhost:5432/crave 
     username: postgres
     password: crave
     driver-class-name: org.postgresql.Driver
