@@ -13,11 +13,8 @@ COPY src ./src
 # Build the Spring Boot application within the Docker image
 RUN mvn clean package
 
-# Execute a shell command to find the JAR filename
-RUN jar_file=$(find /backend/target -name "*.jar" | head -n 1) && echo "JAR_FILE=$jar_file" > /backend/jar_file.txt
-
 # Expose port
 EXPOSE 8080
 
-# Start the Spring Boot application using the dynamically discovered JAR filename
-CMD [ "sh", "-c", "source /backend/jar_file.txt && java -jar $JAR_FILE" ]
+# Start the Spring Boot application
+CMD ["java", "-jar", "/backend/target/backend-0.0.1-SNAPSHOT.jar"]

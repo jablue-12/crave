@@ -1,5 +1,6 @@
 package com.crave.backend.config;
 
+import com.crave.backend.repository.TokenRepository;
 import com.crave.backend.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER_TOKEN = "Bearer "; // Don't remove the space at the end
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
 
     @Override
     protected void doFilterInternal(
@@ -49,8 +51,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // User not connected yet, so we get user from the db
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
+            var isTokenValid = tokenRepository.findByToken(jwt)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+
             // Confirm if the token is valid, we create an authentication token
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

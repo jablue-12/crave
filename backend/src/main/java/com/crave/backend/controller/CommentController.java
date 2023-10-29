@@ -8,12 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping(path = "comments")
+@RequestMapping("dishes")
 public class CommentController {
     private final CommentService commentService;
 
@@ -22,43 +21,15 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping
-    public List<Comment> getComments() {
-        return commentService.getComments();
+    @GetMapping("/{dishId}/comments")
+    public ResponseEntity<List<Comment>> getComments(@PathVariable Long dishId) {
+        return ok(commentService.getComments(dishId));
     }
 
-    @GetMapping(path = "/{id}")
-    public Optional<Comment> getCommentById(@PathVariable Long id) {
-        return commentService.getCommentById(id);
-    }
-
-    @PostMapping
+    @PostMapping("/{dishId}/comments")
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
         Comment newComment = commentService.createComment(comment);
         return new ResponseEntity<>(newComment, HttpStatus.CREATED);
 
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment updatedComment) {
-        Comment existingComment = commentService.findById(id);
-
-        if (existingComment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Comment updated = commentService.updateComment(existingComment, updatedComment);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long id) {
-        if (!commentService.exists(id)) {
-            return new ResponseEntity<>("Comment not found", HttpStatus.NOT_FOUND);
-        }
-
-        commentService.deleteCommentById(id);
-        return new ResponseEntity<>("Comment deleted successfully", HttpStatus.NO_CONTENT);
-    }
-
 }

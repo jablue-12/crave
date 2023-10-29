@@ -1,6 +1,7 @@
 package com.crave.backend.model;
 
 import com.crave.backend.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,16 +31,15 @@ public class Account implements UserDetails {
             generator = "account_sequence"
     )
     private Long id;
-    @NonNull
     private String firstName;
-    @NonNull
     private String lastName;
-    @NonNull
     private String email;
-    @NonNull
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

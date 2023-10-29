@@ -24,17 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CraveConfig {
     private final AccountRepository accountRepository;
-
-    @Bean
-    CommandLineRunner commandLineRunner(RestaurantRepository restaurantRepository) {
-        return args -> {
-            // TODO: remove fake data
-            Restaurant mcdo = new Restaurant("McDonalds", "Kildonan 11", 4.5, "testImage");
-            Restaurant burgerKing = new Restaurant("Burger King", "Northgate 22", 4.3, "testImage");
-            restaurantRepository.saveAll(List.of(mcdo, burgerKing));
-        };
-    }
-
+    
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> accountRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
