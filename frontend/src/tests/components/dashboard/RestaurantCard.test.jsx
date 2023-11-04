@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import RestaurantCard from '../../../components/dashboard/RestaurantCard';
+import RestaurantCard from './../../../components/features/dashboard/core/RestaurantCard';
 
 const restaurantData = {
 	name: 'Olive Garden',
