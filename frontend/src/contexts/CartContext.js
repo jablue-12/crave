@@ -1,4 +1,11 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { cartItems } from './../sample/cartItems';
+import { useAuth } from './AuthContext';
+
+const getCart = userId => {
+	const cart = localStorage.getItem(`cart_${userId || 'default'}`);
+	return cart ? JSON.parse(cart) : cartItems;
+};
 
 export const CartContext = createContext({
 	dishesInCart: [],
@@ -8,16 +15,22 @@ export const CartContext = createContext({
 	countDish: () => {}
 });
 
-export function CartProvider ({ children }) {
-	const [dishesInCart, setDishesInCart] = useState([]);
+export const useCart = () => useContext(CartContext);
 
-	function countDish (id) {
-		console.log(dishesInCart);
-		console.log(id);
+export const CartProvider = ({ children }) => {
+	const { user } = useAuth();
+	const userId = user ? user.id : null;
+	const [dishesInCart, setDishesInCart] = useState(() => getCart(userId));
+
+	useEffect(() => {
+		localStorage.setItem(`cart_${userId || 'default'}`, JSON.stringify(dishesInCart));
+	}, [dishesInCart]);
+
+	const countDish = (id) => {
 		return dishesInCart.find(x => x.id === id)?.quantity ?? 0;
-	}
+	};
 
-	function add (dish) {
+	const add = (dish) => {
 		const quantity = countDish(dish.id);
 
 		if (quantity === 0) {
@@ -27,9 +40,9 @@ export function CartProvider ({ children }) {
 				? { ...x, quantity: x.quantity + 1 }
 				: x));
 		}
-	}
+	};
 
-	function removeOne (id) {
+	const removeOne = (id) => {
 		const quantity = countDish(id);
 
 		if (quantity === 1) {
@@ -39,21 +52,27 @@ export function CartProvider ({ children }) {
 				? { ...x, quantity: x.quantity - 1 }
 				: x));
 		}
-	}
+	};
 
-	function remove (id) {
+	const remove = (id) => {
 		setDishesInCart(dishes => dishes.filter(x => x.id !== id));
-	}
+	};
+
+	const clear = () => {
+		setDishesInCart([]);
+		localStorage.removeItem(`cart_${userId || 'default'}`);
+	};
 
 	const value = {
 		dishesInCart,
 		add,
 		removeOne,
 		remove,
-		countDish
+		countDish,
+		clear
 	};
 
 	return <CartContext.Provider value={value}>
 		{children}
 	</CartContext.Provider>;
-}
+};
