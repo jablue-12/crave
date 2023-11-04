@@ -13,16 +13,18 @@ function App () {
 
 	return <AuthProvider>
 		<CartProvider>
-			<Header setIsSliderOn={setIsSliderOn} />
-			<ShoppingCart
-				isSliderOn={isSliderOn}
-				setIsSliderOn={setIsSliderOn}
-				dishesInCart={dishesInCart}
-			/>
-			<main>
-				{useMemo(() => <Outlet />, [])}
-			</main>
-			<Footer />
+			<div className="p-5">
+				<Header setIsSliderOn={setIsSliderOn} />
+				<ShoppingCart
+					isSliderOn={isSliderOn}
+					setIsSliderOn={setIsSliderOn}
+					dishesInCart={dishesInCart}
+				/>
+				<main className="my-5">
+					{useMemo(() => <Outlet />, [])}
+				</main>
+				<Footer />
+			</div>
 		</CartProvider>
 	</AuthProvider>;
 }

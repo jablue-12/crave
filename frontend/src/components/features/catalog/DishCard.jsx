@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Image, ListGroup, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { BsInfoLg } from 'react-icons/bs';
 import { FaCartArrowDown } from 'react-icons/fa';
+import { iconColor, infoColor } from '../../../common/constants';
 import { useCart } from '../../../contexts/CartContext';
 
 const DishCard = ({ dish }) => {
@@ -41,7 +42,7 @@ const DishCard = ({ dish }) => {
 								</Tooltip>
 							}>
 							<span>
-								<BsInfoLg color="lightseagreen" style={{ cursor: 'pointer' }}/>
+								<BsInfoLg color={infoColor} style={{ cursor: 'pointer' }}/>
 							</span>
 						</OverlayTrigger>
 						<span
@@ -49,7 +50,7 @@ const DishCard = ({ dish }) => {
 							onClick={() => add(dish)}
 							style={{ cursor: 'pointer' }}
 						>
-							<FaCartArrowDown color="lightseagreen" />
+							<FaCartArrowDown color={iconColor} />
 						</span>
 					</ListGroup.Item>
 				</ListGroup>

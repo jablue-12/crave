@@ -39,7 +39,6 @@ export default function Dashboard () {
 			<Restaurants restaurants={restaurants} setRestaurant={setRestaurant} />
 		</Col>
 		<Col md={4} className="mx-4">
-			{restaurant && <h4>{restaurant.name}</h4>}
 			{restaurant && <Restaurant restaurant={restaurant} />}
 		</Col>
 	</Row>;

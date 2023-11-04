@@ -1,12 +1,12 @@
 import { range } from 'lodash';
 import React from 'react';
-import { MdCurrencyYen } from 'react-icons/md';
+import { MdCurrencyPound } from 'react-icons/md';
 
 const PriceLevel = ({ level }) => {
 	return <span>
 		{range(level).map((n, i) =>
 			<span key={i}>
-				<MdCurrencyYen />
+				<MdCurrencyPound />
 			</span>)}
 	</span>;
 };

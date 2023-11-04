@@ -1,9 +1,11 @@
 import { orderBy, take } from 'lodash';
 import React from 'react';
 import { Badge, Col, Image, ListGroup, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { FaLocationDot } from 'react-icons/fa6';
 import { MdRestaurantMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { iconColor } from '../../../../common/constants';
 import { weeklyOrders } from './../../../../sample/weeklyOrders';
 import Comments from './Comments';
 import PriceLevel from './PriceLevel';
@@ -11,6 +13,22 @@ import RatingBar from './RatingBar';
 
 const Restaurant = ({ restaurant }) => {
 	return <>
+		{restaurant && <div style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+			<h4>{restaurant.name}</h4>
+			<span style={{ display: 'flex', justifyContent: 'around', alignItems: 'center', paddingBottom: '10px' }}>
+				<FaLocationDot className="mx-2" color={iconColor} />
+				<span className="mx-2">{restaurant.location}</span>
+				<Link className="mx-2" to={`/restaurants/${restaurant.id}`}>
+					<MdRestaurantMenu
+						color="orange"
+						style={{
+							marginBottom: '5px',
+							cursor: 'pointer'
+						}}
+					/>
+				</Link>
+			</span>
+		</div>}
 		<Row>
 			<Col>
 				<OverlayTrigger
@@ -31,14 +49,6 @@ const Restaurant = ({ restaurant }) => {
 						<Row>
 							<Col>
 								<PriceLevel level={restaurant.priceLevel} />
-							</Col>
-							<Col>
-								<Link to={`/restaurants/${restaurant.id}`}>
-									<MdRestaurantMenu
-										color="orange"
-										style={{ cursor: 'pointer' }}
-									/>
-								</Link>
 							</Col>
 						</Row>
 					</ListGroup.Item>

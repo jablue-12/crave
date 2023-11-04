@@ -5,7 +5,7 @@ import { FaCartArrowDown } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { RESTAURANTS_PATH } from '../../../common/constants';
+import { RESTAURANTS_PATH, iconColor } from '../../../common/constants';
 import { useCart } from '../../../contexts/CartContext';
 import PriceLevel from '../dashboard/core/PriceLevel';
 import RatingBar from '../dashboard/core/RatingBar';
@@ -141,7 +141,7 @@ const Menu = () => {
 									onClick={() => add(selectedTopSeller)}
 									style={{ cursor: 'pointer' }}
 								>
-									<FaCartArrowDown color="lightseagreen" />
+									<FaCartArrowDown color={iconColor} />
 								</span>
 							</ListGroup.Item>
 						</ListGroup>

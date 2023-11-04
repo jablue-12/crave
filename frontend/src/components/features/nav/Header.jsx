@@ -1,9 +1,10 @@
 import { sum } from 'lodash';
 import React, { memo, useState } from 'react';
-import { Container, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Image, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FaChartPie, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
+import { iconColor } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import Popup from './../../common/Popup';
@@ -18,16 +19,18 @@ const Header = ({ setIsSliderOn }) => {
 
 	return (
 		<header>
-			<Navbar expand="md" collapseOnSelect>
+			<Navbar className="p-0" expand="md" collapseOnSelect>
 				<Container>
 					<Link to="/" style={{ textDecoration: 'none' }}>
-						<Navbar.Brand style={{ fontSize: '2rem' }}>Crave</Navbar.Brand>
+						<Navbar.Brand>
+							<Image style={{ height: '80px' }} src="/images/crave-logo.png" fluid />
+						</Navbar.Brand>
 					</Link>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
 							{user && <Link to="profile" style={{ textDecoration: 'none' }}>
-								<FaChartPie color="lightseagreen" />
+								<FaChartPie color={iconColor} />
 							</Link>}
 							<OverlayTrigger
 								key="bottom"
@@ -42,12 +45,12 @@ const Header = ({ setIsSliderOn }) => {
 									{dishesInCart.length === 0
 										? <SlBasket />
 										: <>
-											<FaShoppingCart color="lightseagreen" />
+											<FaShoppingCart color={iconColor} />
 										</>
 									}
 								</Link>
 							</OverlayTrigger>
-							<NavDropdown title={<FaUserCircle color={user ? 'lightseagreen' : 'red'} style={{ textDecoration: 'none', marginLeft: '15px' }} />} menuVariant="light">
+							<NavDropdown title={<FaUserCircle color={user ? `${iconColor}` : 'red'} style={{ textDecoration: 'none', marginLeft: '15px' }} />} menuVariant="light">
 								<NavDropdown.Item onClick={() => setIsRegistering(true)}>Register</NavDropdown.Item>
 								<NavDropdown.Item onClick={() => setIsLoggingIn(true)}>Login</NavDropdown.Item>
 							</NavDropdown>

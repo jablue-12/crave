@@ -4,6 +4,7 @@ import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { iconColor } from '../../../common/constants';
 import { useCart } from '../../../contexts/CartContext';
 import Scrollable from '../../common/Scrollable';
 
@@ -56,10 +57,10 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 										<ListGroup.Item>
 											<Row>
 												<Col>
-													<BsCartPlusFill onClick={() => add(dish)} color="lightseagreen" />
+													<BsCartPlusFill onClick={() => add(dish)} color={iconColor} />
 												</Col>
 												<Col>
-													<BsFillCartDashFill onClick={() => removeOne(dish.id)} color="lightseagreen" />
+													<BsFillCartDashFill onClick={() => removeOne(dish.id)} />
 												</Col>
 												<Col>
 													<BsTrash3Fill color="red" onClick={() => remove(dish.id)} />
