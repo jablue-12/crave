@@ -4,7 +4,7 @@ import { Col, Image, ListGroup, Row } from 'react-bootstrap';
 const DishCard = ({ dish }) => {
 	return <>
 		<Row>
-			<Col>
+			<Col md={6}>
 				<Image
 					src={dish.photos ? dish.photos[0].getUrl() : '/images/1.jpg'}
 					fluid
@@ -18,7 +18,7 @@ const DishCard = ({ dish }) => {
 					alt={dish.name}
 				/>
 			</Col>
-			<Col>
+			<Col md={5}>
 				<ListGroup variant="flush" style={{ fontSize: '14px' }}>
 					<ListGroup.Item>
 						<h6>{dish.name}</h6>
