@@ -4,6 +4,7 @@ import { Container, Image, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } f
 import { FaChartPie, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
+import Typewriter from 'typewriter-effect';
 import { iconColor } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
@@ -22,8 +23,20 @@ const Header = ({ setIsSliderOn }) => {
 			<Navbar className="p-0" expand="md" collapseOnSelect>
 				<Container>
 					<Link to="/" style={{ textDecoration: 'none' }}>
-						<Navbar.Brand>
-							<Image style={{ height: '80px' }} src="/images/crave-logo.png" fluid />
+						<Navbar.Brand className="d-flex" style={{ alignItems: 'center' }}>
+							<Image style={{ height: '80px', marginRight: '10px' }} src="/images/crave-logo.png" fluid />
+							<Typewriter
+								options={{
+									strings: [
+										'RAVE',
+										'Quench your thirsts',
+										'Crave is a food ordering application that allows users',
+										'to conveniently order dishes from a diverse range of eateries'
+									],
+									autoStart: true,
+									loop: true
+								}}
+							/>
 						</Navbar.Brand>
 					</Link>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -5,15 +5,15 @@ import { FaCartArrowDown } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { RESTAURANTS_PATH, iconColor } from '../../../common/constants';
-import { useCart } from '../../../contexts/CartContext';
-import PriceLevel from '../dashboard/core/PriceLevel';
-import RatingBar from '../dashboard/core/RatingBar';
-import api from './../../../common/api';
-import { menu } from './../../../sample/menu';
-import { singleRestaurant } from './../../../sample/singleRestaurant';
-import Loader from './../../common/Loader';
-import DishCard from './DishCard';
+import api from '../../common/api';
+import { RESTAURANTS_PATH, iconColor } from '../../common/constants';
+import { useCart } from '../../contexts/CartContext';
+import { menu } from '../../sample/menu';
+import { singleRestaurant } from '../../sample/singleRestaurant';
+import Loader from '../common/Loader';
+import DishCard from '../features/catalog/DishCard';
+import PriceLevel from '../features/dashboard/core/PriceLevel';
+import RatingBar from '../features/dashboard/core/RatingBar';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -21,7 +21,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
 
-const Menu = () => {
+const Catalog = () => {
 	const { id } = useParams();
 	const [dishes, setDishes] = useState(menu);
 	const [restaurant, setRestaurant] = useState(singleRestaurant);
@@ -183,4 +183,4 @@ const Menu = () => {
 	</Container>;
 };
 
-export default Menu;
+export default Catalog;
