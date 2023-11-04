@@ -2,9 +2,9 @@ export const singleRestaurant = {
 	id: 1,
 	name: 'R 1',
 	location: 'L 1',
-	rating: 1.5,
+	rating: 3.5,
 	imageUrl: './images/1.jpg',
-	priceLevel: 1,
+	priceLevel: 3,
 	description: 'R 1 is a restaurant located in L 1. It offers a menu with a variety of delicious dishes at an affordable price. Customers love the great food and friendly staff, making it a top-notch restaurant with outstanding quality.',
 	menu: [
 		{

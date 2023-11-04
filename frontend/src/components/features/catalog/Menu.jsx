@@ -1,10 +1,14 @@
 import { groupBy, keys, orderBy, take } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Image, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Col, Container, Image, Row, OverlayTrigger, Tooltip, ListGroup } from 'react-bootstrap';
+import { FaCartArrowDown } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { RESTAURANTS_PATH } from '../../../common/constants';
+import { useCart } from '../../../contexts/CartContext';
+import PriceLevel from '../dashboard/core/PriceLevel';
+import RatingBar from '../dashboard/core/RatingBar';
 import api from './../../../common/api';
 import { menu } from './../../../sample/menu';
 import { singleRestaurant } from './../../../sample/singleRestaurant';
@@ -25,6 +29,8 @@ const Menu = () => {
 	const dishesByTag = groupBy(dishes, 'tag');
 	const topSellers = take(orderBy(dishes, ['price'], ['desc']), Math.min(dishes.length, 5));
 	const [selectedTopSeller, setSelectedTopSeller] = useState(topSellers[0] || null);
+
+	const { add } = useCart();
 
 	useEffect(() => {
 		(async () => {
@@ -91,25 +97,54 @@ const Menu = () => {
 									alt={dish.name}
 								/>
 							</OverlayTrigger>
-
 						</SwiperSlide>
 					)}
 				</Swiper>
 			</Col>
 			<Col md={5}>
-				<Row>
+				<Row className="mb-4">
 					<Col>
-						<h4 className="text-center">{restaurant.name}</h4>
-						<div>{restaurant.description}</div>
-						<div>{restaurant.priceLevel}</div>
-						<div>{restaurant.location}</div>
+						<ListGroup variant="flush">
+							<h4 className="text-center">{restaurant.name}</h4>
+							<ListGroup.Item style={{ fontSize: '14px' }}>
+								{restaurant.description}
+							</ListGroup.Item>
+							<ListGroup.Item style={{
+								fontSize: '14px'
+							}}>
+								<Row>
+									<Col xs={2} sm={2} md={2}>
+										<PriceLevel level={restaurant.priceLevel} />
+									</Col>
+									<Col xs={3} sm={3} md={3}>
+										<RatingBar rating={restaurant.rating} />
+									</Col>
+									<Col xs={3} sm={3} md={3}>
+										<div>{restaurant.rating || 'N/A'}</div>
+									</Col>
+								</Row>
+							</ListGroup.Item>
+						</ListGroup>
 					</Col>
 				</Row>
 				<Row>
-					<Col>
-						<h4 className="text-center">{selectedTopSeller.name}</h4>
-						<div>{selectedTopSeller.description}</div>
-						<div>{selectedTopSeller.price}</div>
+					<Col xs={5} sm={5} md={5}>
+						<ListGroup>
+							<ListGroup.Item>
+								<h5>{selectedTopSeller.name}</h5>
+							</ListGroup.Item>
+							<ListGroup.Item style={{ fontSize: '14px' }}>
+								${selectedTopSeller.price}
+							</ListGroup.Item>
+							<ListGroup.Item className="text-center">
+								<span
+									onClick={() => add(selectedTopSeller)}
+									style={{ cursor: 'pointer' }}
+								>
+									<FaCartArrowDown color="lightseagreen" />
+								</span>
+							</ListGroup.Item>
+						</ListGroup>
 					</Col>
 				</Row>
 			</Col>
@@ -119,16 +154,16 @@ const Menu = () => {
 			<Col>
 				<Container>
 					{keys(dishesByTag).map((tag) => (
-						<div key={tag}>
+						<div className="mt-2" key={tag}>
 							<h4>{tag}</h4>
 							<Swiper
 								style={{
-									height: '145px',
+									height: '147px',
 									'--swiper-navigation-color': 'black',
-									'--swiper-navigation-size': '25px'
+									'--swiper-navigation-size': '20px'
 								}}
 								modules={[Navigation, Pagination, Scrollbar, A11y]}
-								spaceBetween={20}
+								spaceBetween={10}
 								slidesPerView={3}
 								navigation
 								loop="true"
@@ -139,7 +174,6 @@ const Menu = () => {
 									</SwiperSlide>
 								)}
 							</Swiper>
-							<hr />
 						</div>
 					))}
 				</Container>

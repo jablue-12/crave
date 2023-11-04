@@ -1,20 +1,17 @@
 import { sum } from 'lodash';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { ImStatsDots } from 'react-icons/im';
 import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
-import { useCart } from './../../../contexts/CartContext';
+import { useCart } from '../../../contexts/CartContext';
 import Popup from './../../common/Popup';
 import Login from './../auth/Login';
 import Register from './../auth/Register';
-import ShoppingCart from './../cart/ShoppingCart';
 
-export default function Header () {
+const Header = ({ setIsSliderOn }) => {
 	const { dishesInCart } = useCart();
-
-	const [isSliderOn, setIsSliderOn] = useState(false);
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
 
@@ -30,10 +27,11 @@ export default function Header () {
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
 							<Link style={{ textDecoration: 'none' }} onClick={() => setIsSliderOn(true)}>
 								{dishesInCart.length === 0
-									? <><SlBasket /></>
+									? <SlBasket />
 									: <>
-										<FaShoppingCart /> {sum(dishesInCart.map(x => x.quantity))}
-									</>}
+										<FaShoppingCart color="lightseagreen" /> {sum(dishesInCart.map(x => x.quantity))}
+									</>
+								}
 							</Link>
 							<Link to="profile" style={{ textDecoration: 'none', marginLeft: '15px' }}>
 								<ImStatsDots />
@@ -60,11 +58,8 @@ export default function Header () {
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
-			<ShoppingCart
-				isSliderOn={isSliderOn}
-				setIsSliderOn={setIsSliderOn}
-				dishesInCart={dishesInCart}
-			/>
 		</header>
 	);
-}
+};
+
+export default memo(Header);

@@ -56,10 +56,10 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 										<ListGroup.Item>
 											<Row>
 												<Col>
-													<BsCartPlusFill onClick={() => add(dish)} color="black" />
+													<BsCartPlusFill onClick={() => add(dish)} color="lightseagreen" />
 												</Col>
 												<Col>
-													<BsFillCartDashFill onClick={() => removeOne(dish.id)} />
+													<BsFillCartDashFill onClick={() => removeOne(dish.id)} color="lightseagreen" />
 												</Col>
 												<Col>
 													<BsTrash3Fill color="red" onClick={() => remove(dish.id)} />

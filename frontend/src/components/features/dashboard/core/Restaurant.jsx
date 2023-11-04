@@ -35,7 +35,7 @@ const Restaurant = ({ restaurant }) => {
 							<Col>
 								<Link to={`/restaurants/${restaurant.id}`}>
 									<MdRestaurantMenu
-										color="red"
+										color="orange"
 										style={{ cursor: 'pointer' }}
 									/>
 								</Link>
