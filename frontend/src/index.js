@@ -3,52 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import App from './App';
-import Cart from './components/cart/Cart';
-import RestaurantsDashboard from './components/dashboard/RestaurantsDashboard';
-import Dish from './components/dish/Dish';
-import Login from './components/login/Login';
-import Register from './components/login/Register';
-import Menu from './components/menu/Menu';
+import Menu from './components/features/catalog/Menu';
+import Profile from './components/features/user/Profile';
+import Dashboard from './components/pages/Dashboard';
 import reportWebVitals from './reportWebVitals';
 import './bootstrap.css';
 
 const router = createBrowserRouter(createRoutesFromElements(
-	<Route path="/" element={<App/>}>
-		<Route
-			index={true}
-			element={<RestaurantsDashboard/>}
-		/>
-		<Route
-			path="/restaurants/:restaurantid"
-			element={<Menu/>}
-		/>
-		<Route
-			path="/restaurants/:restaurantid/:dishid"
-			element={<Dish/>}
-		/>
-		<Route
-			path="/cart"
-			element={<Cart/>}
-		/>
-		<Route
-			path="/register"
-			element={<Register/>}
-		/>
-		<Route
-			path="/login"
-			element={<Login/>}
-		/>
+	<Route path="/" element={<App />}>
+		<Route index={true} element={<Dashboard />} />
+		<Route path="/restaurants/:id" element={<Menu />} />
+		<Route path="/profile" element={<Profile />} />
 	</Route>
 ));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-	<React.StrictMode>
-		<RouterProvider router={router}/>
-	</React.StrictMode>
+	<RouterProvider router={router}/>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

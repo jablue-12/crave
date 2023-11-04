@@ -1,24 +1,21 @@
 import React from 'react';
 import './App.css';
-import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
-import Footer from './components/nav/Footer';
-import Header from './components/nav/Header';
+import Footer from './components/features/nav/Footer';
+import Header from './components/features/nav/Header';
+import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
-import { RestaurantsProvider } from './contexts/RestaurantsContext';
 
 function App () {
-	return <RestaurantsProvider>
+	return <AuthProvider>
 		<CartProvider>
 			<Header />
 			<main>
-				<Container>
-					<Outlet />
-				</Container>
+				<Outlet />
 			</main>
 			<Footer />
 		</CartProvider>
-	</RestaurantsProvider>;
+	</AuthProvider>;
 }
 
 export default App;

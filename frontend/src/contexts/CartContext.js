@@ -1,4 +1,5 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
+import { cartItems } from '../sample/cartItems';
 
 export const CartContext = createContext({
 	dishesInCart: [],
@@ -8,12 +9,12 @@ export const CartContext = createContext({
 	countDish: () => {}
 });
 
+export const useCart = () => useContext(CartContext);
+
 export function CartProvider ({ children }) {
-	const [dishesInCart, setDishesInCart] = useState([]);
+	const [dishesInCart, setDishesInCart] = useState(cartItems);
 
 	function countDish (id) {
-		console.log(dishesInCart);
-		console.log(id);
 		return dishesInCart.find(x => x.id === id)?.quantity ?? 0;
 	}
 
