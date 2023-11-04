@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
+import { LOGIN_PATH, REGISTRATION_PATH, USER_PATH } from '../common/constants';
+import api from './../common/api';
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await axios.post('/auth/login', { email, password });
+			const { data } = await api.post(LOGIN_PATH, { email, password });
 
 			setToken(data);
 			localStorage.setItem('token', data);
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await axios.post('/auth/register', { firstName, lastName, password });
+			const { data } = await api.post(REGISTRATION_PATH, { firstName, lastName, password });
 
 			setToken(data);
 			localStorage.setItem('token', data);
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const getUser = async () => {
-		const { data } = await axios.get('/user', {
+		const { data } = await api.get(USER_PATH, {
 			auth: {
 				firstName,
 				lastName,

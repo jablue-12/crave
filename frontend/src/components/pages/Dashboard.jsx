@@ -1,10 +1,11 @@
-import axios from 'axios';
 import { orderBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 // import Locator from './Locator';
+import { RESTAURANTS_PATH } from '../../common/constants';
 import Restaurant from '../features/dashboard/core/Restaurant';
 import Restaurants from '../features/dashboard/core/Restaurants';
+import api from './../../common/api';
 
 export default function Dashboard () {
 	const [restaurants, setRestaurants] = useState([]);
@@ -12,11 +13,9 @@ export default function Dashboard () {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const baseUrl = 'http://localhost:5000';
-
 		(async () => {
 			try {
-				const { data } = await axios.get(`${baseUrl}/restaurants`);
+				const { data } = await api.get(RESTAURANTS_PATH);
 				setRestaurants(orderBy(data, ['rating'], ['desc']));
 				setIsLoading(false);
 			} catch (error) {
