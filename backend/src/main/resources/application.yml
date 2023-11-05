@@ -9,7 +9,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop # Change to update when you want to main the data
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
