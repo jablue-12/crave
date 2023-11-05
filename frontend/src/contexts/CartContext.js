@@ -58,12 +58,18 @@ export const CartProvider = ({ children }) => {
 		setDishesInCart(dishes => dishes.filter(x => x.id !== id));
 	};
 
+	const clear = () => {
+		setDishesInCart([]);
+		localStorage.removeItem(`cart_${userId || 'default'}`);
+	};
+
 	const value = {
 		dishesInCart,
 		add,
 		removeOne,
 		remove,
-		countDish
+		countDish,
+		clear
 	};
 
 	return <CartContext.Provider value={value}>

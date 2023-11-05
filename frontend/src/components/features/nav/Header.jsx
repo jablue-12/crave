@@ -1,10 +1,12 @@
 import { sum } from 'lodash';
-import React, { memo, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { Container, Image, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { BsFillBellFill } from 'react-icons/bs';
 import { FaChartPie, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
+import { w3cwebsocket as WebSocket } from 'websocket';
 import { iconColor } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
@@ -17,6 +19,39 @@ const Header = ({ setIsSliderOn }) => {
 	const { user } = useAuth();
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+	useEffect(() => {
+		const socket = new WebSocket('ws://localhost:3000/ws');
+
+		socket.onopen = () => {
+			console.log('WebSocket connection opened');
+		};
+
+		socket.onmessage = (event) => {
+			const message = JSON.parse(event.data);
+
+			if (message.channel === '/topic/orders') {
+				// Handle the notification received from the WebSocket
+				console.log('Received notification:', message);
+			}
+		};
+
+		socket.onclose = (event) => {
+			if (event.wasClean) {
+				console.log(`WebSocket closed cleanly, code=${event.code}, reason=${event.reason}`);
+			} else {
+				console.error('WebSocket connection abruptly closed');
+			}
+		};
+
+		socket.onerror = (error) => {
+			console.error('WebSocket connection error:', error);
+		};
+
+		return () => {
+			socket.close();
+		};
+	}, []);
 
 	return (
 		<header>
@@ -42,6 +77,7 @@ const Header = ({ setIsSliderOn }) => {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
+							<BsFillBellFill color="orange" />
 							{user && <Link to="profile" style={{ textDecoration: 'none' }}>
 								<FaChartPie color={iconColor} />
 							</Link>}

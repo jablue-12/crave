@@ -6,10 +6,12 @@ import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import { iconColor } from '../../../common/constants';
 import { useCart } from '../../../contexts/CartContext';
+import { useOrders } from '../../../contexts/OrderContext';
 import Scrollable from '../../common/Scrollable';
 
 const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 	const { dishesInCart, add, removeOne, remove } = useCart();
+	const { placeOrder } = useOrders();
 
 	return <Offcanvas show={isSliderOn} onHide={() => setIsSliderOn(false)} placement="end" name="end">
 		<Offcanvas.Header closeButton>
@@ -29,7 +31,14 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 							type="button"
 							size="sm"
 							disabled={dishesInCart.length === 0}
-						><MdOutlineShoppingCartCheckout size={25} /></Button>
+							onClick={() => placeOrder({
+								id: 1,
+								placedAt: new Date().toISOString()
+								// TODO - order items
+							})}
+						>
+							<MdOutlineShoppingCartCheckout size={25} />
+						</Button>
 					</ListGroup.Item>
 				</ListGroup>
 			</Card>

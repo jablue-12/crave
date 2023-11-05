@@ -6,6 +6,7 @@ import Footer from './components/features/nav/Footer';
 import Header from './components/features/nav/Header';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider, useCart } from './contexts/CartContext';
+import OrderProvider from './contexts/OrderContext';
 
 function App () {
 	const { dishesInCart } = useCart();
@@ -13,18 +14,20 @@ function App () {
 
 	return <AuthProvider>
 		<CartProvider>
-			<div className="p-5">
-				<Header setIsSliderOn={setIsSliderOn} />
-				<ShoppingCart
-					isSliderOn={isSliderOn}
-					setIsSliderOn={setIsSliderOn}
-					dishesInCart={dishesInCart}
-				/>
-				<main className="my-5">
-					{useMemo(() => <Outlet />, [])}
-				</main>
-				<Footer />
-			</div>
+			<OrderProvider>
+				<div className="p-5">
+					<Header setIsSliderOn={setIsSliderOn} />
+					<ShoppingCart
+						isSliderOn={isSliderOn}
+						setIsSliderOn={setIsSliderOn}
+						dishesInCart={dishesInCart}
+					/>
+					<main className="my-5">
+						{useMemo(() => <Outlet />, [])}
+					</main>
+					<Footer />
+				</div>
+			</OrderProvider>
 		</CartProvider>
 	</AuthProvider>;
 }
