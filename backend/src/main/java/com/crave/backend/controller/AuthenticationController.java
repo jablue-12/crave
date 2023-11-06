@@ -17,11 +17,21 @@ public class AuthenticationController {
 
     @PostMapping(path = "/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+        AuthenticationResponse response = authenticationService.register(request);
+        if (response.getToken() != null) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PostMapping(path = "/login")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        AuthenticationResponse response = authenticationService.authenticate(request);
+        if (response.getToken() != null) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 }

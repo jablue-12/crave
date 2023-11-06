@@ -17,12 +17,14 @@ public class AccountRepositoryTest {
 
     @Test
     void testFindByEmailWhereAccountExists() {
-        Account account = new Account(
-                1L, "John",
-                "Doe",
-                "johndoe@gmail.com",
-                "mypassword",
-                UserRole.USER);
+        Account account = Account.builder()
+                .id(1l)
+                .firstName("John")
+                .lastName("Doe")
+                .email("johndoe@gmail.com")
+                .password("mypassword")
+                .userRole(UserRole.USER)
+                .build();
 
         accountRepository.save(account);
 

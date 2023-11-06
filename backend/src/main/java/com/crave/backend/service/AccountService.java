@@ -20,40 +20,4 @@ public class AccountService {
     public List<Account> getAccounts() {
         return accountRepository.findAll();
     }
-
-    public Optional<Account> getAccountById(Long id) {
-        return accountRepository.findById(id);
-    }
-
-    public Account createAccount(Account account) {
-        return accountRepository.save(account);
-    }
-
-    public Account updateAccount(Account existingAccount, Account updatedAccount) {
-
-        if (existingAccount != null) {
-            existingAccount.setFirstName(updatedAccount.getFirstName());
-            existingAccount.setLastName(updatedAccount.getLastName());
-            existingAccount.setEmail(updatedAccount.getEmail());
-            existingAccount.setPassword(updatedAccount.getPassword());
-
-
-            accountRepository.save(existingAccount);
-        }
-
-        return existingAccount;
-    }
-
-    public void deleteAccountById(Long id) {
-        accountRepository.deleteById(id);
-    }
-
-    public Account findById(Long id) {
-        Optional<Account> account = accountRepository.findById(id);
-        return account.orElse(null);
-    }
-
-    public boolean exists(Long id) {
-        return accountRepository.findById(id).isPresent();
-    }
 }
