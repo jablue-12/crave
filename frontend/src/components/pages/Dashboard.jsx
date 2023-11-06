@@ -2,7 +2,7 @@ import { orderBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 // import Locator from './Locator';
-import { RESTAURANTS_PATH } from '../../common/constants';
+import { url } from '../../common/constants';
 import Restaurant from '../features/dashboard/core/Restaurant';
 import Restaurants from '../features/dashboard/core/Restaurants';
 import api from './../../common/api';
@@ -15,7 +15,7 @@ export default function Dashboard () {
 	useEffect(() => {
 		(async () => {
 			try {
-				const { data } = await api.get(RESTAURANTS_PATH);
+				const { data } = await api.get(url.RESTAURANTS);
 				setRestaurants(orderBy(data, ['rating'], ['desc']));
 				setIsLoading(false);
 			} catch (error) {

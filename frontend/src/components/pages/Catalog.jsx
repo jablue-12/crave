@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import api from '../../common/api';
-import { RESTAURANTS_PATH, iconColor } from '../../common/constants';
+import { TOKEN_KEY, iconColor, url } from '../../common/constants';
 import { useCart } from '../../contexts/CartContext';
 import { menu } from '../../sample/menu';
 import { singleRestaurant } from '../../sample/singleRestaurant';
@@ -36,15 +36,23 @@ const Catalog = () => {
 		(async () => {
 			try {
 				const [restaurantById, menu] = await Promise.all([
-					api.get(`${RESTAURANTS_PATH}/${id}`),
-					api.get(`${RESTAURANTS_PATH}/${id}/menu`)
+					api.get(`${url.RESTAURANTS}/${id}`, {
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+						}
+					}),
+					api.get(`${url.RESTAURANTS}/${id}/menu`, {
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+						}
+					})
 				]);
 
 				setRestaurant(restaurantById.data);
 				setDishes(menu.data);
-				setIsLoading(false);
 			} catch (error) {
 				console.error(error);
+			} finally {
 				setIsLoading(false);
 			}
 		})();
@@ -170,7 +178,11 @@ const Catalog = () => {
 							>
 								{dishesByTag[tag].map((dish) =>
 									<SwiperSlide key={dish.id}>
-										<DishCard key={dish.id} dish={dish} />
+										<DishCard
+											key={dish.id}
+											dish={dish}
+											restaurant={restaurant}
+										/>
 									</SwiperSlide>
 								)}
 							</Swiper>

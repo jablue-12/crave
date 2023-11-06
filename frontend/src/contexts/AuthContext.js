@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { LOGIN_PATH, REGISTRATION_PATH, USER_PATH } from '../common/constants';
+import { url } from '../common/constants';
 import api from './../common/api';
 
 const AuthContext = createContext();
@@ -20,10 +20,15 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await api.post(LOGIN_PATH, { email, password });
+			const { data } = await api.post(url.LOGIN, {
+				email,
+				password
+			});
 
-			setToken(data);
-			localStorage.setItem('token', data);
+			// TODO - Handle token null
+
+			setToken(data.token);
+			localStorage.setItem('token', data.token);
 
 			await getUser();
 		} catch (e) {
@@ -45,10 +50,17 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await api.post(REGISTRATION_PATH, { firstName, lastName, password });
+			const { data } = await api.post(url.REGISTRATION, {
+				firstName,
+				lastName,
+				email,
+				password
+			});
 
-			setToken(data);
-			localStorage.setItem('token', data);
+			// TODO - Handle token null
+
+			setToken(data.token);
+			localStorage.setItem('token', data.token);
 
 			await getUser();
 		} catch (e) {
@@ -57,13 +69,14 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const getUser = async () => {
-		const { data } = await api.get(USER_PATH, {
+		const { data } = await api.get(url.USER, {
 			auth: {
 				firstName,
 				lastName,
 				password
 			}
 		});
+
 		setUser(data);
 	};
 
@@ -75,10 +88,10 @@ export const AuthProvider = ({ children }) => {
 				firstName,
 				lastName,
 				email,
+				password,
 				setEmail,
 				setFirstName,
 				setLastName,
-				password,
 				setPassword,
 				login,
 				logout,

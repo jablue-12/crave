@@ -5,13 +5,29 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs';
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 import { iconColor } from '../../../common/constants';
+import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
+import { useNotifier } from '../../../contexts/NotifierContext';
 import { useOrders } from '../../../contexts/OrderContext';
 import Scrollable from '../../common/Scrollable';
 
 const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 	const { dishesInCart, add, removeOne, remove } = useCart();
 	const { placeOrder } = useOrders();
+	const { notifyOrderPlaced } = useNotifier();
+	useAuth();
+
+	const onPlaceOrder = () => {
+		// TODO - replace with actual user
+		const orderInfo = {
+			id: 1,
+			placedAt: new Date().toISOString(),
+			username: 'John Doe', // TODO - `${firstname} ${lastname}`,
+			email: 'xr323@gmail.com'
+		};
+		placeOrder({ orderInfo, orderItems: dishesInCart });
+		notifyOrderPlaced(orderInfo);
+	};
 
 	return <Offcanvas show={isSliderOn} onHide={() => setIsSliderOn(false)} placement="end" name="end">
 		<Offcanvas.Header closeButton>
@@ -31,11 +47,7 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 							type="button"
 							size="sm"
 							disabled={dishesInCart.length === 0}
-							onClick={() => placeOrder({
-								id: 1,
-								placedAt: new Date().toISOString()
-								// TODO - order items
-							})}
+							onClick={() => onPlaceOrder()}
 						>
 							<MdOutlineShoppingCartCheckout size={25} />
 						</Button>

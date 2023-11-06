@@ -1,6 +1,7 @@
 // OrderContext.js
 import axios from 'axios';
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { BASE_URL, TOKEN_KEY } from '../common/constants';
 
 const OrderContext = createContext();
 
@@ -15,9 +16,18 @@ export const OrderProvider = ({ children }) => {
 
 	const getOrders = async () => {
 		setLoading(true);
+
 		try {
-			const response = await axios.get('http://localhost:8080/orders');
-			setOrders(response.data);
+			const { data } = await axios.get(BASE_URL + '/orders', {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+				}
+			});
+
+			console.log('Logging - getOrders()');
+			console.log(data);
+
+			setOrders(data);
 			setError(null);
 		} catch (e) {
 			setError(e);
@@ -26,13 +36,20 @@ export const OrderProvider = ({ children }) => {
 		}
 	};
 
-	const getOrder = (id) =>
-		orders.find((order) => order.id === id);
+	const getOrder = id =>
+		orders.find(order => order.id === id);
 
-	const placeOrder = async (order) => {
+	const placeOrder = async order => {
 		try {
-			const { data } = await axios.post('http://localhost:8080/orders', order);
+			const { data } = await axios.post(BASE_URL + '/orders', order, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+				}
+			});
+
+			console.log('Logging - placeOrder');
 			console.log(data);
+
 			setOrders((prevOrders) => [...prevOrders, order]);
 			setError(null);
 		} catch (e) {
