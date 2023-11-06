@@ -33,7 +33,6 @@ public class SecurityConfig {
             "/auth/**",
             "/accounts",
             "/restaurants",
-            "/orders"
     };
 
     @Bean
