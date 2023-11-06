@@ -30,16 +30,14 @@ public class Account implements UserDetails {
             generator = "account_sequence"
     )
     private Long id;
-    @NonNull
     private String firstName;
-    @NonNull
     private String lastName;
-    @NonNull
     private String email;
-    @NonNull
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
