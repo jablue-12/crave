@@ -12,7 +12,14 @@ public class AccountTest {
 
     @BeforeEach
     public void setUp() {
-        user = new Account(1L, "Dushane", "Hill", "dhill@gmail.co.uk", "idkruhfaminnit", UserRole.USER);
+        user = Account.builder()
+                .id(1l)
+                .firstName("Dushane")
+                .lastName("Hill")
+                .email("dhill@gmail.co.uk")
+                .password("idkruhfaminnit")
+                .userRole(UserRole.USER)
+                .build();
     }
 
     @Test
