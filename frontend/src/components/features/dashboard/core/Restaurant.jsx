@@ -1,53 +1,17 @@
-import { orderBy } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Badge, Col, Image, ListGroup, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { BsInfoLg } from 'react-icons/bs';
 import { FaCartArrowDown } from 'react-icons/fa6';
 import { MdRestaurantMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-// import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
-// import { weeklyOrders } from './../../../../sample/weeklyOrders';
-import { agent } from '../../../../common/api';
-import { REQUEST_TIMEOUT, endpoint, iconColor, infoColor } from '../../../../common/constants';
+import { iconColor, infoColor } from '../../../../common/constants';
 import { useCart } from '../../../../contexts/CartContext';
-import { mockComments } from '../../../../sample/mockComments';
-import Loader from '../../../common/Loader';
 import ActivePieChart from './../../../common/ActivePieChart';
 import Comments from './Comments';
 import RatingBar from './RatingBar';
 
 const Restaurant = ({ dish }) => {
-	const [comments, setComments] = useState(mockComments);
-	const [isLoading, setIsLoading] = useState(true);
 	const { add } = useCart();
-
-	const controller = new AbortController();
-	useEffect(() => {
-		(async () => {
-			try {
-				const timer = setTimeout(() => {
-					controller.abort();
-				}, REQUEST_TIMEOUT);
-
-				// TODO - dishes
-				const { data } = await agent.get(
-					`${endpoint.RESTAURANTS}/${dish.id}${endpoint.COMMENTS}`,
-					controller.signal);
-
-				clearTimeout(timer);
-
-				setComments(data);
-				setIsLoading(false);
-			} catch (e) {
-				console.error(e);
-				setIsLoading(false);
-			}
-		})();
-	}, []);
-
-	if (isLoading) {
-		return <Loader />;
-	}
 
 	return <>
 		{dish && <div style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
@@ -66,7 +30,8 @@ const Restaurant = ({ dish }) => {
 			</span>
 		</div>}
 		<Row>
-			<Col>
+			<h6 className="my-2">Tags</h6>
+			<Col md={6}>
 				<OverlayTrigger
 					key="bottom"
 					placement="bottom"
@@ -79,7 +44,7 @@ const Restaurant = ({ dish }) => {
 					<Image rounded fluid src="/images/1.jpg" />
 				</OverlayTrigger>
 			</Col>
-			<Col>
+			<Col md={6}>
 				<ListGroup variant="flush" style={{ fontSize: '14px' }}>
 					<ListGroup.Item>
 						<Row>
@@ -127,7 +92,7 @@ const Restaurant = ({ dish }) => {
 		<Row className="mt-3">
 			<Col>
 				<h6>Comments</h6>
-				<Comments comments={orderBy(comments, ['date'], ['desc'])} />
+				<Comments />
 			</Col>
 		</Row>
 	</>;

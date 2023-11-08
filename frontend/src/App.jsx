@@ -18,7 +18,7 @@ function App () {
 		<AuthProvider>
 			<CartProvider>
 				<OrderProvider>
-					<Container className="py-1">
+					<Container className="py-2">
 						<Header setIsSliderOn={setIsSliderOn} />
 						<ShoppingCart
 							isSliderOn={isSliderOn}

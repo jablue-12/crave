@@ -5,7 +5,7 @@ import RestaurantCard from './RestaurantCard';
 
 const DishesList = ({ dishes, setSelectedDish }) => {
 	return <Container className="px-4">
-		<Scrollable height={330}>
+		<Scrollable height={425}>
 			{dishes.map(restaurant => (
 				<RestaurantCard
 					key={restaurant.id}
