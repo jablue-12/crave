@@ -17,8 +17,10 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments() {
-        return commentRepository.findAll();
+    public List<Comment> getComments(long dishId) {
+        return commentRepository.findAll().stream()
+                .filter(x -> x.getDish_id() == dishId)
+                .toList();
     }
 
     public Optional<Comment> getCommentById(Long id) {
@@ -32,8 +34,7 @@ public class CommentService {
     public Comment updateComment(Comment existingComment, Comment updatedComment) {
 
         if (existingComment != null) {
-            existingComment.setTitle(updatedComment.getTitle());
-            existingComment.setBody(updatedComment.getBody());
+            existingComment.setContent(updatedComment.getContent());
             commentRepository.save(existingComment);
         }
 
