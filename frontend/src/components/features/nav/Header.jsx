@@ -93,8 +93,7 @@ const Header = ({ setIsSliderOn }) => {
 										</NavDropdown.Item>
 									</>}
 							</NavDropdown>
-							<Popup
-								size="md"
+							<NavDropdown>
 								<NavDropdown.Item onClick={() => setIsRegistering(true)}>
 									Register
 								</NavDropdown.Item>
@@ -103,7 +102,7 @@ const Header = ({ setIsSliderOn }) => {
 								</NavDropdown.Item>
 							</NavDropdown>
 							<Popup
-                size="md"
+								size="md"
 								display={isRegistering}
 								close={() => setIsRegistering(false)}
 								title="Registration"
