@@ -16,14 +16,11 @@ import Register from './../auth/Register';
 
 const Header = ({ setIsSliderOn }) => {
 	const { dishesInCart } = useCart();
-	const { user } = useAuth();
+	const { user, logout } = useAuth();
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
 
 	const { notifications } = useNotifier();
-
-	console.log('Header notifications');
-	console.log(notifications);
 
 	return (
 		<header className="my-1">
@@ -83,14 +80,21 @@ const Header = ({ setIsSliderOn }) => {
 									/>}
 								menuVariant="light"
 							>
-								<NavDropdown.Item onClick={() => setIsRegistering(true)}>
-									Register
-								</NavDropdown.Item>
-								<NavDropdown.Item onClick={() => setIsLoggingIn(true)}>
-									Login
-								</NavDropdown.Item>
+								{user
+									? <NavDropdown.Item onClick={() => logout(user)}>
+										Logout
+									</NavDropdown.Item>
+									: <>
+										<NavDropdown.Item onClick={() => setIsRegistering(true)}>
+											Register
+										</NavDropdown.Item>
+										<NavDropdown.Item onClick={() => setIsLoggingIn(true)}>
+											Login
+										</NavDropdown.Item>
+									</>}
 							</NavDropdown>
 							<Popup
+								size="md"
 								display={isRegistering}
 								close={() => setIsRegistering(false)}
 								title="Registration"
@@ -98,6 +102,7 @@ const Header = ({ setIsSliderOn }) => {
 								<Register />
 							</Popup>
 							<Popup
+								size="md"
 								display={isLoggingIn}
 								close={() => setIsLoggingIn(false)}
 								title="Login"

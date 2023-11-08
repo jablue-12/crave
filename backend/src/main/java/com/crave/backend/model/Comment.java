@@ -3,9 +3,11 @@ package com.crave.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"user_id", "restaurant_id"})
+        @UniqueConstraint(columnNames = {"user_Id", "dish_Id"})
 })
 @Getter
 @Setter
@@ -13,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class Comment {
     @Id
     @SequenceGenerator(
@@ -26,11 +29,11 @@ public class Comment {
     )
     private Long id;
     @NonNull
-    private Long restaurant_id;
+    private Long dish_id;
     @NonNull
     private Long user_id;
     @NonNull
-    private String title;
+    private String content;
     @NonNull
-    private String body;
+    private LocalDateTime createdAt;
 }
