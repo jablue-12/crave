@@ -20,4 +20,8 @@ public class AccountService {
     public List<Account> getAccounts() {
         return accountRepository.findAll();
     }
+
+    public Optional<Account> findByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
 }
