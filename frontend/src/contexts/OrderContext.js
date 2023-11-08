@@ -1,7 +1,6 @@
-// OrderContext.js
-import axios from 'axios';
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { BASE_URL, TOKEN_KEY } from '../common/constants';
+import React, { createContext, useContext, useState } from 'react';
+import api from '../common/api';
+import { TOKEN_KEY, endpoint } from '../common/constants';
 
 const OrderContext = createContext();
 
@@ -18,7 +17,7 @@ export const OrderProvider = ({ children }) => {
 		setLoading(true);
 
 		try {
-			const { data } = await axios.get(BASE_URL + '/orders', {
+			const { data } = await api.get(endpoint.ORDERS, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
 				}
@@ -41,7 +40,7 @@ export const OrderProvider = ({ children }) => {
 
 	const placeOrder = async order => {
 		try {
-			const { data } = await axios.post(BASE_URL + '/orders', order, {
+			const { data } = await api.post(endpoint.ORDERS, order, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
 				}
@@ -59,7 +58,7 @@ export const OrderProvider = ({ children }) => {
 
 	const updateOrder = async (id, order) => {
 		try {
-			const response = await axios.put(`/orders/${id}`, order);
+			const response = await api.put(`/orders/${id}`, order);
 			setOrders((prevOrders) => {
 				const updatedOrders = prevOrders.map((order) =>
 					order.id === id ? response.data : order
@@ -74,17 +73,13 @@ export const OrderProvider = ({ children }) => {
 
 	const deleteOrder = async (id) => {
 		try {
-			await axios.delete(`/orders/${id}`);
+			await api.delete(`${endpoint.ORDERS}/${id}`);
 			setOrders((prevOrders) => prevOrders.filter(o => o.id !== id));
 			setError(null);
 		} catch (e) {
 			setError(e);
 		}
 	};
-
-	useEffect(() => {
-		getOrders();
-	}, []);
 
 	return (
 		<OrderContext.Provider

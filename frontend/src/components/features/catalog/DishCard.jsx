@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Col, Image, ListGroup, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { BsInfoLg } from 'react-icons/bs';
 import { FaCartArrowDown } from 'react-icons/fa';
@@ -63,4 +63,4 @@ const DishCard = ({ dish, restaurant }) => {
 	</>;
 };
 
-export default DishCard;
+export default memo(DishCard);

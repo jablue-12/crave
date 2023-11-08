@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import './App.css';
+import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import ShoppingCart from './components/features/cart/ShoppingCart';
 import Footer from './components/features/nav/Footer';
@@ -17,18 +18,18 @@ function App () {
 		<AuthProvider>
 			<CartProvider>
 				<OrderProvider>
-					<div className="p-5">
+					<Container className="py-1">
 						<Header setIsSliderOn={setIsSliderOn} />
 						<ShoppingCart
 							isSliderOn={isSliderOn}
 							setIsSliderOn={setIsSliderOn}
 							dishesInCart={dishesInCart}
 						/>
-						<main className="my-5">
+						<main className="my-4">
 							{useMemo(() => <Outlet />, [])}
 						</main>
 						<Footer />
-					</div>
+					</Container>
 				</OrderProvider>
 			</CartProvider>
 		</AuthProvider>

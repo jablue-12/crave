@@ -1,15 +1,14 @@
 import React from 'react';
 import { Col, Image, ListGroup, Row } from 'react-bootstrap';
-import PriceLevel from './PriceLevel';
 import RatingBar from './RatingBar';
 
-const RestaurantCard = ({ restaurant, setRestaurant }) => {
+const RestaurantCard = ({ dish, setSelectedDish }) => {
 	return <div className="my-3">
 		<Row>
 			<Col xs={6} md={6}>
 				<Image
-					onClick={() => setRestaurant(restaurant)}
-					src={restaurant.photos ? restaurant.photos[0].getUrl() : '/images/1.jpg'}
+					onClick={() => setSelectedDish(dish)}
+					src={dish.photos ? dish.photos[0].getUrl() : '/images/1.jpg'}
 					fluid
 					style={{
 						width: '100%',
@@ -18,24 +17,24 @@ const RestaurantCard = ({ restaurant, setRestaurant }) => {
 						borderRadius: '5px',
 						cursor: 'pointer'
 					}}
-					alt={restaurant.name}
+					alt={dish.name}
 				/>
 			</Col>
 			<Col xs={5} md={5}>
 				<ListGroup variant="flush" style={{ fontSize: '14px' }}>
 					<ListGroup.Item>
-						<h6>{restaurant.name}</h6>
+						<h6>{dish.name}</h6>
 					</ListGroup.Item>
-					{restaurant.priceLevel && <ListGroup.Item>
-						<PriceLevel level={restaurant.priceLevel} />
+					{<ListGroup.Item>
+						${dish.price}
 					</ListGroup.Item>}
 					<ListGroup.Item>
 						<Row>
 							<Col xs={6} sm={6} md={7}>
-								<RatingBar rating={restaurant.rating} />
+								<RatingBar rating={dish.rating} />
 							</Col>
 							<Col xs={6} sm={3} md={3} style={{ fontSize: '13px' }}>
-								<div className="py-1">{restaurant.rating || 'N/A'}</div>
+								<div className="py-1">{dish.rating || 'N/A'}</div>
 							</Col>
 						</Row>
 					</ListGroup.Item>

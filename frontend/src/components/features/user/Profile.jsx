@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { replace, split, sumBy } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
 import {
 	Radar,
@@ -8,6 +9,8 @@ import {
 	PolarAngleAxis,
 	PolarRadiusAxis
 } from 'recharts';
+import { useOrders } from '../../../contexts/OrderContext';
+import ActivePieChart from '../../common/ActivePieChart';
 import { mockOrders } from './../../../sample/orders';
 
 const data = [
@@ -28,14 +31,18 @@ const data = [
 }));
 
 export default function Profile () {
-	const orders = mockOrders;
-
 	const [userDetails, setUserDetails] = useState({
 		firstname: '',
 		lastname: '',
 		email: '',
 		password: ''
 	});
+
+	const { orders, getOrders } = useOrders();
+
+	useEffect(() => {
+		getOrders();
+	}, []);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -110,9 +117,12 @@ export default function Profile () {
 						</Col>
 					</Row>
 					<Button variant="primary" type="submit">
-        Update User
+						Save
 					</Button>
 				</Form>
+			</Col>
+			<Col md={6}>
+				<ActivePieChart />
 			</Col>
 		</Row>
 		<Row>
@@ -126,11 +136,16 @@ export default function Profile () {
 						</tr>
 					</thead>
 					<tbody>
-						{orders.map(order =>
+						{(orders.length > 0
+							? orders.map(o => ({
+								...o.orderInfo,
+								total: sumBy(o.orderItems, i => i.price)
+							}))
+							: mockOrders).map(order =>
 							<tr key={order.id}>
 								<td>{order.id}</td>
-								<td>{order.placedAt}</td>
-								<td>{order.total}</td>
+								<td>{replace(split(order.placedAt, '.')[0], 'T', ' ')}</td>
+								<td>${order.total}</td>
 							</tr>)}
 					</tbody>
 				</Table>

@@ -1,21 +1,37 @@
 import { sum, sumBy } from 'lodash';
-import React from 'react';
-import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs';
-import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { GiPayMoney } from 'react-icons/gi';
 import { iconColor } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import { useNotifier } from '../../../contexts/NotifierContext';
 import { useOrders } from '../../../contexts/OrderContext';
 import Scrollable from '../../common/Scrollable';
+import Map from '../dashboard/map/Map';
 
 const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
+	const [location, setLocation] = useState({ lat: null, lng: null });
+
 	const { dishesInCart, add, removeOne, remove } = useCart();
 	const { placeOrder } = useOrders();
 	const { notifyOrderPlaced } = useNotifier();
 	useAuth();
+
+	useEffect(() => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				setLocation({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				});
+			});
+		} else {
+			console.log('Geolocation is not supported by this browser.');
+		}
+	}, []);
 
 	const onPlaceOrder = () => {
 		// TODO - replace with actual user
@@ -41,16 +57,17 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 							${sumBy(dishesInCart, x => x.price * x.quantity).toFixed(2)}
 					</ListGroup.Item>
 					<ListGroup.Item className="text-center">
-						<Button
-							className="btn-inherit"
-							variant="light"
-							type="button"
-							size="sm"
-							disabled={dishesInCart.length === 0}
-							onClick={() => onPlaceOrder()}
-						>
-							<MdOutlineShoppingCartCheckout size={25} />
-						</Button>
+						<GiPayMoney onClick={onPlaceOrder} style={{ cursor: 'pointer' }} />
+					</ListGroup.Item>
+					<ListGroup.Item>
+						<div>
+							<h2>Your Location</h2>
+							<p>Latitude: {location.lat}</p>
+							<p>Longitude: {location.lng}</p>
+						</div>
+					</ListGroup.Item>
+					<ListGroup.Item>
+						<Map />
 					</ListGroup.Item>
 				</ListGroup>
 			</Card>

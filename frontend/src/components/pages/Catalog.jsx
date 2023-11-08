@@ -5,8 +5,8 @@ import { FaCartArrowDown } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import api from '../../common/api';
-import { TOKEN_KEY, iconColor, url } from '../../common/constants';
+import { agent } from '../../common/api';
+import { REQUEST_TIMEOUT, iconColor, endpoint } from '../../common/constants';
 import { useCart } from '../../contexts/CartContext';
 import { menu } from '../../sample/menu';
 import { singleRestaurant } from '../../sample/singleRestaurant';
@@ -32,26 +32,26 @@ const Catalog = () => {
 
 	const { add } = useCart();
 
+	const controller = new AbortController();
+
 	useEffect(() => {
 		(async () => {
 			try {
-				const [restaurantById, menu] = await Promise.all([
-					api.get(`${url.RESTAURANTS}/${id}`, {
-						headers: {
-							Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
-						}
-					}),
-					api.get(`${url.RESTAURANTS}/${id}/menu`, {
-						headers: {
-							Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
-						}
-					})
+				const timer = setTimeout(() => {
+					controller.abort();
+				}, REQUEST_TIMEOUT);
+
+				const [restaurantsResult, menuResult] = await Promise.all([
+					agent.getTokenized(`${endpoint.RESTAURANTS}/${id}`, controller.signal),
+					agent.getTokenized(`${endpoint.RESTAURANTS}/${id}/menu`, controller.signal)
 				]);
 
-				setRestaurant(restaurantById.data);
-				setDishes(menu.data);
-			} catch (error) {
-				console.error(error);
+				clearTimeout(timer);
+
+				setRestaurant(restaurantsResult.data);
+				setDishes(menuResult.data);
+			} catch (e) {
+				console.error(e);
 			} finally {
 				setIsLoading(false);
 			}

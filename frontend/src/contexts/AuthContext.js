@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-import { url } from '../common/constants';
-import api from './../common/api';
+import { endpoint } from '../common/constants';
+import api, { agent } from './../common/api';
 
 const AuthContext = createContext();
 
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await api.post(url.LOGIN, {
+			const { data } = await api.post(endpoint.LOGIN, {
 				email,
 				password
 			});
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 		e.preventDefault();
 
 		try {
-			const { data } = await api.post(url.REGISTRATION, {
+			const { data } = await api.post(endpoint.REGISTRATION, {
 				firstName,
 				lastName,
 				email,
@@ -69,14 +69,9 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const getUser = async () => {
-		const { data } = await api.get(url.USER, {
-			auth: {
-				firstName,
-				lastName,
-				password
-			}
-		});
-
+		const { data } = await agent.getTokenized(endpoint.USER);
+		console.log('Logging - getUser() - AuthContext');
+		console.log(data);
 		setUser(data);
 	};
 

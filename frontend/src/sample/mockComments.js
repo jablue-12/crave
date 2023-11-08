@@ -1,4 +1,4 @@
-export const comments = [
+export const mockComments = [
 	{
 		id: 1,
 		content: 'The food was delicious, and the service was impeccable. I\'ll definitely be coming back!',

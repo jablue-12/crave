@@ -3,7 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Scrollable from './../../../common/Scrollable';
 
 const Comments = ({ comments }) => {
-	return <Scrollable height={300}>
+	return <Scrollable height={200}>
 		<ListGroup variant="flush">
 			{comments.map((x) => (
 				<ListGroup.Item key={x.id}>
