@@ -1,5 +1,6 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.auth.AuthenticationRequest;
 import com.crave.backend.model.auth.AuthenticationResponse;
 import com.crave.backend.model.auth.RegisterRequest;
@@ -7,10 +8,8 @@ import com.crave.backend.service.AccountService;
 import com.crave.backend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -32,7 +31,6 @@ public class AuthenticationController {
                 .findFirst()
                 .orElse(null));
     }
-
 
     @PostMapping(path = "/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
