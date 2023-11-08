@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Image, ListGroup, Row } from 'react-bootstrap';
 import RatingBar from './RatingBar';
 
-const RestaurantCard = ({ dish, setSelectedDish }) => {
+const DishCard = ({ dish, setSelectedDish }) => {
 	return <div className="my-3">
 		<Row>
 			<Col xs={6} md={6}>
@@ -44,4 +44,4 @@ const RestaurantCard = ({ dish, setSelectedDish }) => {
 	</div>;
 };
 
-export default RestaurantCard;
+export default DishCard;

@@ -5,9 +5,9 @@ import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { REQUEST_TIMEOUT, endpoint } from '../../common/constants';
 import { menu } from '../../sample/menu';
+import Dish from '../features/dashboard/core/Dish';
+import DishesList from '../features/dashboard/core/DishesList';
 import Filter from '../features/dashboard/core/Filter';
-import Restaurant from '../features/dashboard/core/Restaurant';
-import DishesList from '../features/dashboard/core/Restaurants';
 import { agent } from './../../common/api';
 
 import 'swiper/css';
@@ -120,7 +120,7 @@ export default function Dashboard () {
 			</Row>
 		</Col>
 		<Col md={4} className="mx-4">
-			{selectedDish && <Restaurant dish={selectedDish} />}
+			{selectedDish && <Dish dish={selectedDish} />}
 		</Col>
 	</Row>;
 };

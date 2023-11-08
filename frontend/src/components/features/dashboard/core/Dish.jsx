@@ -6,11 +6,11 @@ import { MdRestaurantMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { iconColor, infoColor } from '../../../../common/constants';
 import { useCart } from '../../../../contexts/CartContext';
-import ActivePieChart from './../../../common/ActivePieChart';
+import ActivePieChart from '../../../common/ActivePieChart';
 import Comments from './Comments';
 import RatingBar from './RatingBar';
 
-const Restaurant = ({ dish }) => {
+const Dish = ({ dish }) => {
 	const { add } = useCart();
 
 	return <>
@@ -98,4 +98,4 @@ const Restaurant = ({ dish }) => {
 	</>;
 };
 
-export default Restaurant;
+export default Dish;
