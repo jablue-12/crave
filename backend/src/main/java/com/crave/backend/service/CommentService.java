@@ -19,7 +19,7 @@ public class CommentService {
 
     public List<Comment> getComments(long dishId) {
         return commentRepository.findAll().stream()
-                .filter(x -> x.getDish_Id() == dishId)
+                .filter(x -> x.getDish_id() == dishId)
                 .toList();
     }
 

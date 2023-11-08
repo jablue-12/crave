@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class Comment {
     @Id
     @SequenceGenerator(
@@ -28,9 +29,9 @@ public class Comment {
     )
     private Long id;
     @NonNull
-    private Long dish_Id;
+    private Long dish_id;
     @NonNull
-    private Long user_Id;
+    private Long user_id;
     @NonNull
     private String content;
     @NonNull
