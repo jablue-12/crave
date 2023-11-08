@@ -8,7 +8,7 @@ export const endpoint = {
 	LOGIN: '/auth/login',
 	REGISTRATION: '/auth/register',
 	USER: 'auth/user',
-	RESTAURANTS: '/restaurants',
+	DISHES: '/dishes',
 	ORDERS: '/orders',
 	COMMENTS: '/comments'
 };
