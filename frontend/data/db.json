@@ -1,46 +1,451 @@
 {
-    "restaurants": [
+  "dishes": [
+    {
+      "id": 1,
+      "name": "R 1",
+      "location": "L 1",
+      "rating": 1.5,
+      "imageUrl": "./images/1.jpg",
+      "priceLevel": 1,
+      "description": "R 1 is a restaurant located in L 1. It offers a menu with a variety of delicious dishes at an affordable price. Customers love the great food and friendly staff, making it a top-notch restaurant with outstanding quality.",
+      "menu": [
         {
-            "id": 1,
-            "name": "R 1",
-            "location": "L 1",
-            "rating": 1.5,
-            "imageUrl": "./images/1.jpg"
+          "id": 1,
+          "name": "Menu Item 1",
+          "description": "Description for Menu Item 1",
+          "tag": "Tag1",
+          "price": 10.99
         },
         {
-            "id": 2,
-            "name": "R 2",
-            "location": "L 2",
-            "rating": 2.5,
-            "imageUrl": "./images/2.jpg"
-        },
-        {
-            "id": 3,
-            "name": "R 3",
-            "location": "L 3",
-            "rating": 4,
-            "imageUrl": "./images/3.jpg"
-        },
-        {
-            "id": 4,
-            "name": "R 4",
-            "location": "L 4",
-            "rating": 4.5,
-            "imageUrl": "./images/4.jpg"
-        },
-        {
-            "id": 5,
-            "name": "R 5",
-            "location": "L 5",
-            "rating": 2.5,
-            "imageUrl": "./images/5.jpg"
-        },
-        {
-            "id": 6,
-            "name": "R 6",
-            "location": "L 6",
-            "rating": 4,
-            "imageUrl": "./images/6.jpg"
+          "id": 2,
+          "name": "Menu Item 2",
+          "description": "Description for Menu Item 2",
+          "tag": "Tag2",
+          "price": 15.99
         }
-    ]
+      ],
+      "tags": ["asian", "affordable", "friendly", "variety", "top-notch", "delicious"],
+      "comments": [
+        {
+          "id": 1,
+          "content": "Great food! Great food! Great food! Great food! Great food! Great food! Great food! Great food! Great food! Great food!",
+          "date": "2023-10-30"
+        },
+        {
+          "id": 2,
+          "content": "Nice atmosphere.",
+          "date": "2023-10-29"
+        },
+        {
+          "id": 8,
+          "content": "Delicious dishes!",
+          "date": "2023-10-28"
+        },
+        {
+          "id": 9,
+          "content": "Friendly staff!",
+          "date": "2023-10-27"
+        },
+        {
+          "id": 10,
+          "content": "Good service!",
+          "date": "2023-10-26"
+        },
+        {
+          "id": 11,
+          "content": "Amazing experience!",
+          "date": "2023-10-25"
+        },
+        {
+          "id": 12,
+          "content": "Impressive menu!",
+          "date": "2023-10-24"
+        },
+        {
+          "id": 13,
+          "content": "Outstanding quality!",
+          "date": "2023-10-23"
+        },
+        {
+          "id": 14,
+          "content": "A must-visit place!",
+          "date": "2023-10-22"
+        },
+        {
+          "id": 15,
+          "content": "Top-notch restaurant!",
+          "date": "2023-10-21"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "R 2",
+      "location": "L 2",
+      "rating": 2.5,
+      "imageUrl": "./images/2.jpg",
+      "priceLevel": 2,
+      "description": "R 2 is a restaurant located in L 2. It offers a diverse menu with a cozy ambiance and excellent service. Customers love the mouthwatering dishes and highly recommend it as a superb quality dining spot.",
+      "menu": [
+        {
+          "id": 3,
+          "name": "Menu Item 3",
+          "description": "Description for Menu Item 3",
+          "tag": "Tag1",
+          "price": 12.99
+        },
+        {
+          "id": 4,
+          "name": "Menu Item 4",
+          "description": "Description for Menu Item 4",
+          "tag": "Tag3",
+          "price": 18.99
+        }
+      ],
+      "tags": ["cozy", "diverse", "mouthwatering", "superb quality", "excellent service", "highly recommended"],
+      "comments": [
+        {
+          "id": 3,
+          "content": "Good service!",
+          "date": "2023-10-28"
+        },
+        {
+          "id": 16,
+          "content": "Great food variety!",
+          "date": "2023-10-27"
+        },
+        {
+          "id": 17,
+          "content": "Cozy ambiance!",
+          "date": "2023-10-26"
+        },
+        {
+          "id": 18,
+          "content": "Wonderful experience!",
+          "date": "2023-10-25"
+        },
+        {
+          "id": 19,
+          "content": "Excellent service!",
+          "date": "2023-10-24"
+        },
+        {
+          "id": 20,
+          "content": "Mouthwatering dishes!",
+          "date": "2023-10-23"
+        },
+        {
+          "id": 21,
+          "content": "Highly recommended!",
+          "date": "2023-10-22"
+        },
+        {
+          "id": 22,
+          "content": "Superb quality!",
+          "date": "2023-10-21"
+        },
+        {
+          "id": 23,
+          "content": "Terrific menu!",
+          "date": "2023-10-20"
+        },
+        {
+          "id": 24,
+          "content": "Top-class restaurant!",
+          "date": "2023-10-19"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "R 3",
+      "location": "L 3",
+      "rating": 4,
+      "imageUrl": "./images/3.jpg",
+      "priceLevel": 1,
+      "description": "R 3 is a restaurant located in L 3. It offers delicious food at an affordable price and is known for its lovely staff and exceptional taste. Customers find it a perfect dining spot with unforgettable experiences.",
+      "menu": [
+        {
+          "id": 5,
+          "name": "Menu Item 5",
+          "description": "Description for Menu Item 5",
+          "tag": "Tag2",
+          "price": 9.99
+        }
+      ],
+      "tags": ["delicious", "affordable", "lovely staff", "exceptional taste", "perfect dining", "unforgettable experiences"],
+      "comments": [
+        {
+          "id": 4,
+          "content": "Delicious food!",
+          "date": "2023-10-27"
+        },
+        {
+          "id": 25,
+          "content": "Awesome place!",
+          "date": "2023-10-26"
+        },
+        {
+          "id": 26,
+          "content": "Lovely staff!",
+          "date": "2023-10-25"
+        },
+        {
+          "id": 27,
+          "content": "Great value for money!",
+          "date": "2023-10-24"
+        },
+        {
+          "id": 28,
+          "content": "Perfect dining spot!",
+          "date": "2023-10-23"
+        },
+        {
+          "id": 29,
+          "content": "Exceptional taste!",
+          "date": "2023-10-22"
+        },
+        {
+          "id": 30,
+          "content": "Unforgettable experience!",
+          "date": "2023-10-21"
+        },
+        {
+          "id": 31,
+          "content": "Highly satisfying!",
+          "date": "2023-10-20"
+        },
+        {
+          "id": 32,
+          "content": "Great for families!",
+          "date": "2023-10-19"
+        },
+        {
+          "id": 33,
+          "content": "Simply amazing!",
+          "date": "2023-10-18"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "R 4",
+      "location": "L 4",
+      "rating": 4.5,
+      "imageUrl": "./images/4.jpg",
+      "priceLevel": 3,
+      "description": "R 4 is a restaurant located in L 4. It offers a top-notch dining experience with a menu of exquisite dishes and top-notch quality. Customers highly recommend it for special occasions and describe it as an elegant and classy fine dining restaurant.",
+      "menu": [
+        {
+          "id": 6,
+          "name": "Menu Item 6",
+          "description": "Description for Menu Item 6",
+          "tag": "Tag4",
+          "price": 14.99
+        },
+        {
+          "id": 7,
+          "name": "Menu Item 7",
+          "description": "Description for Menu Item 7",
+          "tag": "Tag3",
+          "price": 16.99
+        }
+      ],
+      "tags": ["top-notch dining", "exquisite dishes", "special occasions", "elegant and classy", "fine dining", "highly recommended"],
+      "comments": [
+        {
+          "id": 5,
+          "content": "Fantastic place!",
+          "date": "2023-10-26"
+        },
+        {
+          "id": 34,
+          "content": "Highly recommended!",
+          "date": "2023-10-25"
+        },
+        {
+          "id": 35,
+          "content": "A gem of a restaurant!",
+          "date": "2023-10-24"
+        },
+        {
+          "id": 36,
+          "content": "Top-notch quality!",
+          "date": "2023-10-23"
+        },
+        {
+          "id": 37,
+          "content": "Exquisite dishes!",
+          "date": "2023-10-22"
+        },
+        {
+          "id": 38,
+          "content": "Perfect for special occasions!",
+          "date": "2023-10-21"
+        },
+        {
+          "id": 39,
+          "content": "Unbelievably good!",
+          "date": "2023-10-20"
+        },
+        {
+          "id": 40,
+          "content": "Elegant and classy!",
+          "date": "2023-10-19"
+        },
+        {
+          "id": 41,
+          "content": "A culinary delight!",
+          "date": "2023-10-18"
+        },
+        {
+          "id": 42,
+          "content": "Fine dining at its best!",
+          "date": "2023-10-17"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "R 5",
+      "location": "L 5",
+      "rating": 2.5,
+      "imageUrl": "./images/5.jpg",
+      "priceLevel": 2,
+      "description": "R 5 is a restaurant located in L 5. It offers decent food at fair prices, making it a suitable option for a quick meal. While it may not be the best choice, some customers find it satisfactory.",
+      "menu": [
+        {
+          "id": 8,
+          "name": "Menu Item 8",
+          "description": "Description for Menu Item 8",
+          "tag": "Tag1",
+          "price": 11.99
+        }
+      ],
+      "tags": ["decent", "fair prices", "quick meal", "satisfactory", "average quality", "needs improvement"],
+      "comments": [
+        {
+          "id": 6,
+          "content": "Not bad!",
+          "date": "2023-10-25"
+        },
+        {
+          "id": 43,
+          "content": "Decent food!",
+          "date": "2023-10-24"
+        },
+        {
+          "id": 44,
+          "content": "Satisfactory experience!",
+          "date": "2023-10-23"
+        },
+        {
+          "id": 45,
+          "content": "Fair prices!",
+          "date": "2023-10-22"
+        },
+        {
+          "id": 46,
+          "content": "Average quality!",
+          "date": "2023-10-21"
+        },
+        {
+          "id": 47,
+          "content": "Could be better!",
+          "date": "2023-10-20"
+        },
+        {
+          "id": 48,
+          "content": "Okay for a quick meal!",
+          "date": "2023-10-19"
+        },
+        {
+          "id": 49,
+          "content": "Not the best option!",
+          "date": "2023-10-18"
+        },
+        {
+          "id": 50,
+          "content": "Average at best!",
+          "date": "2023-10-17"
+        },
+        {
+          "id": 51,
+          "content": "Needs improvement!",
+          "date": "2023-10-16"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "R 5",
+      "location": "L 5",
+      "rating": 2.5,
+      "imageUrl": "./images/5.jpg",
+      "priceLevel": 2,
+      "description": "R 5 is a restaurant located in L 5. It offers decent food at fair prices, making it a suitable option for a quick meal. While it may not be the best choice, some customers find it satisfactory.",
+      "menu": [
+        {
+          "id": 8,
+          "name": "Menu Item 8",
+          "description": "Description for Menu Item 8",
+          "tag": "Tag1",
+          "price": 11.99
+        }
+      ],
+      "tags": ["decent", "fair prices", "quick meal", "satisfactory", "average quality", "needs improvement"],
+      "comments": [
+        {
+          "id": 6,
+          "content": "Not bad!",
+          "date": "2023-10-25"
+        },
+        {
+          "id": 43,
+          "content": "Decent food!",
+          "date": "2023-10-24"
+        },
+        {
+          "id": 44,
+          "content": "Satisfactory experience!",
+          "date": "2023-10-23"
+        },
+        {
+          "id": 45,
+          "content": "Fair prices!",
+          "date": "2023-10-22"
+        },
+        {
+          "id": 46,
+          "content": "Average quality!",
+          "date": "2023-10-21"
+        },
+        {
+          "id": 47,
+          "content": "Could be better!",
+          "date": "2023-10-20"
+        },
+        {
+          "id": 48,
+          "content": "Okay for a quick meal!",
+          "date": "2023-10-19"
+        },
+        {
+          "id": 49,
+          "content": "Not the best option!",
+          "date": "2023-10-18"
+        },
+        {
+          "id": 50,
+          "content": "Average at best!",
+          "date": "2023-10-17"
+        },
+        {
+          "id": 51,
+          "content": "Needs improvement!",
+          "date": "2023-10-16"
+        }
+      ]
+    }
+  ]
 }
