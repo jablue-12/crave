@@ -95,6 +95,15 @@ const Header = ({ setIsSliderOn }) => {
 							</NavDropdown>
 							<Popup
 								size="md"
+								<NavDropdown.Item onClick={() => setIsRegistering(true)}>
+									Register
+								</NavDropdown.Item>
+								<NavDropdown.Item onClick={() => setIsLoggingIn(true)}>
+									Login
+								</NavDropdown.Item>
+							</NavDropdown>
+							<Popup
+                size="md"
 								display={isRegistering}
 								close={() => setIsRegistering(false)}
 								title="Registration"
