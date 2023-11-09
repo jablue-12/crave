@@ -1,7 +1,11 @@
 package com.crave.backend.config;
 
+import com.crave.backend.model.Dish;
+import com.crave.backend.model.Ingredient;
 import com.crave.backend.model.Restaurant;
 import com.crave.backend.repository.AccountRepository;
+import com.crave.backend.repository.DishRepository;
+import com.crave.backend.repository.IngredientRepository;
 import com.crave.backend.repository.RestaurantRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,13 +22,40 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
 public class CraveConfig {
     private final AccountRepository accountRepository;
-    
+
+    @Bean
+    CommandLineRunner commandLineRunner(RestaurantRepository restaurantRepository, IngredientRepository ingredientRepository) {
+        return args -> {
+            // TODO: remove fake data
+            // Restaurants
+            Restaurant mcdo = new Restaurant("McDonalds", "Kildonan 11", 4.5, "testImage");
+            Restaurant burgerKing = new Restaurant("Burger King", "Northgate 22", 4.3, "testImage");
+            restaurantRepository.saveAll(List.of(mcdo, burgerKing));
+
+            //Ingredients
+            Ingredient ingredient1 = Ingredient.builder()
+                    .name("beef")
+                    .tag("beef")
+                    .quantity(2)
+                    .build();
+
+            Ingredient ingredient2 = Ingredient.builder()
+                    .name("garlic")
+                    .tag("garlic")
+                    .quantity(3)
+                    .build();
+            ingredientRepository.saveAll(List.of(ingredient1, ingredient2));
+
+        };
+    }
+
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> accountRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
