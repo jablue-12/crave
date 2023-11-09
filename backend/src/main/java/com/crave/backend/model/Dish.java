@@ -1,7 +1,10 @@
 package com.crave.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table
@@ -10,7 +13,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+@Builder
 public class Dish {
     @Id
     @SequenceGenerator(
@@ -23,11 +26,22 @@ public class Dish {
             generator = "dish_sequence"
     )
     private Long id;
-    @NonNull
     private String name;
-    @NonNull
+    private String description;
     private String tag;
     private String imageUrl;
     private float price;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "dish_ingredients",
+            joinColumns = @JoinColumn(name = "dish_id")
+    )
+    @Column(name = "ingredient_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Long> ingredientIds;
+
+    // Transient field to load ingredients during retrieval
+    @Transient
+    private List<Ingredient> ingredients;
 }
