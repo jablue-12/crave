@@ -1,9 +1,11 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.model.UserOrder;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.UserOrderService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +35,12 @@ public class UserOrderController {
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             // userDetails contains information about the authenticated user
-            Account user = accountService.findByEmail(userDetails.getUsername()).orElse(null);
-            return ResponseEntity.ok(user);
+            try {
+                UserDTO user = accountService.findByEmail(userDetails.getUsername());
+                return ResponseEntity.ok(user);
+            } catch (EntityNotFoundException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
         }
         return ResponseEntity.badRequest().body("Unable to get the orders since user is not authenticated.");
     }

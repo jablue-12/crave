@@ -1,7 +1,9 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,16 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "accounts")
+@RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
 
-    @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
     @GetMapping
-    public List<Account> getAccounts() {
+    public List<UserDTO> getAccounts() {
         return accountService.getAccounts();
     }
 }
