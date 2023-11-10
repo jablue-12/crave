@@ -1,7 +1,6 @@
 package com.crave.backend.controller;
 
 import com.crave.backend.model.Dish;
-import com.crave.backend.model.Restaurant;
 import com.crave.backend.service.DishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

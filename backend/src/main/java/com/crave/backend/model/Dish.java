@@ -1,16 +1,17 @@
 package com.crave.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -44,4 +45,8 @@ public class Dish {
     // Transient field to load ingredients during retrieval
     @Transient
     private List<Ingredient> ingredients;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 }
