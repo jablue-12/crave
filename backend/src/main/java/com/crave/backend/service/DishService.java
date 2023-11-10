@@ -4,9 +4,11 @@ import com.crave.backend.model.Dish;
 import com.crave.backend.model.Ingredient;
 import com.crave.backend.repository.DishRepository;
 import com.crave.backend.repository.IngredientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,7 +18,13 @@ public class DishService {
     private final IngredientRepository ingredientRepository;
 
     public List<Dish> getDishes() {
-        return dishRepository.findAll();
+        List<Dish> dishes = dishRepository.findAll();
+        for (Dish dish : dishes) {
+            List<Ingredient> ingredients = ingredientRepository.findAllById(dish.getIngredientIds());
+            dish.setIngredients(ingredients);
+        }
+
+        return dishes;
     }
 
     public Dish createDish(Dish dish) {
@@ -33,6 +41,10 @@ public class DishService {
         dish.setIngredients(ingredients);
 
         return dishRepository.save(dish);
+    }
+
+    public Dish findDish(Long id) {
+        return dishRepository.findById(id).orElse(null);
     }
 
     public List<Dish> getByTags(List<String> tags) {
