@@ -6,15 +6,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_Id", "dish_Id"})
-})
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
 public class Comment {
     @Id
@@ -28,12 +23,12 @@ public class Comment {
             generator = "comment_sequence"
     )
     private Long id;
-    @NonNull
-    private Long dish_id;
-    @NonNull
-    private Long user_id;
-    @NonNull
     private String content;
-    @NonNull
     private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "dish_id")
+    private Dish dish;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 }
