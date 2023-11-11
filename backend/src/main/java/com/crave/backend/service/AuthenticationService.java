@@ -41,7 +41,7 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .userRole(request.getUserRole())
+                .userRole(isValidUserRole(request) ? request.getUserRole() : UserRole.USER)
                 .build();
 
         var savedUser = accountRepository.save(user);
@@ -70,6 +70,10 @@ public class AuthenticationService {
             return AuthenticationResponse.builder().token(null).statusMessage(e.getMessage()).build();
         }
 
+    }
+
+    private boolean isValidUserRole(RegisterRequest request) {
+        return request.getUserRole() == UserRole.USER || request.getUserRole() == UserRole.ADMIN;
     }
 
     private void saveUserToken(Account user, String jwtToken) {

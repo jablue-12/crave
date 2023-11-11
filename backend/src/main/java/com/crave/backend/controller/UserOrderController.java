@@ -1,9 +1,11 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.model.UserOrder;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.UserOrderService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,19 +24,18 @@ public class UserOrderController {
     private final UserOrderService userOrderService;
     private final AccountService accountService;
 
-//    // Need DB relationship between UserOrder and Account
-//    @GetMapping
-//    public List<UserOrder> getOrders() {
-//        return userOrderService.getOrders();
-//    }
-
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             // userDetails contains information about the authenticated user
-            Account user = accountService.findByEmail(userDetails.getUsername()).orElse(null);
-            return ResponseEntity.ok(user);
+            try {
+                Account account = accountService.findByEmail(userDetails.getUsername());
+                UserDTO user = UserDTO.of(account);
+                return ResponseEntity.ok(user);
+            } catch (EntityNotFoundException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
         }
         return ResponseEntity.badRequest().body("Unable to get the orders since user is not authenticated.");
     }
