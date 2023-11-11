@@ -1,5 +1,6 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.dto.CommentDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.model.Comment;
 import com.crave.backend.model.Dish;
@@ -37,11 +38,16 @@ public class CommentController {
     @PostMapping(path = "/create/{dishId}")
     public ResponseEntity<?> createCommentOnDishId(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dishId, @RequestBody Comment comment) {
         if (userDetails != null) {
-            // userDetails contains information about the authenticated user
-            Account user = accountService.findByEmail(userDetails.getUsername()).orElseThrow(() -> new EntityNotFoundException("User with email " + userDetails.getUsername() + "does not exist"));
+            try {
+                Account user = accountService.findByEmail(userDetails.getUsername());
+                Comment newComment = commentService.createComment(user, dishId, comment);
+                CommentDTO commentDTO = CommentDTO.of(newComment);
 
-            Comment newComment = commentService.createComment(user, dishId, comment);
-            return new ResponseEntity<>(newComment, HttpStatus.CREATED);
+                return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
+
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
         }
         return ResponseEntity.badRequest().body("User has to be authenticated in order to make a comment.");
 
