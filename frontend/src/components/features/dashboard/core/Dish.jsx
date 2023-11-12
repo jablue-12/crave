@@ -92,7 +92,7 @@ const Dish = ({ dish }) => {
 		<Row className="mt-3">
 			<Col>
 				<h6>Comments</h6>
-				<Comments />
+				<Comments dishId={dish.id} />
 			</Col>
 		</Row>
 	</>;

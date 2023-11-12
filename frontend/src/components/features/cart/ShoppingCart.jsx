@@ -4,21 +4,23 @@ import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs';
 import { GiPayMoney } from 'react-icons/gi';
-import { iconColor } from '../../../common/constants';
+import { GrMap } from 'react-icons/gr';
+import { color } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
-import { useNotifier } from '../../../contexts/NotifierContext';
 import { useOrders } from '../../../contexts/OrderContext';
 import Scrollable from '../../common/Scrollable';
 import Map from '../dashboard/map/Map';
 
 const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 	const [location, setLocation] = useState({ lat: null, lng: null });
+	const [isMapOn, setIsMapOn] = useState(false);
 
 	const { dishesInCart, add, removeOne, remove } = useCart();
 	const { placeOrder } = useOrders();
-	const { notifyOrderPlaced } = useNotifier();
 	useAuth();
+
+	console.log(location);
 
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -42,7 +44,6 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 			email: 'xr323@gmail.com'
 		};
 		placeOrder({ orderInfo, orderItems: dishesInCart });
-		notifyOrderPlaced(orderInfo);
 	};
 
 	return <Offcanvas show={isSliderOn} onHide={() => setIsSliderOn(false)} placement="end" name="end">
@@ -60,14 +61,7 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 						<GiPayMoney onClick={onPlaceOrder} style={{ cursor: 'pointer' }} />
 					</ListGroup.Item>
 					<ListGroup.Item>
-						<div>
-							<h2>Your Location</h2>
-							<p>Latitude: {location.lat}</p>
-							<p>Longitude: {location.lng}</p>
-						</div>
-					</ListGroup.Item>
-					<ListGroup.Item>
-						<Map />
+						{isMapOn ? <Map /> : <GrMap onClick={() => setIsMapOn(true)} />}
 					</ListGroup.Item>
 				</ListGroup>
 			</Card>
