@@ -20,7 +20,7 @@ const Comments = ({ dishId }) => {
 
 				// TODO - dishes
 				const { data } = await agent.get(
-					`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`,
+					`${endpoint.COMMENTS}/${dishId}`,
 					controller.signal);
 
 				clearTimeout(timer);
@@ -32,17 +32,18 @@ const Comments = ({ dishId }) => {
 				setIsLoading(false);
 			}
 		})();
-	}, []);
+	}, [dishId]);
 
 	if (isLoading) {
 		return <Loader />;
 	}
 	return <Scrollable height={200}>
 		<ListGroup variant="flush">
-			{comments.map((x) => (
-				<ListGroup.Item key={x.id}>
-					<p style={{ fontSize: '14px', wordWrap: 'break-word' }}>{x.content}</p>
-					<p style={{ fontSize: '12px', marginBottom: 0, textAlign: 'right' }}>{x.date}</p>
+			{comments.map((comment) => (
+				<ListGroup.Item key={comment.id}>
+					<p style={{ fontSize: '14px', wordWrap: 'break-word' }}>{comment.content}</p>
+					<p style={{ fontSize: '12px', marginBottom: 0, textAlign: 'right' }}>{comment.user.email}</p>
+					<p style={{ fontSize: '12px', marginBottom: 0, textAlign: 'right' }}>{comment.createdAt}</p>
 				</ListGroup.Item>
 			))}
 		</ListGroup>

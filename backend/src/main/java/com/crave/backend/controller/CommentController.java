@@ -1,62 +1,55 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.dto.CommentDTO;
+import com.crave.backend.model.Account;
 import com.crave.backend.model.Comment;
+import com.crave.backend.model.Dish;
+import com.crave.backend.service.AccountService;
 import com.crave.backend.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.crave.backend.service.DishService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping(path = "comments")
+@RequestMapping("comments")
+@RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
+    private final AccountService accountService;
+    private final DishService dishService;
 
-    @Autowired
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
-
-    @GetMapping
-    public List<Comment> getComments() {
-        return commentService.getComments();
-    }
-
-    @GetMapping(path = "/{id}")
-    public Optional<Comment> getCommentById(@PathVariable Long id) {
-        return commentService.getCommentById(id);
-    }
-
-    @PostMapping
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-        Comment newComment = commentService.createComment(comment);
-        return new ResponseEntity<>(newComment, HttpStatus.CREATED);
-
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment updatedComment) {
-        Comment existingComment = commentService.findById(id);
-
-        if (existingComment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping(path = "/{dishId}")
+    public ResponseEntity<?> getComments(@PathVariable Long dishId) {
+        Dish dish = dishService.findDish(dishId);
+        if (dish != null) {
+            return ok(commentService.getComments(dishId));
+        } else {
+            return ResponseEntity.badRequest().body("Dish with id " + dishId + " does not exist");
         }
-
-        Comment updated = commentService.updateComment(existingComment, updatedComment);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long id) {
-        if (!commentService.exists(id)) {
-            return new ResponseEntity<>("Comment not found", HttpStatus.NOT_FOUND);
+    @PostMapping(path = "/create/{dishId}")
+    public ResponseEntity<?> createCommentOnDishId(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dishId, @RequestBody Comment comment) {
+        if (userDetails != null) {
+            try {
+                Account user = accountService.findByEmail(userDetails.getUsername());
+                Comment newComment = commentService.createComment(user, dishId, comment);
+                CommentDTO commentDTO = CommentDTO.of(newComment);
+
+                return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
+
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
         }
+        return ResponseEntity.badRequest().body("User has to be authenticated in order to make a comment.");
 
-        commentService.deleteCommentById(id);
-        return new ResponseEntity<>("Comment deleted successfully", HttpStatus.NO_CONTENT);
     }
-
 }

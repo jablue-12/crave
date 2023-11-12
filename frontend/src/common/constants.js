@@ -13,6 +13,15 @@ export const endpoint = {
 	COMMENTS: '/comments'
 };
 
+export const path = {
+	LOGIN: '/auth/login',
+	REGISTRATION: '/auth/register',
+	USER: 'auth/user',
+	RESTAURANTS: '/restaurants',
+	ORDERS: '/orders',
+	COMMENTS: '/comments'
+};
+
 export const iconColor = '#1E90FF';
 export const infoColor = 'lightseagreen';
 
