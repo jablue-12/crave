@@ -5,12 +5,10 @@ import com.crave.backend.model.Account;
 import com.crave.backend.repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +26,8 @@ public class AccountService {
         return users;
     }
 
-    public UserDTO findByEmail(String email) {
+    public Account findByEmail(String email) {
         Account account = accountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("email " + email + " is not found"));
-        return UserDTO.of(account);
+        return account;
     }
 }

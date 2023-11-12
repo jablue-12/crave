@@ -1,12 +1,6 @@
-import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
+import React, { useState } from 'react';
 
-const data = [
-	{ name: 'Ingredient A', value: 400 },
-	{ name: 'Ingredient B', value: 300 },
-	{ name: 'Ingredient C', value: 300 },
-	{ name: 'Ingredient D', value: 200 }
-];
+import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
 const renderActiveShape = (props) => {
 	const RADIAN = Math.PI / 180;
@@ -58,37 +52,34 @@ const renderActiveShape = (props) => {
 	);
 };
 
-export default class ActivePieChart extends PureComponent {
-	static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si';
+const ActivePieChart = ({ ingredients }) => {
+	const [activeIndex, setActiveIndex] = useState(0);
 
-	state = {
-		activeIndex: 0
+	const onPieEnter = (_, index) => {
+		setActiveIndex(index);
 	};
 
-	onPieEnter = (_, index) => {
-		this.setState({
-			activeIndex: index
-		});
-	};
+	return (
+		<ResponsiveContainer width="100%" height="100%">
+			<PieChart width={200} height={200}>
+				<Pie
+					activeIndex={activeIndex}
+					activeShape={renderActiveShape} // You should define renderActiveShape
+					data={ingredients.map(x => ({
+						name: x.name,
+						value: x.quantity
+					}))}
+					cx="50%"
+					cy="50%"
+					innerRadius={55}
+					outerRadius={70}
+					fill="#8884d8"
+					dataKey="value"
+					onMouseEnter={onPieEnter}
+				/>
+			</PieChart>
+		</ResponsiveContainer>
+	);
+};
 
-	render () {
-		return (
-			<ResponsiveContainer width="100%" height="100%">
-				<PieChart width="200px" height="200px">
-					<Pie
-						activeIndex={this.state.activeIndex}
-						activeShape={renderActiveShape}
-						data={data}
-						cx="50%"
-						cy="50%"
-						innerRadius={55}
-						outerRadius={70}
-						fill="#8884d8"
-						dataKey="value"
-						onMouseEnter={this.onPieEnter}
-					/>
-				</PieChart>
-			</ResponsiveContainer>
-		);
-	}
-}
+export default ActivePieChart;

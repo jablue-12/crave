@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { agent } from '../../common/api';
-import { REQUEST_TIMEOUT, iconColor, endpoint } from '../../common/constants';
+import { REQUEST_TIMEOUT, endpoint, color } from '../../common/constants';
 import { useCart } from '../../contexts/CartContext';
 import { menu } from '../../sample/menu';
 import { singleRestaurant } from '../../sample/singleRestaurant';
@@ -149,7 +149,7 @@ const Catalog = () => {
 									onClick={() => add(selectedTopSeller)}
 									style={{ cursor: 'pointer' }}
 								>
-									<FaCartArrowDown color={iconColor} />
+									<FaCartArrowDown color={color.ICON} />
 								</span>
 							</ListGroup.Item>
 						</ListGroup>

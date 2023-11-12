@@ -6,7 +6,7 @@ import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
 
 import Typewriter from 'typewriter-effect';
-import { color, iconColor } from '../../../common/constants';
+import { color } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import { useNotifier } from './../../../contexts/NotifierContext';
@@ -48,7 +48,7 @@ const Header = ({ setIsSliderOn }) => {
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
 							{user &&
 								<Link to="profile" style={{ textDecoration: 'none' }}>
-									<FaChartPie color={iconColor} />
+									<FaChartPie color={color.ICON} />
 								</Link>}
 							<OverlayTrigger
 								key="bottom"
@@ -64,7 +64,7 @@ const Header = ({ setIsSliderOn }) => {
 								>
 									{dishesInCart.length === 0
 										? <SlBasket />
-										: <FaShoppingCart color={iconColor} />}
+										: <FaShoppingCart color={color.ICON} />}
 								</Link>
 							</OverlayTrigger>
 							<NavDropdown

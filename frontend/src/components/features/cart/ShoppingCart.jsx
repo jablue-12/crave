@@ -4,7 +4,7 @@ import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs';
 import { GiPayMoney } from 'react-icons/gi';
-import { iconColor } from '../../../common/constants';
+import { color } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import { useNotifier } from '../../../contexts/NotifierContext';
@@ -95,7 +95,7 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 										<ListGroup.Item>
 											<Row>
 												<Col>
-													<BsCartPlusFill onClick={() => add(dish)} color={iconColor} />
+													<BsCartPlusFill onClick={() => add(dish)} color={color.ICON} />
 												</Col>
 												<Col>
 													<BsFillCartDashFill onClick={() => removeOne(dish.id)} />

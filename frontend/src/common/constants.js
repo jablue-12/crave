@@ -1,6 +1,6 @@
 export const REQUEST_TIMEOUT = 1000;
 
-const PORT = 5000;
+const PORT = 8080;
 export const SOCKET_URL = `ws://localhost:${PORT}/ws`;
 export const BASE_URL = `http://localhost:${PORT}`;
 export const endpoint = {
@@ -21,9 +21,6 @@ export const path = {
 	ORDERS: '/orders',
 	COMMENTS: '/comments'
 };
-
-export const iconColor = '#1E90FF';
-export const infoColor = 'lightseagreen';
 
 export const TOKEN_KEY = 'token';
 

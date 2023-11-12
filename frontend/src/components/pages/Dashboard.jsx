@@ -32,7 +32,7 @@ export default function Dashboard () {
 					controller.abort();
 				}, REQUEST_TIMEOUT);
 
-				const { data } = await agent.get(endpoint.DISHES, controller.signal);
+				const { data } = await agent.get(endpoint.DISHES);
 
 				clearTimeout(timer);
 

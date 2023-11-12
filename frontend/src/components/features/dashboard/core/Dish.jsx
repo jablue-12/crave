@@ -4,7 +4,7 @@ import { BsInfoLg } from 'react-icons/bs';
 import { FaCartArrowDown } from 'react-icons/fa6';
 import { MdRestaurantMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { iconColor, infoColor } from '../../../../common/constants';
+import { color } from '../../../../common/constants';
 import { useCart } from '../../../../contexts/CartContext';
 import ActivePieChart from '../../../common/ActivePieChart';
 import Comments from './Comments';
@@ -69,7 +69,7 @@ const Dish = ({ dish }) => {
 								</Tooltip>
 							}>
 							<span>
-								<BsInfoLg color={infoColor} style={{ cursor: 'pointer' }}/>
+								<BsInfoLg color={color.INFO} style={{ cursor: 'pointer' }}/>
 							</span>
 						</OverlayTrigger>
 						<span
@@ -77,7 +77,7 @@ const Dish = ({ dish }) => {
 							onClick={() => add(dish)}
 							style={{ cursor: 'pointer' }}
 						>
-							<FaCartArrowDown color={iconColor} />
+							<FaCartArrowDown color={color.ICON} />
 						</span>
 					</ListGroup.Item>
 				</ListGroup>
@@ -86,13 +86,13 @@ const Dish = ({ dish }) => {
 		<Row className="mt-3" style={{ height: 250 }}>
 			<h6>Ingredients</h6>
 			<Col>
-				<ActivePieChart />
+				<ActivePieChart ingredients={dish.ingredients} />
 			</Col>
 		</Row>
 		<Row className="mt-3">
 			<Col>
 				<h6>Comments</h6>
-				<Comments />
+				<Comments dishId={dish.id} />
 			</Col>
 		</Row>
 	</>;

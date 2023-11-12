@@ -36,7 +36,8 @@ public class AuthenticationController {
         if (userDetails != null) {
             // userDetails contains information about the authenticated user
             try {
-                UserDTO user = accountService.findByEmail(userDetails.getUsername());
+                Account account = accountService.findByEmail(userDetails.getUsername());
+                UserDTO user = UserDTO.of(account);
                 return ResponseEntity.ok(user);
             } catch (EntityNotFoundException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
