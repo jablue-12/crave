@@ -7,7 +7,6 @@ import { GiPayMoney } from 'react-icons/gi';
 import { color } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
-import { useNotifier } from '../../../contexts/NotifierContext';
 import { useOrders } from '../../../contexts/OrderContext';
 import Scrollable from '../../common/Scrollable';
 import Map from '../dashboard/map/Map';
@@ -17,7 +16,6 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 
 	const { dishesInCart, add, removeOne, remove } = useCart();
 	const { placeOrder } = useOrders();
-	const { notifyOrderPlaced } = useNotifier();
 	useAuth();
 
 	useEffect(() => {
@@ -42,7 +40,6 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 			email: 'xr323@gmail.com'
 		};
 		placeOrder({ orderInfo, orderItems: dishesInCart });
-		notifyOrderPlaced(orderInfo);
 	};
 
 	return <Offcanvas show={isSliderOn} onHide={() => setIsSliderOn(false)} placement="end" name="end">

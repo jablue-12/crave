@@ -9,7 +9,6 @@ import Typewriter from 'typewriter-effect';
 import { color } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
-import { useNotifier } from './../../../contexts/NotifierContext';
 import Popup from './../../common/Popup';
 import Login from './../auth/Login';
 import Register from './../auth/Register';
@@ -20,11 +19,8 @@ const Header = ({ setIsSliderOn }) => {
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-	const { notifications } = useNotifier();
-
 	return (
 		<header className="my-1">
-			{notifications.map((x, i) => <div key={i}>{x.content}</div>)}
 			<Navbar className="p-0" expand="md" collapseOnSelect>
 				<Container>
 					<Link to="/" style={{ textDecoration: 'none' }}>
