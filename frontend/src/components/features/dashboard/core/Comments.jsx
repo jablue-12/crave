@@ -28,7 +28,7 @@ const Comments = ({ dishId }) => {
 				}, REQUEST_TIMEOUT);
 
 				const { data } = await agent.get(
-					`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`,
+					`${endpoint.COMMENTS}/${dishId}`,
 					controller.signal);
 
 				clearTimeout(timer);
@@ -40,7 +40,7 @@ const Comments = ({ dishId }) => {
 				setIsLoading(false);
 			}
 		})();
-	}, []);
+	}, [dishId]);
 
 	const onSelect = comment => {
 		setSeletedComment(comment);
