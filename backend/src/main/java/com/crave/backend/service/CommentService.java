@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,15 +20,11 @@ public class CommentService {
     private final DishRepository dishRepository;
 
     public List<CommentDTO> getComments(Long dishId) {
-
-        List<CommentDTO> commentDTO = new ArrayList<>();
-        List<Comment> comments = commentRepository.findCommentsByDishId(dishId);
-
-        for (Comment comment : comments) {
-            commentDTO.add(CommentDTO.of(comment));
-        }
-
-        return commentDTO;
+        return commentRepository
+                .findCommentsByDishId(dishId)
+                .stream()
+                .map(CommentDTO::of)
+                .toList();
     }
 
     public Comment createComment(Account account, Long dishId, Comment comment) {

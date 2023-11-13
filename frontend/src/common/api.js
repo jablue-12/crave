@@ -5,21 +5,26 @@ const api = axios.create({
 	baseURL: BASE_URL
 });
 
-const headers = {
-	Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
-};
-
 export const agent = {
-	get: (url, signal) => api.get(url, { signal }),
-	getTokenized: (url, signal) => api.get(url, {
-		headers,
-		signal
+	get: (url) => api.get(url),
+	post: (url, body) => api.post(url, body),
+	getTokenized: (url) => api.get(url, {
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+			'Content-Type': 'application/json'
+		}
 	}),
 	putTokenized: (url, body) => api.put(url, body, {
-		headers
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+			'Content-Type': 'application/json'
+		}
 	}),
-	postTokenized: (url, body) => api.put(url, body, {
-		headers
+	postTokenized: (url, body) => api.post(url, body, {
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+			'Content-Type': 'application/json'
+		}
 	})
 };
 
