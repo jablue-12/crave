@@ -1,7 +1,11 @@
 package com.crave.backend.service;
 
 import com.crave.backend.model.RestaurantItem;
+import com.crave.backend.model.Restaurant;
 import com.crave.backend.repository.RestaurantItemRepository;
+import com.crave.backend.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantItemService {
     private final RestaurantItemRepository restaurantItemRepository;
-
-    @Autowired
-    public RestaurantItemService(RestaurantItemRepository restaurantItemRepository) {
-        this.restaurantItemRepository = restaurantItemRepository;
-    }
+    private final RestaurantRepository restaurantRepository;
 
     public List<RestaurantItem> getRestaurantItems() {
         return restaurantItemRepository.findAll();
@@ -25,12 +26,20 @@ public class RestaurantItemService {
         return restaurantItemRepository.findById(id);
     }
 
+    public List<RestaurantItem> getRestaurantItemByRestaurantId(Long restaurantId) {
+        List<RestaurantItem> restaurantItems = restaurantItemRepository.findAllByRestaurantId(restaurantId);
+        return restaurantItems;
+    }
+
     public RestaurantItem createRestaurantItem(RestaurantItem restaurantItem) {
+        Restaurant theRestaurant = restaurantRepository.findById(restaurantItem.getRestaurantId()).orElse(null);
+        if(theRestaurant == null){
+            return null;
+        }
         return restaurantItemRepository.save(restaurantItem);
     }
 
     public RestaurantItem updateRestaurantItem(RestaurantItem updatedRestaurantItem) {
-
         if (exists(updatedRestaurantItem.getId())) {
             restaurantItemRepository.save(updatedRestaurantItem);
         }
@@ -38,13 +47,12 @@ public class RestaurantItemService {
         return updatedRestaurantItem;
     }
 
-    public List<RestaurantItem> getRestaurantItemByRestaurantId(Long id) {
-        List<RestaurantItem> restaurantItems = restaurantItemRepository.findAllByResaurantId(id);
-        return restaurantItems;
-    }
-
     public void deleteRestaurantItemById(Long id) {
         restaurantItemRepository.deleteById(id);
+    }
+
+    public void deleteRestaurantItemByRestaurantId(Long restaurantId) {
+        restaurantItemRepository.deleteByRestaurantId(restaurantId);
     }
 
     public RestaurantItem findById(Long id) {

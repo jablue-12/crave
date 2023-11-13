@@ -45,6 +45,16 @@ public class UserOrderController {
         return userOrderService.getOrderById(id);
     }
 
+    @GetMapping(path = "/restaurants/{restaurantId}")
+    public List<UserOrder> getOrdersByRestaurantId(@PathVariable Long restaurantId) {
+        return userOrderService.getOrdersByRestaurantId(restaurantId);
+    }
+
+    @GetMapping(path = "/accounts/{accountId}")
+    public List<UserOrder> getOrdersByAccountId(@PathVariable Long accountId) {
+        return userOrderService.getOrdersByAccountId(accountId);
+    }
+
     @PostMapping
     public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder userOrder) {
         System.out.println(userOrder.toString());

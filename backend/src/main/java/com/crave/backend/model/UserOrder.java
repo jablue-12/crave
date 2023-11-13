@@ -29,16 +29,13 @@ public class UserOrder {
     )
     private Long id;
     @NonNull
-    private Long userId;
+    private Long accountId;
     @NonNull
     private Long restaurantId;
     
     @NonNull
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
-    private List<OrderItem>orderItems;
 
     @Nullable
     private String description;

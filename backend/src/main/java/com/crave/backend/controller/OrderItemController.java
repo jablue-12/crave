@@ -30,9 +30,9 @@ public class OrderItemController {
         return orderItemService.getOrderItemById(id);
     }
 
-    @GetMapping(path = "/order/{id}")
-    public Optional<OrderItem> getOrderItemByOrderId(@PathVariable Long orderId) {
-        return orderItemService.getOrderItemById(orderId);
+    @GetMapping(path = "/order/{orderId}")
+    public List<OrderItem> getOrderItemsByOrderId(@PathVariable Long orderId) {
+        return orderItemService.getOrderItemsByOrderId(orderId);
     }
 
     @PostMapping
@@ -50,7 +50,7 @@ public class OrderItemController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        OrderItem updated = orderItemService.updateOrderItem(existingOrderItem, updatedOrderItem);
+        OrderItem updated = orderItemService.updateOrderItem(updatedOrderItem);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
@@ -62,6 +62,13 @@ public class OrderItemController {
 
         orderItemService.deleteOrderItemById(id);
         return new ResponseEntity<>("OrderItem deleted successfully", HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/order/{orderId}")
+    public ResponseEntity<String> deleteOrderItemByOrderId(@PathVariable Long orderId) {
+
+        orderItemService.deleteOrderItemByOrderId(orderId);
+        return new ResponseEntity<>("OrderItems deleted successfully", HttpStatus.NO_CONTENT);
     }
 
 }

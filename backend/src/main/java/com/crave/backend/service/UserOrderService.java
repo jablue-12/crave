@@ -1,13 +1,12 @@
 package com.crave.backend.service;
 
 import com.crave.backend.model.UserOrder;
-import com.crave.backend.model.OrderItem;
 import com.crave.backend.repository.OrderItemRepository;
 import com.crave.backend.repository.UserOrderRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +16,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserOrderService {
     private final UserOrderRepository userOrderRepository;
-    private final OrderItemRepository orderItemRepository;
    
 
     public List<UserOrder> getOrders() {
         return userOrderRepository.findAll();
+    }
+
+    public List<UserOrder> getOrdersByRestaurantId(Long restaurantId) {
+        return userOrderRepository.findAllByRestaurantId(restaurantId);
+    }
+
+    public List<UserOrder> getOrdersByAccountId(Long accountId) {
+        return userOrderRepository.findAllByAccountId(accountId);
     }
 
     public Optional<UserOrder> getOrderById(Long id) {

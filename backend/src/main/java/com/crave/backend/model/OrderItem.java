@@ -24,13 +24,9 @@ public class OrderItem {
     )
     private Long id;
     @NonNull
-    private Long order_id;
+    private Long orderId;
     @NonNull
     private String name;
     @NonNull
     private float price;
-
-    @ManyToOne
-    private UserOrder order;
-
 }

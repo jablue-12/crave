@@ -23,9 +23,4 @@ public class AccountController {
     public List<UserDTO> getAccounts() {
         return accountService.getAccounts();
     }
-
-    @GetMapping(path="/orders/{id}")
-    public List<UserOrder> getOrders(@PathVariable Long id) {
-        return accountService.getUserOrders(id);
-    }
 }

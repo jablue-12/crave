@@ -24,12 +24,10 @@ public class RestaurantItem {
     )
     private Long id;
     @NonNull
-    private Long restaurant_id;
+    private Long restaurantId;
     @NonNull
     private String name;
     @NonNull
     private float price;
-
-    // @ManyToOne
-    // private Restaurant restaurant;
+    
 }

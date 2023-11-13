@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UserOrderRepository extends JpaRepository<UserOrder, Long> {
     List<UserOrder> findAllByRestaurantId(@Param("restaurant_id") Long restaurantId);
     
-    List<UserOrder> findAllByUserId(@Param("user_id") Long user_id);
+    List<UserOrder> findAllByAccountId(@Param("account_id") Long user_id);
 
 }

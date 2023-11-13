@@ -24,7 +24,7 @@ public class RestaurantItemController {
     public List<RestaurantItem> getRestaurantItems() {
         return restaurantItemService.getRestaurantItems();
     }
-
+    
     @GetMapping(path = "/{id}")
     public Optional<RestaurantItem> getRestaurantItemById(@PathVariable Long id) {
         return restaurantItemService.getRestaurantItemById(id);
@@ -34,7 +34,6 @@ public class RestaurantItemController {
     public List<RestaurantItem> getRestaurantItemByRestaurantId(@PathVariable Long restaurantId) {
         return restaurantItemService.getRestaurantItemByRestaurantId(restaurantId);
     }
-
 
     @PostMapping
     public ResponseEntity<RestaurantItem> createRestaurantItem(@RequestBody RestaurantItem restaurantItem) {
@@ -63,6 +62,12 @@ public class RestaurantItemController {
 
         restaurantItemService.deleteRestaurantItemById(id);
         return new ResponseEntity<>("RestaurantItem deleted successfully", HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<String> deleteRestaurantItemByRestaurantId(@PathVariable Long restaurantId) {
+        restaurantItemService.deleteRestaurantItemByRestaurantId(restaurantId);
+        return new ResponseEntity<>("RestaurantItems deleted successfully", HttpStatus.NO_CONTENT);
     }
 
 }

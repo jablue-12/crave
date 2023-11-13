@@ -1,16 +1,19 @@
 package com.crave.backend.controller;
 
+import com.crave.backend.enums.RestaurantTag;
 import com.crave.backend.model.Restaurant;
 import com.crave.backend.model.RestaurantItem;
-import com.crave.backend.model.UserOrder;
 import com.crave.backend.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "restaurants")
@@ -27,16 +30,23 @@ public class RestaurantController {
         return restaurantService.getRestaurants();
     }
 
+    @GetMapping(path="/tags")
+    public List<Restaurant> getRestaurantsByTags(@RequestBody List<String> tags) {
+        Set<RestaurantTag> tagSet = new HashSet<RestaurantTag>();
+        for (String tagName : tags) {
+            try {
+                tagSet.add(RestaurantTag.valueOf(tagName));
+            } catch (IllegalArgumentException e) {
+                return new ArrayList<Restaurant>();
+            }
+        }
+        return restaurantService.getRestaurantsByTags(tagSet);
+    }
+
     @GetMapping(path = "/{id}")
     public Optional<Restaurant> getRestaurantById(@PathVariable Long id) {
         return restaurantService.getRestaurantById(id);
     }
-
-    @GetMapping(path="/orders/{id}")
-    public List<UserOrder> getOrders(@PathVariable Long id) {
-        return restaurantService.getRestaurantOrders(id);
-    }
-
 
     @PostMapping
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) {
@@ -54,6 +64,28 @@ public class RestaurantController {
 
         Restaurant updated = restaurantService.updateRestaurant(updatedRestaurant);
         return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @PutMapping(path="/addtags/{id}")
+    public ResponseEntity<Restaurant> addTagsToRestaurants(@PathVariable Long id, @RequestBody List<String> tags ) {
+        
+        Restaurant existingRestaurant = restaurantService.findById(id);
+
+        Set<RestaurantTag> tagSet = new HashSet<RestaurantTag>();
+        for (String tagName : tags) {
+            try {
+                tagSet.add(RestaurantTag.valueOf(tagName));
+            } catch (IllegalArgumentException e) {
+                return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+        }
+
+        if (existingRestaurant == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        existingRestaurant.getTags().addAll(tagSet);
+        return new ResponseEntity<>(restaurantService.updateRestaurant(existingRestaurant),  HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

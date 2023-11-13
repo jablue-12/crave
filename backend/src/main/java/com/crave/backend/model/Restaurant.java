@@ -2,6 +2,9 @@ package com.crave.backend.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.crave.backend.enums.RestaurantTag;
 
 import io.micrometer.common.lang.Nullable;
 
@@ -39,7 +42,9 @@ public class Restaurant {
     @NonNull
     private String imageUrl;
 
-
+    @ElementCollection(targetClass = RestaurantTag.class)
+    @Enumerated(EnumType.STRING)
+    private Set<RestaurantTag> tags;
     @Nullable
     private String description;
     @Nullable
@@ -50,7 +55,4 @@ public class Restaurant {
     private LocalTime close_at;
     @Nullable
     private byte days_open;
-
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
-    private List<RestaurantItem>restaurantItems = new ArrayList<>();
 }
