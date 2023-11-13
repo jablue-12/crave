@@ -1,7 +1,7 @@
 import { sum } from 'lodash';
 import React, { useState, memo } from 'react';
 import { Container, Image, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { FaChartPie, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import { FaChartPie, FaPlus, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
 
@@ -18,6 +18,10 @@ const Header = ({ setIsSliderOn }) => {
 	const { user, logout } = useAuth();
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+	const isUserAdmin = () => {
+		return user && user.userRole === 'ADMIN';
+	};
 
 	return (
 		<header className="my-1">
@@ -42,8 +46,12 @@ const Header = ({ setIsSliderOn }) => {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
+							{isUserAdmin() &&
+									<Link to="dish-creation" style={{ textDecoration: 'none' }}>
+										<FaPlus color={iconColor} />
+									</Link>}
 							{user &&
-								<Link to="profile" style={{ textDecoration: 'none' }}>
+								<Link to="profile" style={{ textDecoration: 'none', marginLeft: '20px' }}>
 									<FaChartPie color={iconColor} />
 								</Link>}
 							<OverlayTrigger

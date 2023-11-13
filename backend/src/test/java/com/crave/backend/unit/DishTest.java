@@ -11,6 +11,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DishTest {
@@ -46,8 +47,9 @@ public class DishTest {
                 .name("Burger")
                 .description("Burger description")
                 .tag("beef")
-                .imageUrl("some-image-url")
+                .image("some-image-url".getBytes())
                 .price(14.99f)
+                .rating(4.5f)
                 .ingredientIds(List.of(beefIngredient.getId(), garlicIngredient.getId()))
                 .ingredients(List.of(beefIngredient, garlicIngredient))
                 .comments(List.of(comment))
@@ -61,8 +63,9 @@ public class DishTest {
         assertEquals("Burger", dish.getName());
         assertEquals("Burger description", dish.getDescription());
         assertEquals("beef", dish.getTag());
-        assertEquals("some-image-url", dish.getImageUrl());
+        assertArrayEquals("some-image-url".getBytes(), dish.getImage());
         assertEquals(14.99f, dish.getPrice());
+        assertEquals(4.5f, dish.getRating());
 
         // Ingredient Ids
         List<Long> ingredientIds = dish.getIngredientIds();
@@ -88,8 +91,9 @@ public class DishTest {
         dish.setName("Chicken Alfredo");
         dish.setDescription("Chicken Alfredo description");
         dish.setTag("chicken");
-        dish.setImageUrl("some-image-url-updated");
-        dish.setPrice(14.99f);
+        dish.setImage("updated".getBytes());
+        dish.setPrice(18.88f);
+        dish.setRating(3.8f);
         dish.setIngredientIds(new ArrayList<>());
         dish.setIngredients(new ArrayList<>());
         dish.setComments(new ArrayList<>());
@@ -98,8 +102,9 @@ public class DishTest {
         assertEquals("Chicken Alfredo", dish.getName());
         assertEquals("Chicken Alfredo description", dish.getDescription());
         assertEquals("chicken", dish.getTag());
-        assertEquals("some-image-url-updated", dish.getImageUrl());
-        assertEquals(14.99f, dish.getPrice());
+        assertArrayEquals("updated".getBytes(), dish.getImage());
+        assertEquals(18.88f, dish.getPrice());
+        assertEquals(3.8f, dish.getRating());
 
         assertEquals(0, dish.getIngredientIds().size());
         assertEquals(0, dish.getIngredients().size());

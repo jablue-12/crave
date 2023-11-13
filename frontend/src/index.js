@@ -6,6 +6,7 @@ import App from './App';
 import Profile from './components/features/user/Profile';
 import Catalog from './components/pages/Catalog';
 import Dashboard from './components/pages/Dashboard';
+import DishCreation from './components/pages/DishCreation';
 import reportWebVitals from './reportWebVitals';
 import './bootstrap.css';
 
@@ -14,6 +15,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 		<Route index={true} element={<Dashboard />} />
 		<Route path="/restaurants/:id" element={<Catalog />} />
 		<Route path="/profile" element={<Profile />} />
+		<Route path="/dish-creation" element={<DishCreation />} />
 	</Route>
 ));
 

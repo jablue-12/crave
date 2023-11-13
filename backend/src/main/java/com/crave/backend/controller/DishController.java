@@ -31,7 +31,7 @@ public class DishController {
         return (tags == null || tags.isEmpty()) ? ok(dishService.getDishes()) : ok(dishService.getByTags(tags));
     }
 
-    @PostMapping(path = "/create")
+    @PostMapping
     public ResponseEntity<?> createDish(@RequestBody Dish dish) {
         try {
             Dish newDish = dishService.createDish(dish);
