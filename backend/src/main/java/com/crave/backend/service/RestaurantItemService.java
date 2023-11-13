@@ -29,16 +29,18 @@ public class RestaurantItemService {
         return restaurantItemRepository.save(restaurantItem);
     }
 
-    public RestaurantItem updateRestaurantItem(RestaurantItem existingRestaurantItem, RestaurantItem updatedRestaurantItem) {
+    public RestaurantItem updateRestaurantItem(RestaurantItem updatedRestaurantItem) {
 
-        if (existingRestaurantItem != null) {
-            existingRestaurantItem.setName(updatedRestaurantItem.getName());
-            existingRestaurantItem.setPrice(updatedRestaurantItem.getPrice());
-            
-            restaurantItemRepository.save(existingRestaurantItem);
+        if (exists(updatedRestaurantItem.getId())) {
+            restaurantItemRepository.save(updatedRestaurantItem);
         }
 
-        return existingRestaurantItem;
+        return updatedRestaurantItem;
+    }
+
+    public List<RestaurantItem> getRestaurantItemByRestaurantId(Long id) {
+        List<RestaurantItem> restaurantItems = restaurantItemRepository.findAllByResaurantId(id);
+        return restaurantItems;
     }
 
     public void deleteRestaurantItemById(Long id) {

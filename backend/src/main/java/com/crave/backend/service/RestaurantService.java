@@ -20,7 +20,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
-    private final RestaurantItemRepository restaurantItemRepository;
     private final UserOrderRepository userOrderRepository;
 
     public List<Restaurant> getRestaurants() {
@@ -45,44 +44,6 @@ public class RestaurantService {
             restaurantRepository.save(updatedRestaurant);
         }
         
-        return updatedRestaurant;
-    }
-    
-    public Restaurant addRestaurantItemById(Restaurant updatedRestaurant, Long restaurantItemId) {
-        if (!restaurantItemRepository.existsById(restaurantItemId)) {
-            return updatedRestaurant;
-        }
-        
-        RestaurantItem newItem = restaurantItemRepository.findById(restaurantItemId).orElse(null);
-        updatedRestaurant.getRestaurantItems().add(newItem);
-        restaurantRepository.save(updatedRestaurant);
-        return updatedRestaurant;
-    }
-
-    public Restaurant addRestaurantItemsById(Restaurant updatedRestaurant, List<Long> restaurantItemIds) {
-        for (Long restaurantItemId : restaurantItemIds) {
-            if (!restaurantItemRepository.existsById(restaurantItemId)) {
-                return updatedRestaurant;
-            }
-        }
-
-        List <RestaurantItem> newItems = restaurantItemRepository.findAllById(restaurantItemIds);
-        updatedRestaurant.getRestaurantItems().addAll(newItems);
-        restaurantRepository.save(updatedRestaurant);
-        return updatedRestaurant;
-    }
-
-    public Restaurant addRestaurantItem(Restaurant updatedRestaurant, RestaurantItem restaurantItem) {
-        restaurantItemRepository.save(restaurantItem);
-        updatedRestaurant.getRestaurantItems().add(restaurantItem);
-        restaurantRepository.save(updatedRestaurant);
-        return updatedRestaurant;
-    }
-
-    public Restaurant addRestaurantItems(Restaurant updatedRestaurant, List<RestaurantItem> restaurantItems) {
-        restaurantItemRepository.saveAll(restaurantItems);
-        updatedRestaurant.getRestaurantItems().addAll(restaurantItems);
-        restaurantRepository.save(updatedRestaurant);
         return updatedRestaurant;
     }
 

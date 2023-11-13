@@ -30,6 +30,11 @@ public class OrderItemController {
         return orderItemService.getOrderItemById(id);
     }
 
+    @GetMapping(path = "/order/{id}")
+    public Optional<OrderItem> getOrderItemByOrderId(@PathVariable Long orderId) {
+        return orderItemService.getOrderItemById(orderId);
+    }
+
     @PostMapping
     public ResponseEntity<OrderItem> createOrderItem(@RequestBody OrderItem orderItem) {
         OrderItem newOrderItem = orderItemService.createOrderItem(orderItem);

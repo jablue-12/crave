@@ -37,12 +37,7 @@ public class UserOrder {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "orderItems",
-            joinColumns = @JoinColumn(name = "order_id")
-    )
-    @Column(name = "orderItems")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<OrderItem>orderItems;
 
     @Nullable

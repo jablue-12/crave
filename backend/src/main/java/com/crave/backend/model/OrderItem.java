@@ -30,4 +30,7 @@ public class OrderItem {
     @NonNull
     private float price;
 
+    @ManyToOne
+    private UserOrder order;
+
 }

@@ -1,4 +1,6 @@
 package com.crave.backend.model;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import io.micrometer.common.lang.Nullable;
@@ -49,11 +51,6 @@ public class Restaurant {
     @Nullable
     private byte days_open;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "restaurantItems",
-            joinColumns = @JoinColumn(name = "restaurant_id")
-    )
-    @Column(name = "restaurantItems")
-    private List<RestaurantItem>restaurantItems;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
+    private List<RestaurantItem>restaurantItems = new ArrayList<>();
 }

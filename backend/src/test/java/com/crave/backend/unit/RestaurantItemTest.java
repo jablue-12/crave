@@ -17,7 +17,7 @@ public class RestaurantItemTest {
     @Test
     void testGetters() {
         assertEquals(1L, restaurantItem.getId());
-        assertEquals(1L, restaurantItem.getRestaurant_id());
+        assertEquals(1L, restaurantItem.getRestaurantId());
         assertEquals("pancake", restaurantItem.getName());
         assertEquals(2.99f, restaurantItem.getPrice());
     }
@@ -25,13 +25,13 @@ public class RestaurantItemTest {
     @Test
     void testSetters() {
         restaurantItem.setId(2L);
-        restaurantItem.setRestaurant_id(2L);
+        restaurantItem.setRestaurantId(2L);
         restaurantItem.setName("omelet");
         restaurantItem.setPrice(3.50f);
 
 
         assertEquals(2L, restaurantItem.getId());
-        assertEquals(2L, restaurantItem.getRestaurant_id());
+        assertEquals(2L, restaurantItem.getRestaurantId());
         assertEquals("omelet", restaurantItem.getName());
         assertEquals(3.50f, restaurantItem.getPrice());
     }

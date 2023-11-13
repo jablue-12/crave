@@ -39,46 +39,6 @@ public class UserOrderService {
         return updatedUserOrder;
     }
 
-    public UserOrder addOrderItemById(UserOrder updatedUserOrder, Long restaurantItemId) {
-        if (!orderItemRepository.existsById(restaurantItemId)) {
-            return updatedUserOrder;
-        }
-        
-        OrderItem newItem = orderItemRepository.findById(restaurantItemId).orElse(null);
-        updatedUserOrder.getOrderItems().add(newItem);
-        userOrderRepository.save(updatedUserOrder);
-        return updatedUserOrder;
-    }
-
-    public UserOrder addOrderItemsById(UserOrder updatedUserOrder, List<Long> restaurantItemIds) {
-        for (Long restaurantItemId : restaurantItemIds) {
-            if (!orderItemRepository.existsById(restaurantItemId)) {
-                return updatedUserOrder;
-            }
-        }
-
-        List <OrderItem> newItems = orderItemRepository.findAllById(restaurantItemIds);
-        updatedUserOrder.getOrderItems().addAll(newItems);
-        userOrderRepository.save(updatedUserOrder);
-        return updatedUserOrder;
-    }
-
-    public UserOrder addOrderItem(UserOrder updatedUserOrder, OrderItem restaurantItem) {
-        orderItemRepository.save(restaurantItem);
-        updatedUserOrder.getOrderItems().add(restaurantItem);
-        userOrderRepository.save(updatedUserOrder);
-        return updatedUserOrder;
-    }
-
-    public UserOrder addOrderItems(UserOrder updatedUserOrder, List<OrderItem> restaurantItems) {
-        orderItemRepository.saveAll(restaurantItems);
-        updatedUserOrder.getOrderItems().addAll(restaurantItems);
-        userOrderRepository.save(updatedUserOrder);
-        return updatedUserOrder;
-    }
-
-
-
     public void deleteOrderById(Long id) {
         userOrderRepository.deleteById(id);
     }

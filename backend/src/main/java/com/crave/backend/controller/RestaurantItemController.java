@@ -30,6 +30,12 @@ public class RestaurantItemController {
         return restaurantItemService.getRestaurantItemById(id);
     }
 
+    @GetMapping(path = "/restaurant/{restaurantId}")
+    public List<RestaurantItem> getRestaurantItemByRestaurantId(@PathVariable Long restaurantId) {
+        return restaurantItemService.getRestaurantItemByRestaurantId(restaurantId);
+    }
+
+
     @PostMapping
     public ResponseEntity<RestaurantItem> createRestaurantItem(@RequestBody RestaurantItem restaurantItem) {
         RestaurantItem newRestaurantItem = restaurantItemService.createRestaurantItem(restaurantItem);
@@ -45,7 +51,7 @@ public class RestaurantItemController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        RestaurantItem updated = restaurantItemService.updateRestaurantItem(existingRestaurantItem, updatedRestaurantItem);
+        RestaurantItem updated = restaurantItemService.updateRestaurantItem(updatedRestaurantItem);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 

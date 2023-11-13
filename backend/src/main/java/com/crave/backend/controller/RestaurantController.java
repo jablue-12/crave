@@ -56,51 +56,6 @@ public class RestaurantController {
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
-    @PutMapping("/additembyid/{id}/{restaurantItemId}")
-    public ResponseEntity<Restaurant> addRestaurantItemById(@PathVariable Long id, @PathVariable Long restaurantItemId) {
-        Restaurant existingRestaurant = restaurantService.findById(id);
-        if (existingRestaurant == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Restaurant updated = restaurantService.addRestaurantItemById(existingRestaurant, restaurantItemId);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
-    }
-
-
-    @PutMapping("/additemsbyids/{id}")
-    public ResponseEntity<Restaurant> addRestaurantItemsById(@PathVariable Long id, @RequestBody List<Long> restaurantItemIds) {
-        Restaurant existingRestaurant = restaurantService.findById(id);
-        if (existingRestaurant == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Restaurant updated = restaurantService.addRestaurantItemsById(existingRestaurant, restaurantItemIds);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
-    }
-
-    @PutMapping("/additem/{id}")
-    public ResponseEntity<Restaurant> addRestaurantItem(@PathVariable Long id, @RequestBody RestaurantItem restaurantItem) {
-        Restaurant existingRestaurant = restaurantService.findById(id);
-        if (existingRestaurant == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Restaurant updated = restaurantService.addRestaurantItem(existingRestaurant, restaurantItem);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
-    }
-
-
-    @PutMapping("/additems/{id}")
-    public ResponseEntity<Restaurant> addRestaurantItems(@PathVariable Long id, @RequestBody List<RestaurantItem> restaurantItem) {
-        Restaurant existingRestaurant = restaurantService.findById(id);
-        if (existingRestaurant == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Restaurant updated = restaurantService.addRestaurantItems(existingRestaurant, restaurantItem);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
-    }
-
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteRestaurant(@PathVariable Long id) {
         if (!restaurantService.exists(id)) {
