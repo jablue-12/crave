@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { replace, split, sumBy } from 'lodash';
+import { sumBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
 import {
@@ -9,6 +9,7 @@ import {
 	PolarAngleAxis,
 	PolarRadiusAxis
 } from 'recharts';
+import { splitDate } from '../../../common/utils';
 import { useOrders } from '../../../contexts/OrderContext';
 import ActivePieChart from '../../common/ActivePieChart';
 import { mockOrders } from './../../../sample/orders';
@@ -144,7 +145,7 @@ export default function Profile () {
 							: mockOrders).map(order =>
 							<tr key={order.id}>
 								<td>{order.id}</td>
-								<td>{replace(split(order.placedAt, '.')[0], 'T', ' ')}</td>
+								<td>{splitDate(order.placedAt)}</td>
 								<td>${order.total}</td>
 							</tr>)}
 					</tbody>

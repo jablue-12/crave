@@ -34,8 +34,7 @@ public class SecurityConfig {
             "/accounts",
             "/restaurants",
             "/dishes/**",
-            "/ingredients/**",
-            "/comments/**"
+            "/ingredients/**"
     };
 
     @Bean
