@@ -30,8 +30,12 @@ public class Dish {
     private String name;
     private String description;
     private String tag;
-    private String imageUrl;
     private float price;
+    private float rating;
+
+    @Lob // Store as Large object in db
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
 
     @ElementCollection
     @CollectionTable(

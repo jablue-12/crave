@@ -61,21 +61,20 @@ public class CraveConfig {
 
             // Dish
             Dish dish = Dish.builder()
-                    .name("Beef Wellington P")
-                    .description("Description for beef wellington")
+                    .name("Haiwain Pizza")
+                    .description("Description for Haiwain Pizza")
                     .tag("Pizza")
-                    .imageUrl("beef-wellington-img")
                     .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
                     .price(25.99f)
+                    .rating(3.5f)
                     .build();
             dishRepository.save(dish);
 
             // Dish
             dish = Dish.builder()
-                    .name("Beef Wellington C")
-                    .description("Description for beef wellington")
+                    .name("Chow Mein")
+                    .description("Description for Chow Mein")
                     .tag("Chinese")
-                    .imageUrl("beef-wellington-img")
                     .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
                     .price(25.99f)
                     .build();
