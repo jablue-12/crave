@@ -1,6 +1,10 @@
 package com.crave.backend.model;
+import java.util.List;
+import java.time.LocalDateTime;
 
 import com.crave.backend.enums.OrderStatus;
+
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,4 +35,18 @@ public class UserOrder {
     @NonNull
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "orderItems",
+            joinColumns = @JoinColumn(name = "order_id")
+    )
+    @Column(name = "orderItems")
+    private List<OrderItem>orderItems;
+
+    @Nullable
+    private String description;
+
+    @Nullable
+    private LocalDateTime placed_at;
 }

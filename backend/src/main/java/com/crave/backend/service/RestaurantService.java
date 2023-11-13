@@ -1,7 +1,15 @@
 package com.crave.backend.service;
 
 import com.crave.backend.model.Restaurant;
+import com.crave.backend.model.RestaurantItem;
+import com.crave.backend.model.UserOrder;
+
+
 import com.crave.backend.repository.RestaurantRepository;
+import com.crave.backend.repository.RestaurantItemRepository;
+import com.crave.backend.repository.UserOrderRepository;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +17,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
-
-    @Autowired
-    public RestaurantService(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
+    private final RestaurantItemRepository restaurantItemRepository;
+    private final UserOrderRepository userOrderRepository;
 
     public List<Restaurant> getRestaurants() {
         return restaurantRepository.findAll();
@@ -29,18 +35,55 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant updateRestaurant(Restaurant existingRestaurant, Restaurant updatedRestaurant) {
+    public List<UserOrder> getRestaurantOrders(Long restaurantId) {
+        List<UserOrder> orders = userOrderRepository.findAllByRestaurantId(restaurantId);
+        return orders;
+    }
 
-        if (existingRestaurant != null) {
-            existingRestaurant.setName(updatedRestaurant.getName());
-            existingRestaurant.setAddress(updatedRestaurant.getAddress());
-            existingRestaurant.setRating(updatedRestaurant.getRating());
-            existingRestaurant.setImageUrl(updatedRestaurant.getImageUrl());
+    public Restaurant updateRestaurant(Restaurant updatedRestaurant) {
+        if(exists(updatedRestaurant.getId())){
+            restaurantRepository.save(updatedRestaurant);
+        }
+        
+        return updatedRestaurant;
+    }
+    
+    public Restaurant addRestaurantItemById(Restaurant updatedRestaurant, Long restaurantItemId) {
+        if (!restaurantItemRepository.existsById(restaurantItemId)) {
+            return updatedRestaurant;
+        }
+        
+        RestaurantItem newItem = restaurantItemRepository.findById(restaurantItemId).orElse(null);
+        updatedRestaurant.getRestaurantItems().add(newItem);
+        restaurantRepository.save(updatedRestaurant);
+        return updatedRestaurant;
+    }
 
-            restaurantRepository.save(existingRestaurant);
+    public Restaurant addRestaurantItemsById(Restaurant updatedRestaurant, List<Long> restaurantItemIds) {
+        for (Long restaurantItemId : restaurantItemIds) {
+            if (!restaurantItemRepository.existsById(restaurantItemId)) {
+                return updatedRestaurant;
+            }
         }
 
-        return existingRestaurant;
+        List <RestaurantItem> newItems = restaurantItemRepository.findAllById(restaurantItemIds);
+        updatedRestaurant.getRestaurantItems().addAll(newItems);
+        restaurantRepository.save(updatedRestaurant);
+        return updatedRestaurant;
+    }
+
+    public Restaurant addRestaurantItem(Restaurant updatedRestaurant, RestaurantItem restaurantItem) {
+        restaurantItemRepository.save(restaurantItem);
+        updatedRestaurant.getRestaurantItems().add(restaurantItem);
+        restaurantRepository.save(updatedRestaurant);
+        return updatedRestaurant;
+    }
+
+    public Restaurant addRestaurantItems(Restaurant updatedRestaurant, List<RestaurantItem> restaurantItems) {
+        restaurantItemRepository.saveAll(restaurantItems);
+        updatedRestaurant.getRestaurantItems().addAll(restaurantItems);
+        restaurantRepository.save(updatedRestaurant);
+        return updatedRestaurant;
     }
 
     public void deleteRestaurantById(Long id) {

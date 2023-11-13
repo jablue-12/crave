@@ -61,7 +61,7 @@ public class UserOrderController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        UserOrder updated = userOrderService.updateOrder(existingUserOrder, updatedUserOrder);
+        UserOrder updated = userOrderService.updateOrder(updatedUserOrder);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 

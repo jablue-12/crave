@@ -1,6 +1,8 @@
 package com.crave.backend.controller;
 
 import com.crave.backend.model.Restaurant;
+import com.crave.backend.model.RestaurantItem;
+import com.crave.backend.model.UserOrder;
 import com.crave.backend.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,12 @@ public class RestaurantController {
         return restaurantService.getRestaurantById(id);
     }
 
+    @GetMapping(path="/orders/{id}")
+    public List<UserOrder> getOrders(@PathVariable Long id) {
+        return restaurantService.getRestaurantOrders(id);
+    }
+
+
     @PostMapping
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) {
         Restaurant newRestaurant = restaurantService.createRestaurant(restaurant);
@@ -44,7 +52,52 @@ public class RestaurantController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Restaurant updated = restaurantService.updateRestaurant(existingRestaurant, updatedRestaurant);
+        Restaurant updated = restaurantService.updateRestaurant(updatedRestaurant);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @PutMapping("/additembyid/{id}/{restaurantItemId}")
+    public ResponseEntity<Restaurant> addRestaurantItemById(@PathVariable Long id, @PathVariable Long restaurantItemId) {
+        Restaurant existingRestaurant = restaurantService.findById(id);
+        if (existingRestaurant == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Restaurant updated = restaurantService.addRestaurantItemById(existingRestaurant, restaurantItemId);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/additemsbyids/{id}")
+    public ResponseEntity<Restaurant> addRestaurantItemsById(@PathVariable Long id, @RequestBody List<Long> restaurantItemIds) {
+        Restaurant existingRestaurant = restaurantService.findById(id);
+        if (existingRestaurant == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Restaurant updated = restaurantService.addRestaurantItemsById(existingRestaurant, restaurantItemIds);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @PutMapping("/additem/{id}")
+    public ResponseEntity<Restaurant> addRestaurantItem(@PathVariable Long id, @RequestBody RestaurantItem restaurantItem) {
+        Restaurant existingRestaurant = restaurantService.findById(id);
+        if (existingRestaurant == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Restaurant updated = restaurantService.addRestaurantItem(existingRestaurant, restaurantItem);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/additems/{id}")
+    public ResponseEntity<Restaurant> addRestaurantItems(@PathVariable Long id, @RequestBody List<RestaurantItem> restaurantItem) {
+        Restaurant existingRestaurant = restaurantService.findById(id);
+        if (existingRestaurant == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Restaurant updated = restaurantService.addRestaurantItems(existingRestaurant, restaurantItem);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 

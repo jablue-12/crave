@@ -2,7 +2,10 @@ package com.crave.backend.service;
 
 import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
+import com.crave.backend.model.UserOrder;
 import com.crave.backend.repository.AccountRepository;
+import com.crave.backend.repository.UserOrderRepository;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
-
+    private final UserOrderRepository userOrderRepository;
     public List<UserDTO> getAccounts() {
         List<UserDTO> users = new ArrayList<>();
         List<Account> accounts = accountRepository.findAll();
@@ -33,7 +36,8 @@ public class AccountService {
         return account;
     }
 
-    public Optional<Account> findByEmail(String email) {
-        return accountRepository.findByEmail(email);
+    public List<UserOrder> getUserOrders(Long accountId) {
+        List<UserOrder> orders = userOrderRepository.findAllByUserId(accountId);
+        return orders;
     }
 }

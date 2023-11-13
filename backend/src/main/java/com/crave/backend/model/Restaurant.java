@@ -1,4 +1,9 @@
 package com.crave.backend.model;
+import java.util.List;
+
+import io.micrometer.common.lang.Nullable;
+
+import java.time.LocalTime;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,4 +36,24 @@ public class Restaurant {
     private Double rating;
     @NonNull
     private String imageUrl;
+
+
+    @Nullable
+    private String description;
+    @Nullable
+    private String email;
+    @Nullable
+    private LocalTime open_at;
+    @Nullable
+    private LocalTime close_at;
+    @Nullable
+    private byte days_open;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "restaurantItems",
+            joinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    @Column(name = "restaurantItems")
+    private List<RestaurantItem>restaurantItems;
 }
