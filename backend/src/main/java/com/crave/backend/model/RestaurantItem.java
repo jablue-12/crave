@@ -24,7 +24,7 @@ public class RestaurantItem {
     )
     private Long id;
     @NonNull
-    private Long restaurant_id;
+    private Long restaurantId;
     @NonNull
     private String name;
     @NonNull

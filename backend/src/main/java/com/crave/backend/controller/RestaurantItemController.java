@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "restaurantItems")
+@RequestMapping(path = "restaurantitems")
 public class RestaurantItemController {
     private final RestaurantItemService restaurantItemService;
 

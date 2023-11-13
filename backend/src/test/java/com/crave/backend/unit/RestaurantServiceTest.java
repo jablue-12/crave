@@ -23,10 +23,10 @@ class RestaurantServiceTest {
     private RestaurantRepository restaurantRepository;
     private RestaurantService restaurantService;
 
-    @BeforeEach
-    void setUp() {
-        restaurantService = new RestaurantService(restaurantRepository);
-    }
+    // @BeforeEach
+    // void setUp() {
+    //     restaurantService = new RestaurantService(restaurantRepository);
+    // }
 
     @Test
     void testGetRestaurants() {
@@ -102,7 +102,7 @@ class RestaurantServiceTest {
         when(restaurantRepository.save(existingRestaurant)).thenReturn(existingRestaurant);
 
         // Call the service method
-        Restaurant updatedResult = restaurantService.updateRestaurant(existingRestaurant, updatedRestaurant);
+        Restaurant updatedResult = restaurantService.updateRestaurant(updatedRestaurant);
 
         // Assertions
         assertEquals(updatedRestaurant.getName(), existingRestaurant.getName());

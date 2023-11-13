@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "userOrders")
+@RequestMapping(path = "userorders")
 @RequiredArgsConstructor
 public class UserOrderController {
     private final UserOrderService userOrderService;
@@ -50,7 +50,6 @@ public class UserOrderController {
         System.out.println(userOrder.toString());
         UserOrder newUserOrder = userOrderService.createOrder(userOrder);
         return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
-
     }
 
     @PutMapping("/{id}")

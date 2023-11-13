@@ -29,9 +29,10 @@ public class UserOrder {
     )
     private Long id;
     @NonNull
-    private Long user_id;
+    private Long userId;
     @NonNull
-    private Long restaurant_id;
+    private Long restaurantId;
+    
     @NonNull
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

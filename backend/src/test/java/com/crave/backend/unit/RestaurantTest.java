@@ -11,7 +11,7 @@ public class RestaurantTest {
 
     @BeforeEach
     public void setUp() {
-        restaurant = new Restaurant(1L, "Olive Garden", "123 Pembina", 4.4, "testimage/olivegarden");
+        restaurant = new Restaurant("Olive Garden", "123 Pembina", 4.4, "testimage/olivegarden");
     }
 
     @Test
