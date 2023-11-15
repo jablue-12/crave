@@ -74,6 +74,7 @@ const Header = ({ setIsSliderOn }) => {
 							<NavDropdown
 								title={
 									<FaUserCircle
+										data-cy="user"
 										color={user
 											? `${color.user.AUTHENTICATED}`
 											: `${color.user.GUEST}`}
@@ -89,10 +90,10 @@ const Header = ({ setIsSliderOn }) => {
 										Logout
 									</NavDropdown.Item>
 									: <>
-										<NavDropdown.Item onClick={() => setIsRegistering(true)}>
+										<NavDropdown.Item data-cy="register" onClick={() => setIsRegistering(true)}>
 											Register
 										</NavDropdown.Item>
-										<NavDropdown.Item onClick={() => setIsLoggingIn(true)}>
+										<NavDropdown.Item data-cy="login" onClick={() => setIsLoggingIn(true)}>
 											Login
 										</NavDropdown.Item>
 									</>}
