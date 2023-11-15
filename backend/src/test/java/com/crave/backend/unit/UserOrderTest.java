@@ -18,7 +18,7 @@ public class UserOrderTest {
     @Test
     void testGetters() {
         assertEquals(1L, userOrder.getId());
-        assertEquals(1L, userOrder.getUserId());
+        assertEquals(1L, userOrder.getAccountId());
         assertEquals(1L, userOrder.getRestaurantId());
         assertEquals(OrderStatus.START, userOrder.getStatus());
     }
@@ -26,13 +26,13 @@ public class UserOrderTest {
     @Test
     void testSetters() {
         userOrder.setId(2L);
-        userOrder.setUserId(2L);
+        userOrder.setAccountId(2L);
         userOrder.setRestaurantId(2L);
         userOrder.setStatus(OrderStatus.IN_PROGRESS);
 
 
         assertEquals(2L, userOrder.getId());
-        assertEquals(2L, userOrder.getUserId());
+        assertEquals(2L, userOrder.getAccountId());
         assertEquals(2L, userOrder.getRestaurantId());
         assertEquals(OrderStatus.IN_PROGRESS, userOrder.getStatus());
     }

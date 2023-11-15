@@ -9,6 +9,7 @@ public enum RestaurantTag {
     CAFE,
     ITALIAN,
     CHINESE,
+    MEXICAN,
     INDIAN,
 }
 
