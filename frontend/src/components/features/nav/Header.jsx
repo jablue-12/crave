@@ -1,7 +1,7 @@
 import { sum } from 'lodash';
 import React, { useState, memo } from 'react';
 import { Container, Image, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { FaChartPie, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import { FaChartPie, FaPlus, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { SlBasket } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ import Typewriter from 'typewriter-effect';
 import { color, iconColor } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
-import { useNotifier } from './../../../contexts/NotifierContext';
 import Popup from './../../common/Popup';
 import Login from './../auth/Login';
 import Register from './../auth/Register';
@@ -20,11 +19,12 @@ const Header = ({ setIsSliderOn }) => {
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-	const { notifications } = useNotifier();
+	const isUserAdmin = () => {
+		return user && user.userRole === 'ADMIN';
+	};
 
 	return (
 		<header className="my-1">
-			{notifications.map((x, i) => <div key={i}>{x.content}</div>)}
 			<Navbar className="p-0" expand="md" collapseOnSelect>
 				<Container>
 					<Link to="/" style={{ textDecoration: 'none' }}>
@@ -46,8 +46,12 @@ const Header = ({ setIsSliderOn }) => {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
+							{isUserAdmin() &&
+									<Link to="dish-creation" style={{ textDecoration: 'none' }}>
+										<FaPlus color={iconColor} />
+									</Link>}
 							{user &&
-								<Link to="profile" style={{ textDecoration: 'none' }}>
+								<Link to="profile" style={{ textDecoration: 'none', marginLeft: '20px' }}>
 									<FaChartPie color={iconColor} />
 								</Link>}
 							<OverlayTrigger

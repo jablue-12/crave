@@ -9,7 +9,6 @@ import com.crave.backend.repository.AccountRepository;
 import com.crave.backend.repository.DishRepository;
 import com.crave.backend.repository.IngredientRepository;
 import com.crave.backend.repository.RestaurantRepository;
-
 import com.crave.backend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -19,13 +18,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -64,15 +61,25 @@ public class CraveConfig {
 
             // Dish
             Dish dish = Dish.builder()
-                    .name("Beef Wellington")
-                    .description("Description for beef wellington")
-                    .tag("tag1")
-                    .imageUrl("beef-wellington-img")
+                    .name("Haiwain Pizza")
+                    .description("Description for Haiwain Pizza")
+                    .tag("Pizza")
+                    .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
+                    .price(25.99f)
+                    .rating(3.5f)
+                    .build();
+            dishRepository.save(dish);
+
+            // Dish
+            dish = Dish.builder()
+                    .name("Chow Mein")
+                    .description("Description for Chow Mein")
+                    .tag("Chinese")
                     .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
                     .price(25.99f)
                     .build();
             dishRepository.save(dish);
-            
+
             // Account registrations
             RegisterRequest userRegistration = RegisterRequest.builder()
                     .firstName("User")
