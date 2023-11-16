@@ -62,6 +62,7 @@ const Dish = ({ dish }) => {
 							</span>
 						</OverlayTrigger>
 						<span
+							data-cy="add-to-cart"
 							className="mx-3"
 							onClick={() => add(dish)}
 							style={{ cursor: 'pointer' }}

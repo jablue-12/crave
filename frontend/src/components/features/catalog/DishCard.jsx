@@ -5,7 +5,7 @@ import { FaCartArrowDown } from 'react-icons/fa';
 import { iconColor, infoColor } from '../../../common/constants';
 import { useCart } from '../../../contexts/CartContext';
 
-const DishCard = ({ dish, restaurant }) => {
+const DishCard = ({ dish }) => {
 	const { add } = useCart();
 
 	return <>
@@ -46,12 +46,9 @@ const DishCard = ({ dish, restaurant }) => {
 							</span>
 						</OverlayTrigger>
 						<span
+							data-cy="add-to-cart"
 							className="mx-3"
-							onClick={() => add({
-								...dish,
-								restaurantId: restaurant.id,
-								restaurantName: restaurant.name
-							})}
+							onClick={() => add(dish)}
 							style={{ cursor: 'pointer' }}
 						>
 							<FaCartArrowDown color={iconColor} />

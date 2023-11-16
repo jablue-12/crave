@@ -23,3 +23,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import { generateString } from '../utils/generateString';
+
+Cypress.Commands.add('register', () => {
+	cy.get('[data-cy="user"]').click();
+	cy.get('[data-cy="register"]').click();
+	cy.get('[data-cy="first-name"]').type('John');
+	cy.get('[data-cy="last-name"]').type('Doe');
+	cy.get('[data-cy="email"]').type(`${generateString()}@gmail.com`);
+	cy.get('[data-cy="password"]').type('123');
+	cy.get('[data-cy="auth-form"]').submit();
+	cy.get('.btn-close').click();
+});
+
+Cypress.Commands.add('login', () => {
+	cy.get('[data-cy="user"]').click();
+	cy.get('[data-cy="login"]').click();
+	cy.get('[data-cy="email"]').type('userdemo@gmail.com');
+	cy.get('[data-cy="password"]').type('demo');
+	cy.get('[data-cy="auth-form"]').submit();
+	cy.get('.btn-close').click();
+});
+
+Cypress.Commands.add('logout', () => {
+	cy.get('[data-cy="user"]').click();
+	cy.get('[data-cy="logout"]').click();
+});

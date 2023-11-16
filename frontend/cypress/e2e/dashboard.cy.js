@@ -14,7 +14,7 @@ describe('tags spec', () => {
 	});
 
 	it('should display each dish name', () => {
-		cy.fixture('dishes').then((dishes) => {
+		cy.fixture('dishes').then(dishes => {
 			dishes.forEach((dish) => {
 				cy.get(`h6:contains(${dish.name})`).should('exist');
 			});
@@ -28,6 +28,14 @@ describe('tags spec', () => {
 				cy.get('.dish-name').contains(dish.name).should('exist');
 				cy.get('.dish-tag').contains(dish.tag).should('exist');
 			});
+		});
+	});
+
+	it('should filter dishes by tag', () => {
+		cy.get('[data-cy="filter-tag"]').contains('Pizza').click();
+		cy.get('[data-cy="dish-image"]').each((img) => {
+			cy.wrap(img).click();
+			cy.get('.dish-tag').should('contain', 'Pizza');
 		});
 	});
 });
