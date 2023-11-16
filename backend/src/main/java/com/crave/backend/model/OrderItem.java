@@ -7,10 +7,9 @@ import lombok.*;
 @Table
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+@Builder
 public class OrderItem {
     @Id
     @SequenceGenerator(
@@ -23,11 +22,7 @@ public class OrderItem {
             generator = "orderItem_sequence"
     )
     private Long id;
-    @NonNull
     private Long order_id;
-    @NonNull
     private String name;
-    @NonNull
     private float price;
-
 }

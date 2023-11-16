@@ -7,10 +7,9 @@ import lombok.*;
 @Table
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+@Builder
 public class RestaurantItem {
     @Id
     @SequenceGenerator(
@@ -23,10 +22,7 @@ public class RestaurantItem {
             generator = "restaurantItem_sequence"
     )
     private Long id;
-    @NonNull
     private Long restaurant_id;
-    @NonNull
     private String name;
-    @NonNull
     private float price;
 }
