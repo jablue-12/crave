@@ -33,7 +33,7 @@ public class AccountService {
         return account;
     }
 
-    public Optional<Account> findByEmail(String email) {
-        return accountRepository.findByEmail(email);
-    }
+    // public Optional<Account> findByEmail(String email) {
+    //     return accountRepository.findByEmail(email);
+    // }
 }
