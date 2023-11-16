@@ -23,16 +23,16 @@ export const path = {
 	COMMENTS: '/comments'
 };
 
-export const iconColor = '#1E90FF';
-export const infoColor = 'lightseagreen';
+export const iconColor = 'rgb(30, 144, 255)';
+export const infoColor = 'rgb(32, 178, 170)';
 
 export const TOKEN_KEY = 'token';
 
 export const color = {
-	ICON: '#1E90FF',
-	INFO: 'lightseagreen',
+	ICON: 'rgb(30, 144, 255)',
+	INFO: 'rgb(32, 178, 170)',
 	user: {
-		GUEST: 'red',
-		AUTHENTICATED: 'mediumturquoise'
+		GUEST: 'rgb(255, 0, 0)',
+		AUTHENTICATED: 'rgb(72, 209, 204)'
 	}
 };

@@ -9,8 +9,6 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

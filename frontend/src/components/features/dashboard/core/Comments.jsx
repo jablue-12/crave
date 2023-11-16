@@ -24,7 +24,7 @@ const Comments = ({ dishId }) => {
 		(async () => {
 			try {
 				const { data } = await agent.get(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`);
-				setComments(orderBy(data, ['date'], ['desc']));
+				setComments(orderBy(data, ['createdAt'], ['desc']));
 				setIsLoading(false);
 			} catch (e) {
 				console.error(e);
@@ -65,7 +65,7 @@ const Comments = ({ dishId }) => {
 			const { data } = await agent.postTokenized(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`, {
 				content: contentOnChange
 			});
-			setComments(prev => [...prev, data]);
+			setComments(prev => [data, ...prev]);
 		} catch (e) {
 			console.error(e);
 		}
@@ -91,7 +91,7 @@ const Comments = ({ dishId }) => {
 						}}
 						onClick={() => onSelect(x)}
 					/>}
-					<p style={{
+					<p data-cy="comment-content" style={{
 						fontSize: '14px',
 						wordWrap: 'break-word'
 					}}
@@ -104,6 +104,7 @@ const Comments = ({ dishId }) => {
 				</ListGroup.Item>
 			))}
 			{user && <ListGroup.Item
+				data-cy="add-comment"
 				onClick={() => setIsAdding(true)}
 				style={{
 					display: 'flex',
@@ -153,6 +154,7 @@ const Comments = ({ dishId }) => {
 						controlId="exampleForm.ControlTextarea1"
 					>
 						<Form.Control
+							data-cy="add-comment-textarea"
 							as="textarea"
 							rows={3}
 							value={contentOnChange}
@@ -165,7 +167,7 @@ const Comments = ({ dishId }) => {
 				<Button variant="secondary" onClick={() => setIsAdding(false)}>
 					Cancel
 				</Button>
-				<Button variant="secondary" onClick={onAdd}>
+				<Button data-cy="add-comment-submit" variant="secondary" onClick={onAdd}>
 					Add
 				</Button>
 			</Modal.Footer>

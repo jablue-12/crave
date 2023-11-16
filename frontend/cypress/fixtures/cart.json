@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"name": "HAIWAIN PIZZA",
+		"price": 25.99,
+		"quantity": 1
+	},
+	{
+		"id": 2,
+		"name": "CHOW MEIN",
+		"price": 25.99,
+		"quantity": 1
+	}
+]

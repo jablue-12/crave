@@ -14,10 +14,11 @@ export default function AuthForm ({ children, onSubmit }) {
 
 	return (
 		<div className="text-center" style={{ width: '100%', height: '100%' }}>
-			<Form onSubmit={onSubmit} style={{ width: '100%' }}>
+			<Form data-cy="auth-form" onSubmit={onSubmit} style={{ width: '100%' }}>
 				{children}
 				<Form.Group className="mb-2" controlid="email" style={formGroupStyle}>
 					<Form.Control
+						data-cy="email"
 						className="w-50"
 						autoFocus
 						type="email"
@@ -38,6 +39,7 @@ export default function AuthForm ({ children, onSubmit }) {
 						}
 					>
 						<Form.Control
+							data-cy="password"
 							className="w-50"
 							type="password"
 							value={password}
@@ -47,9 +49,10 @@ export default function AuthForm ({ children, onSubmit }) {
 						/>
 					</OverlayTrigger>
 				</Form.Group>
-				<Submit disabled={
-					email.length === 0 ||
-					password === 0}
+				<Submit
+					disabled={
+						email.length === 0 ||
+						password === 0}
 				/>
 			</Form>
 		</div>

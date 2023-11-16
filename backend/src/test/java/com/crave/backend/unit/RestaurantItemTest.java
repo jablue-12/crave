@@ -11,7 +11,12 @@ public class RestaurantItemTest {
 
     @BeforeEach
     public void setUp() {
-        restaurantItem = new RestaurantItem(1L, 1L, "pancake", 2.99f);
+        restaurantItem = RestaurantItem.builder()
+                .id(1L)
+                .restaurant_id(1L)
+                .name("pancake")
+                .price(2.99f)
+                .build();
     }
 
     @Test

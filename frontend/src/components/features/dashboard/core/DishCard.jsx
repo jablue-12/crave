@@ -7,6 +7,7 @@ const DishCard = ({ dish, setSelectedDish }) => {
 		<Row>
 			<Col xs={6} md={6}>
 				<Image
+					data-cy="dish-image"
 					onClick={() => setSelectedDish(dish)}
 					src={dish.photos ? dish.photos[0].getUrl() : '/images/1.jpg'}
 					fluid

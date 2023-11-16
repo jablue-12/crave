@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { cartItems } from './../sample/cartItems';
 import { useAuth } from './AuthContext';
 
-const getCart = userId => {
-	const cart = localStorage.getItem(`cart_${userId || 'default'}`);
-	return cart ? JSON.parse(cart) : cartItems;
+const getCartForUser = email => {
+	const cart = localStorage.getItem(`cart_${email}`);
+	return cart ? JSON.parse(cart) : [];
 };
 
 export const CartContext = createContext({
@@ -19,11 +18,13 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
 	const { user } = useAuth();
-	const userId = user ? user.id : null;
-	const [dishesInCart, setDishesInCart] = useState(() => getCart(userId));
+	const email = user ? user.email : null;
+	const [dishesInCart, setDishesInCart] = useState(() => getCartForUser(email));
 
 	useEffect(() => {
-		localStorage.setItem(`cart_${userId || 'default'}`, JSON.stringify(dishesInCart));
+		if (email) {
+			localStorage.setItem(`cart_${email}`, JSON.stringify(dishesInCart));
+		}
 	}, [dishesInCart]);
 
 	const countDish = (id) => {
@@ -60,7 +61,7 @@ export const CartProvider = ({ children }) => {
 
 	const clear = () => {
 		setDishesInCart([]);
-		localStorage.removeItem(`cart_${userId || 'default'}`);
+		localStorage.removeItem(`cart_${email}`);
 	};
 
 	const value = {

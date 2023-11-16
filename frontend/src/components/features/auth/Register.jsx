@@ -16,6 +16,7 @@ export default function Register () {
 	return <AuthForm onSubmit={register}>
 		<Form.Group className="mb-2" controlid="name" style={formGroupStyle}>
 			<Form.Control
+				data-cy="first-name"
 				className="w-50"
 				autoFocus
 				type="firstName"
@@ -27,6 +28,7 @@ export default function Register () {
 		</Form.Group>
 		<Form.Group className="mb-2" controlid="address" style={formGroupStyle}>
 			<Form.Control
+				data-cy="last-name"
 				className="w-50"
 				type="lastName"
 				value={lastName}

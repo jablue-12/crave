@@ -7,6 +7,7 @@
 - [Meetings](https://github.com/xiaoran-MENG/crave/wiki/Meetings)
 - [Project Setup](https://github.com/xiaoran-MENG/crave/wiki/Project-Setup)
 - [Workflow](https://github.com/jablue-12/crave/wiki/Workflow)
+- [Acceptance Tests](https://github.com/jablue-12/crave/wiki/Acceptance-Tests)
 
 ## COMP 4350 Proposal for Team Crave
 

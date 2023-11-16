@@ -28,6 +28,7 @@ const Filter = ({ setDishes }) => {
 		{tags.map((tag) => (
 			<Col key={tag} md={5}>
 				<Badge
+					data-cy="filter-tag"
 					key={tag}
 					pill
 					bg={selectedTags.includes(tag) ? 'success' : 'secondary'}

@@ -12,7 +12,12 @@ public class UserOrderTest {
 
     @BeforeEach
     public void setUp() {
-        userOrder = new UserOrder(1L, 1L, 1L, OrderStatus.START);
+        userOrder = UserOrder.builder()
+                .id(1L)
+                .user_id(1L)
+                .restaurant_id(1L)
+                .status(OrderStatus.START)
+                .build();
     }
 
     @Test
