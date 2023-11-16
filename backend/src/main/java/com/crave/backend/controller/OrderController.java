@@ -15,14 +15,11 @@ import java.util.stream.IntStream;
 @RequestMapping(path = "orders")
 public class OrderController {
     @Builder
-    public record OrderItem(int id, String name, double price, int restaurantId, String restaurantName) {
+    public record OrderItem(int id, String name, double price, String tag) {
     }
 
     @Builder
-    public record OrderInfo(int id, String placedAt, String username, String email) {
-    }
-
-    public record OrderPlaced(String content, OrderInfo orderInfo) {
+    public record OrderInfo(String placedAt, String username, String email, String role) {
     }
 
     @Builder
@@ -36,7 +33,6 @@ public class OrderController {
                 IntStream.range(1, 6).mapToObj(i -> Order.builder()
                                 .orderInfo(
                                         OrderInfo.builder()
-                                                .id(i)
                                                 .placedAt(LocalDateTime.now().toString())
                                                 .username("Firstname Lastname")
                                                 .email("test@gmail.com")
@@ -46,22 +42,16 @@ public class OrderController {
                                                 .id(1)
                                                 .name("Test Order Item 1")
                                                 .price(12.5)
-                                                .restaurantId(1)
-                                                .restaurantName("Test Restaurant")
                                                 .build(),
                                         OrderItem.builder()
                                                 .id(2)
                                                 .name("Test Order Item 2")
                                                 .price(12.5)
-                                                .restaurantId(2)
-                                                .restaurantName("Test Restaurant")
                                                 .build(),
                                         OrderItem.builder()
                                                 .id(3)
                                                 .name("Test Order Item 3")
                                                 .price(12.5)
-                                                .restaurantId(1)
-                                                .restaurantName("Test Restaurant")
                                                 .build()
                                 )).build())
                         .toList());
@@ -72,13 +62,6 @@ public class OrderController {
         System.out.println("Logging - placeOrder()");
         System.out.println(order);
         System.out.println("Collecting order info");
-        return ResponseEntity.ok("Order - " + order.orderInfo.id + " - Placed");
-    }
-
-    @MessageMapping("/orderPlaced")
-    @SendTo("/topic/notifications")
-    public OrderPlaced notifyOrderPlaced(@Payload OrderPlaced orderPlaced) {
-        System.out.println("LA LA LA");
-        return orderPlaced;
+        return ResponseEntity.ok("Order for " + order.orderInfo.username + " - Placed");
     }
 }

@@ -24,6 +24,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @Configuration
 @RequiredArgsConstructor
@@ -37,70 +39,90 @@ public class CraveConfig {
             DishRepository dishRepository,
             AuthenticationService authenticationService) {
         return args -> {
-            // TODO: remove fake data
-            // Restaurants
-            Restaurant mcdo = new Restaurant("McDonalds", "Kildonan 11", 4.5, "testImage");
-            Restaurant burgerKing = new Restaurant("Burger King", "Northgate 22", 4.3, "testImage");
-            restaurantRepository.saveAll(List.of(mcdo, burgerKing));
-
-            //Ingredients
-            Ingredient ingredient1 = Ingredient.builder()
-                    .name("beef")
-                    .tag("beef")
-                    .quantity(2)
-                    .build();
-
-            Ingredient ingredient2 = Ingredient.builder()
-                    .name("garlic")
-                    .tag("garlic")
-                    .quantity(3)
-                    .build();
-            ingredientRepository.saveAll(List.of(ingredient1, ingredient2));
-
-            List<Ingredient> dbIgredients = ingredientRepository.findAll();
-
-            // Dish
-            Dish dish = Dish.builder()
-                    .name("Haiwain Pizza")
-                    .description("Description for Haiwain Pizza")
-                    .tag("Pizza")
-                    .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
-                    .price(25.99f)
-                    .rating(3.5f)
-                    .build();
-            dishRepository.save(dish);
-
-            // Dish
-            dish = Dish.builder()
-                    .name("Chow Mein")
-                    .description("Description for Chow Mein")
-                    .tag("Chinese")
-                    .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
-                    .price(25.99f)
-                    .build();
-            dishRepository.save(dish);
-
-            // Account registrations
-            RegisterRequest userRegistration = RegisterRequest.builder()
-                    .firstName("User")
-                    .lastName("Demo")
-                    .email("userdemo@gmail.com")
-                    .password("demo")
-                    .userRole(UserRole.USER)
-                    .build();
-
-            RegisterRequest adminRegistration = RegisterRequest.builder()
-                    .firstName("Admin")
-                    .lastName("Demo")
-                    .email("admindemo@gmail.com")
-                    .password("demo")
-                    .userRole(UserRole.ADMIN)
-                    .build();
-
-            authenticationService.register(userRegistration);
-            authenticationService.register(adminRegistration);
-
+            seedRestaurants(restaurantRepository);
+            seedIngredients(ingredientRepository);
+            seedDishes(ingredientRepository, dishRepository);
+            seedAccounts(authenticationService);
         };
+    }
+
+    private static void seedRestaurants(RestaurantRepository restaurantRepository) {
+        Restaurant mcdo = new Restaurant("McDonalds", "Kildonan 11", 4.5, "testImage");
+        Restaurant burgerKing = new Restaurant("Burger King", "Northgate 22", 4.3, "testImage");
+        restaurantRepository.saveAll(List.of(mcdo, burgerKing));
+    }
+
+    private static void seedAccounts(AuthenticationService authenticationService) {
+        RegisterRequest userRegistration = RegisterRequest.builder()
+                .firstName("User")
+                .lastName("Demo")
+                .email("userdemo@gmail.com")
+                .password("demo")
+                .userRole(UserRole.USER)
+                .build();
+
+        RegisterRequest adminRegistration = RegisterRequest.builder()
+                .firstName("Admin")
+                .lastName("Demo")
+                .email("admindemo@gmail.com")
+                .password("demo")
+                .userRole(UserRole.ADMIN)
+                .build();
+
+        authenticationService.register(userRegistration);
+        authenticationService.register(adminRegistration);
+    }
+
+    private static void seedIngredients(IngredientRepository ingredientRepository) {
+        Ingredient beef = Ingredient.builder()
+                .name("beef")
+                .tag("beef")
+                .quantity(2)
+                .build();
+
+        Ingredient garlic = Ingredient.builder()
+                .name("garlic")
+                .tag("garlic")
+                .quantity(3)
+                .build();
+
+        ingredientRepository.saveAll(List.of(beef, garlic));
+    }
+
+    private static void seedDishes(IngredientRepository ingredientRepository, DishRepository dishRepository) {
+        List<Ingredient> dbIgredients = ingredientRepository.findAll();
+
+        String[] tags = {
+                "Pizza",
+                "Burgers",
+                "Chinese",
+                "Mexican",
+                "Italian",
+                "Sushi",
+                "Indian",
+                "Thai",
+                "Japanese",
+                "Greek",
+                "Korean",
+                "Vietnamese",
+                "American",
+                "Desserts"
+        };
+
+        IntStream.range(0, 10)
+                .mapToObj(i -> {
+                    String tag = tags[i];
+                    return Dish.builder()
+                            .name(tag + " Dish " + i)
+                            .description("Description for " + tag + " Dish " + i)
+                            .tag(tag)
+                            .ingredientIds(List.of(dbIgredients.get(0).getId(), dbIgredients.get(1).getId()))
+                            .price(1.5F + i)
+                            .rating(i / 2F)
+                            .build();
+                })
+                .toList()
+                .forEach(dishRepository::save);
     }
 
     @Bean

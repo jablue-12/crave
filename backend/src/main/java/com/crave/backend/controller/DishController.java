@@ -73,9 +73,6 @@ public class DishController {
             @PathVariable Long dishId,
             @PathVariable Long commentId,
             @RequestBody Comment comment) {
-        System.out.println(dishId);
-        System.out.println(commentId);
-        System.out.println(comment);
         return new ResponseEntity<>(CommentDTO.of(comment), HttpStatus.CREATED);
     }
 }

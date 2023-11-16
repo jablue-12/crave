@@ -18,8 +18,9 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 
 	const { dishesInCart, add, removeOne, remove } = useCart();
 	const { placeOrder } = useOrders();
-	useAuth();
+	const { user } = useAuth();
 
+	console.log('Logging - ShoppingCart');
 	console.log(location);
 
 	useEffect(() => {
@@ -36,14 +37,15 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 	}, []);
 
 	const onPlaceOrder = () => {
-		// TODO - replace with actual user
-		const orderInfo = {
-			id: 1,
-			placedAt: new Date().toISOString(),
-			username: 'John Doe', // TODO - `${firstname} ${lastname}`,
-			email: 'xr323@gmail.com'
-		};
-		placeOrder({ orderInfo, orderItems: dishesInCart });
+		if (user) {
+			const orderInfo = {
+				placedAt: new Date().toISOString(),
+				username: user.firstName + ' ' + user.lastName,
+				email: user.email,
+				role: user.userRole
+			};
+			placeOrder({ orderInfo, orderItems: dishesInCart });
+		}
 	};
 
 	return <Offcanvas show={isSliderOn} onHide={() => setIsSliderOn(false)} placement="end" name="end">
@@ -58,7 +60,10 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 						<div data-cy="subtotal">${sumBy(dishesInCart, x => x.price * x.quantity).toFixed(2)}</div>
 					</ListGroup.Item>
 					<ListGroup.Item className="text-center">
-						<GiPayMoney onClick={onPlaceOrder} style={{ cursor: 'pointer' }} />
+						{user
+							? <GiPayMoney onClick={onPlaceOrder} style={{ cursor: 'pointer' }} />
+							: <h6><strong>Please login to place order</strong></h6>
+						}
 					</ListGroup.Item>
 					<ListGroup.Item>
 						{isMapOn ? <Map /> : <GrMap onClick={() => setIsMapOn(true)} />}
