@@ -72,9 +72,6 @@ export const AuthProvider = ({ children }) => {
 
 			console.log('Logging - regsiter()');
 			console.log(registrationResult.data);
-
-			const userResult = await agent.getTokenized(endpoint.USER);
-			setUser(userResult.data);
 		} catch (e) {
 			alert(e);
 		}

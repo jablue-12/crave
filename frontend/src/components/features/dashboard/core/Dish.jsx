@@ -2,8 +2,6 @@ import React from 'react';
 import { Badge, Col, Image, ListGroup, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { BsInfoLg } from 'react-icons/bs';
 import { FaCartArrowDown } from 'react-icons/fa6';
-import { MdRestaurantMenu } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import { iconColor, infoColor } from '../../../../common/constants';
 import { useCart } from '../../../../contexts/CartContext';
 import ActivePieChart from '../../../common/ActivePieChart';
@@ -15,22 +13,13 @@ const Dish = ({ dish }) => {
 
 	return <>
 		{dish && <div style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
-			<h4>{dish.name}</h4>
+			<h4 className="dish-name">{dish.name}</h4>
 			<span style={{ display: 'flex', justifyContent: 'around', alignItems: 'center', paddingBottom: '10px' }}>
-				<Badge className="mx-2" pill bg="success">tag</Badge>
-				<Link className="mx-2" to={`/restaurants/${dish.id}`}>
-					<MdRestaurantMenu
-						color="orange"
-						style={{
-							marginBottom: '5px',
-							cursor: 'pointer'
-						}}
-					/>
-				</Link>
+				<Badge className="dish-tag mx-2" pill bg="success">{dish.tag}</Badge>
 			</span>
 		</div>}
 		<Row>
-			<h6 className="my-2">Tags</h6>
+			<h6 className="my-2">Details</h6>
 			<Col md={6}>
 				<OverlayTrigger
 					key="bottom"
