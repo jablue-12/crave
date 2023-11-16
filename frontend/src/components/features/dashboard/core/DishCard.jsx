@@ -7,7 +7,10 @@ const DishCard = ({ dish, setSelectedDish }) => {
 		<Row>
 			<Col xs={6} md={6}>
 				<Image
+<<<<<<< HEAD
 					data-cy="dish-image"
+=======
+>>>>>>> a0af99b... Rename files and fix bug
 					onClick={() => setSelectedDish(dish)}
 					src={dish.photos ? dish.photos[0].getUrl() : '/images/1.jpg'}
 					fluid

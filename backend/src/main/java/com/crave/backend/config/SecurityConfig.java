@@ -12,7 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+<<<<<<< HEAD
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+=======
+>>>>>>> abbe86c... Fix backend and frontend issues
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -33,8 +36,15 @@ public class SecurityConfig {
             "/auth/**",
             "/accounts",
             "/restaurants",
+<<<<<<< HEAD
+<<<<<<< HEAD
             "/dishes/**",
             "/ingredients/**"
+=======
+            "/orders"
+>>>>>>> abbe86c... Fix backend and frontend issues
+=======
+>>>>>>> efb3522... Add order controller and webhook
     };
 
     @Bean

@@ -5,8 +5,22 @@ import { FaCartArrowDown } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+<<<<<<< HEAD
+<<<<<<< HEAD
 import { agent } from '../../common/api';
 import { REQUEST_TIMEOUT, iconColor, endpoint } from '../../common/constants';
+=======
+import api from '../../common/api';
+<<<<<<< HEAD
+import { RESTAURANTS_PATH, iconColor } from '../../common/constants';
+>>>>>>> 5ffd710... Add typewriter to header
+=======
+import { TOKEN_KEY, iconColor, url } from '../../common/constants';
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
+=======
+import { agent } from '../../common/api';
+import { REQUEST_TIMEOUT, iconColor, endpoint } from '../../common/constants';
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
 import { useCart } from '../../contexts/CartContext';
 import { menu } from '../../sample/menu';
 import { singleRestaurant } from '../../sample/singleRestaurant';
@@ -32,6 +46,8 @@ const Catalog = () => {
 
 	const { add } = useCart();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 	const controller = new AbortController();
 
 	useEffect(() => {
@@ -53,6 +69,41 @@ const Catalog = () => {
 			} catch (e) {
 				console.error(e);
 			} finally {
+=======
+=======
+	const controller = new AbortController();
+
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
+	useEffect(() => {
+		(async () => {
+			try {
+				const timer = setTimeout(() => {
+					controller.abort();
+				}, REQUEST_TIMEOUT);
+
+				const [restaurantsResult, menuResult] = await Promise.all([
+					agent.getTokenized(`${endpoint.RESTAURANTS}/${id}`, controller.signal),
+					agent.getTokenized(`${endpoint.RESTAURANTS}/${id}/menu`, controller.signal)
+				]);
+
+<<<<<<< HEAD
+				setRestaurant(restaurantById.data);
+				setDishes(menu.data);
+			} catch (error) {
+				console.error(error);
+<<<<<<< HEAD
+>>>>>>> 5ffd710... Add typewriter to header
+=======
+=======
+				clearTimeout(timer);
+
+				setRestaurant(restaurantsResult.data);
+				setDishes(menuResult.data);
+			} catch (e) {
+				console.error(e);
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
+			} finally {
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
 				setIsLoading(false);
 			}
 		})();
@@ -178,11 +229,21 @@ const Catalog = () => {
 							>
 								{dishesByTag[tag].map((dish) =>
 									<SwiperSlide key={dish.id}>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
 										<DishCard
 											key={dish.id}
 											dish={dish}
 											restaurant={restaurant}
 										/>
+<<<<<<< HEAD
+=======
+										<DishCard key={dish.id} dish={dish} />
+>>>>>>> 5ffd710... Add typewriter to header
+=======
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
 									</SwiperSlide>
 								)}
 							</Swiper>

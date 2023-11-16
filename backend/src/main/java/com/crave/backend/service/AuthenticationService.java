@@ -41,7 +41,11 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+<<<<<<< HEAD
                 .userRole(isValidUserRole(request) ? request.getUserRole() : UserRole.USER)
+=======
+                .userRole(request.getUserRole())
+>>>>>>> aa627c3... Include UserRole
                 .build();
 
         var savedUser = accountRepository.save(user);

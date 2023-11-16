@@ -1,6 +1,22 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 import React, { createContext, useContext, useState } from 'react';
 import api, { agent } from '../common/api';
 import { TOKEN_KEY, endpoint } from '../common/constants';
+=======
+// OrderContext.js
+import axios from 'axios';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+<<<<<<< HEAD
+>>>>>>> abbe86c... Fix backend and frontend issues
+=======
+import { BASE_URL, TOKEN_KEY } from '../common/constants';
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
+=======
+import React, { createContext, useContext, useState } from 'react';
+import api from '../common/api';
+import { TOKEN_KEY, endpoint } from '../common/constants';
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
 
 const OrderContext = createContext();
 
@@ -15,6 +31,8 @@ export const OrderProvider = ({ children }) => {
 
 	const getOrders = async () => {
 		setLoading(true);
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 		try {
 			const { data } = await api.get(endpoint.ORDERS, {
@@ -27,6 +45,25 @@ export const OrderProvider = ({ children }) => {
 			console.log(data);
 
 			setOrders(data);
+=======
+		try {
+			const response = await axios.get('http://localhost:8080/orders');
+			setOrders(response.data);
+>>>>>>> abbe86c... Fix backend and frontend issues
+=======
+
+		try {
+			const { data } = await api.get(endpoint.ORDERS, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+				}
+			});
+
+			console.log('Logging - getOrders()');
+			console.log(data);
+
+			setOrders(data);
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
 			setError(null);
 		} catch (e) {
 			setError(e);
@@ -35,6 +72,8 @@ export const OrderProvider = ({ children }) => {
 		}
 	};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 	const getOrder = id =>
 		orders.find(order => order.id === id);
 
@@ -46,6 +85,27 @@ export const OrderProvider = ({ children }) => {
 			console.log(data);
 
 			setOrders((prevOrders) => [order, ...prevOrders]);
+=======
+	const getOrder = (id) =>
+		orders.find((order) => order.id === id);
+=======
+	const getOrder = id =>
+		orders.find(order => order.id === id);
+>>>>>>> 1cd73ca... Add token to axios calls and refactor components
+
+	const placeOrder = async order => {
+		try {
+			const { data } = await api.post(endpoint.ORDERS, order, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+				}
+			});
+
+			console.log('Logging - placeOrder');
+			console.log(data);
+
+			setOrders((prevOrders) => [...prevOrders, order]);
+>>>>>>> abbe86c... Fix backend and frontend issues
 			setError(null);
 		} catch (e) {
 			setError(e);
@@ -54,7 +114,15 @@ export const OrderProvider = ({ children }) => {
 
 	const updateOrder = async (id, order) => {
 		try {
+<<<<<<< HEAD
+<<<<<<< HEAD
 			const response = await api.put(`/orders/${id}`, order);
+=======
+			const response = await axios.put(`/orders/${id}`, order);
+>>>>>>> abbe86c... Fix backend and frontend issues
+=======
+			const response = await api.put(`/orders/${id}`, order);
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
 			setOrders((prevOrders) => {
 				const updatedOrders = prevOrders.map((order) =>
 					order.id === id ? response.data : order
@@ -69,7 +137,15 @@ export const OrderProvider = ({ children }) => {
 
 	const deleteOrder = async (id) => {
 		try {
+<<<<<<< HEAD
+<<<<<<< HEAD
 			await api.delete(`${endpoint.ORDERS}/${id}`);
+=======
+			await axios.delete(`/orders/${id}`);
+>>>>>>> abbe86c... Fix backend and frontend issues
+=======
+			await api.delete(`${endpoint.ORDERS}/${id}`);
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
 			setOrders((prevOrders) => prevOrders.filter(o => o.id !== id));
 			setError(null);
 		} catch (e) {
@@ -77,6 +153,16 @@ export const OrderProvider = ({ children }) => {
 		}
 	};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	useEffect(() => {
+		getOrders();
+	}, []);
+
+>>>>>>> abbe86c... Fix backend and frontend issues
+=======
+>>>>>>> 97c8cf1... Refactor UI to fit the model business model
 	return (
 		<OrderContext.Provider
 			value={{

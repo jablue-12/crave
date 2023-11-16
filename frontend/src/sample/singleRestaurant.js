@@ -2,9 +2,21 @@ export const singleRestaurant = {
 	id: 1,
 	name: 'R 1',
 	location: 'L 1',
+<<<<<<< HEAD
+<<<<<<< HEAD
 	rating: 3.5,
 	imageUrl: './images/1.jpg',
 	priceLevel: 3,
+=======
+	rating: 1.5,
+	imageUrl: './images/1.jpg',
+	priceLevel: 1,
+>>>>>>> 85a6cf9... Refactor frontend
+=======
+	rating: 3.5,
+	imageUrl: './images/1.jpg',
+	priceLevel: 3,
+>>>>>>> 63043f4... Update styling for menu
 	description: 'R 1 is a restaurant located in L 1. It offers a menu with a variety of delicious dishes at an affordable price. Customers love the great food and friendly staff, making it a top-notch restaurant with outstanding quality.',
 	menu: [
 		{

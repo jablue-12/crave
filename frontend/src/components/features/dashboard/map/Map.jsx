@@ -4,7 +4,7 @@ import React from 'react';
 export default function Map ({ from = { lat: 30.3165, lng: 78.0322 }, to = { lat: 30.2553, lng: 78.0972 } }) {
 	const containerStyle = {
 		width: '95%',
-		height: '250px',
+		height: '350px',
 		borderRadius: '5px'
 	};
 

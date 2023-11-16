@@ -14,11 +14,18 @@ export default function AuthForm ({ children, onSubmit }) {
 
 	return (
 		<div className="text-center" style={{ width: '100%', height: '100%' }}>
+<<<<<<< HEAD
 			<Form data-cy="auth-form" onSubmit={onSubmit} style={{ width: '100%' }}>
 				{children}
 				<Form.Group className="mb-2" controlid="email" style={formGroupStyle}>
 					<Form.Control
 						data-cy="email"
+=======
+			<Form onSubmit={onSubmit} style={{ width: '100%' }}>
+				{children}
+				<Form.Group className="mb-2" controlid="email" style={formGroupStyle}>
+					<Form.Control
+>>>>>>> 85a6cf9... Refactor frontend
 						className="w-50"
 						autoFocus
 						type="email"
@@ -39,7 +46,10 @@ export default function AuthForm ({ children, onSubmit }) {
 						}
 					>
 						<Form.Control
+<<<<<<< HEAD
 							data-cy="password"
+=======
+>>>>>>> 85a6cf9... Refactor frontend
 							className="w-50"
 							type="password"
 							value={password}
@@ -49,10 +59,16 @@ export default function AuthForm ({ children, onSubmit }) {
 						/>
 					</OverlayTrigger>
 				</Form.Group>
+<<<<<<< HEAD
 				<Submit
 					disabled={
 						email.length === 0 ||
 						password === 0}
+=======
+				<Submit disabled={
+					email.length === 0 ||
+					password === 0}
+>>>>>>> 85a6cf9... Refactor frontend
 				/>
 			</Form>
 		</div>

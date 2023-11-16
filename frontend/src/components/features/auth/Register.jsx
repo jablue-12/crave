@@ -16,7 +16,10 @@ export default function Register () {
 	return <AuthForm onSubmit={register}>
 		<Form.Group className="mb-2" controlid="name" style={formGroupStyle}>
 			<Form.Control
+<<<<<<< HEAD
 				data-cy="first-name"
+=======
+>>>>>>> 85a6cf9... Refactor frontend
 				className="w-50"
 				autoFocus
 				type="firstName"
@@ -28,7 +31,10 @@ export default function Register () {
 		</Form.Group>
 		<Form.Group className="mb-2" controlid="address" style={formGroupStyle}>
 			<Form.Control
+<<<<<<< HEAD
 				data-cy="last-name"
+=======
+>>>>>>> 85a6cf9... Refactor frontend
 				className="w-50"
 				type="lastName"
 				value={lastName}

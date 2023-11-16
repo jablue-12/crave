@@ -1,11 +1,17 @@
 package com.crave.backend.controller;
 
+<<<<<<< HEAD
 import com.crave.backend.dto.UserDTO;
+=======
+>>>>>>> cc34dbe... Retrieve authenticated user
 import com.crave.backend.model.Account;
 import com.crave.backend.model.UserOrder;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.UserOrderService;
+<<<<<<< HEAD
 import jakarta.persistence.EntityNotFoundException;
+=======
+>>>>>>> cc34dbe... Retrieve authenticated user
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +29,22 @@ import java.util.Optional;
 public class UserOrderController {
     private final UserOrderService userOrderService;
     private final AccountService accountService;
+<<<<<<< HEAD
+=======
+
+//    // Need DB relationship between UserOrder and Account
+//    @GetMapping
+//    public List<UserOrder> getOrders() {
+//        return userOrderService.getOrders();
+//    }
+>>>>>>> cc34dbe... Retrieve authenticated user
 
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             // userDetails contains information about the authenticated user
+<<<<<<< HEAD
             try {
                 Account account = accountService.findByEmail(userDetails.getUsername());
                 UserDTO user = UserDTO.of(account);
@@ -36,6 +52,10 @@ public class UserOrderController {
             } catch (EntityNotFoundException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
+=======
+            Account user = accountService.findByEmail(userDetails.getUsername()).orElse(null);
+            return ResponseEntity.ok(user);
+>>>>>>> cc34dbe... Retrieve authenticated user
         }
         return ResponseEntity.badRequest().body("Unable to get the orders since user is not authenticated.");
     }

@@ -32,4 +32,8 @@ public class AccountService {
         Account account = accountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("email " + email + " is not found"));
         return account;
     }
+
+    public Optional<Account> findByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
 }
