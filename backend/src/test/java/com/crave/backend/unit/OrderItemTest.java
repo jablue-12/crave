@@ -11,7 +11,12 @@ public class OrderItemTest {
 
     @BeforeEach
     public void setUp() {
-        orderItem = new OrderItem(1L, 1L, "large fries", 3.99f);
+        orderItem = OrderItem.builder()
+                .id(1L)
+                .order_id(1L)
+                .name("large fries")
+                .price(3.99f)
+                .build();
     }
 
     @Test

@@ -5,7 +5,7 @@ import com.crave.backend.model.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
     private Account user;
@@ -29,7 +29,17 @@ public class AccountTest {
         assertEquals("Hill", user.getLastName());
         assertEquals("dhill@gmail.co.uk", user.getEmail());
         assertEquals("idkruhfaminnit", user.getPassword());
+        assertEquals("dhill@gmail.co.uk", user.getUsername());
         assertEquals(UserRole.USER, user.getUserRole());
+        assertNull(user.getComments());
+        assertNull(user.getTokens());
+
+        // Override methods that are not used
+        assertEquals(1, user.getAuthorities().size());
+        assertTrue(user.isAccountNonExpired());
+        assertTrue(user.isAccountNonLocked());
+        assertTrue(user.isCredentialsNonExpired());
+        assertTrue(user.isEnabled());
     }
 
     @Test
