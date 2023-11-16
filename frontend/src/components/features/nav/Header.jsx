@@ -66,27 +66,27 @@ const Header = ({ setIsSliderOn }) => {
 									style={{ textDecoration: 'none', marginLeft: '20px' }}
 									onClick={() => setIsSliderOn(true)}
 								>
-									{dishesInCart.length === 0
-										? <SlBasket />
-										: <FaShoppingCart color={iconColor} />}
+									<span data-cy="shopping-cart">
+										{dishesInCart.length === 0
+											? <SlBasket />
+											: <FaShoppingCart color={iconColor} />}
+									</span>
 								</Link>
 							</OverlayTrigger>
 							<NavDropdown
 								title={
 									<FaUserCircle
 										data-cy="user"
-										color={user
-											? `${color.user.AUTHENTICATED}`
-											: `${color.user.GUEST}`}
 										style={{
 											textDecoration: 'none',
-											marginLeft: '15px'
+											marginLeft: '15px',
+											color: `${user ? color.user.AUTHENTICATED : color.user.GUEST}`
 										}}
 									/>}
 								menuVariant="light"
 							>
 								{user
-									? <NavDropdown.Item onClick={() => logout(user)}>
+									? <NavDropdown.Item data-cy="logout" onClick={() => logout(user)}>
 										Logout
 									</NavDropdown.Item>
 									: <>

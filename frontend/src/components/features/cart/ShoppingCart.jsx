@@ -54,8 +54,8 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 			<Card>
 				<ListGroup variant="flush">
 					<ListGroup.Item className="text-center">
-						<h4>Subtotal | {sum(dishesInCart.map(x => x.quantity))} Items</h4>
-							${sumBy(dishesInCart, x => x.price * x.quantity).toFixed(2)}
+						<h4>Subtotal | <span data-cy="cart-items-count">{sum(dishesInCart.map(x => x.quantity))}</span> Items</h4>
+						<div data-cy="subtotal">${sumBy(dishesInCart, x => x.price * x.quantity).toFixed(2)}</div>
 					</ListGroup.Item>
 					<ListGroup.Item className="text-center">
 						<GiPayMoney onClick={onPlaceOrder} style={{ cursor: 'pointer' }} />
