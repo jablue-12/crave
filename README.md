@@ -1,5 +1,11 @@
 # COMP 4350 - Crave Project
 
+## Deployment
+
+Frontend is deployed at ```https://crave-comp4350.netlify.app/``` using [Netlify](https://www.netlify.com/).
+
+Backend is deployed at ```https://crave-backend-api.onrender.com/``` using [Render](https://render.com/).
+
 ## Wiki Page
 - [Home Page](https://github.com/xiaoran-MENG/crave/wiki)
 - [Coding Standard and Guidelines](https://github.com/xiaoran-MENG/crave/wiki/Coding-Standards-and-Guidelines)
