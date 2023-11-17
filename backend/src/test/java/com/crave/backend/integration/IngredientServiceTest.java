@@ -1,11 +1,11 @@
 package com.crave.backend.integration;
 
 import com.crave.backend.model.Ingredient;
-import com.crave.backend.repository.IngredientRepository;
 import com.crave.backend.service.IngredientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
@@ -14,13 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.properties")
+@ActiveProfiles("test")
 public class IngredientServiceTest {
 
     @Autowired
     private IngredientService ingredientService;
-
-    @Autowired
-    private IngredientRepository ingredientRepository;
 
     @Test
     public void testGetIngredients() {
