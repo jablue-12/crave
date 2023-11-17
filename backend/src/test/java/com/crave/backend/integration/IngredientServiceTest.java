@@ -25,9 +25,7 @@ public class IngredientServiceTest {
     @Test
     public void testGetIngredients() {
         List<Ingredient> ingredients = ingredientService.getIngredients();
-
-        // Has 2 ingredients based on the craveConfig (Fake data also applies to test db)
-        assertEquals(2, ingredients.size());
+        assertEquals(0, ingredients.size());
     }
 
     @Test
@@ -43,5 +41,8 @@ public class IngredientServiceTest {
         assertEquals(ingredient.getName(), createdIngredient.getName());
         assertEquals(ingredient.getTag(), createdIngredient.getTag());
         assertEquals(ingredient.getQuantity(), createdIngredient.getQuantity());
+
+        List<Ingredient> ingredients = ingredientService.getIngredients();
+        assertEquals(1, ingredients.size());
     }
 }

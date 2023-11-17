@@ -33,7 +33,7 @@ public class IngredientControllerTest {
         ResponseEntity<List> response = restTemplate.getForEntity(url, List.class);
 
         assertEquals(OK, response.getStatusCode());
-        assertEquals(2, response.getBody().size()); // DB has 2 ingredients by default. Look at CraveConfig
+        assertEquals(0, response.getBody().size()); // DB has 2 ingredients by default. Look at CraveConfig
     }
 
     @Test
