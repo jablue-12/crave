@@ -2,7 +2,7 @@ export const REQUEST_TIMEOUT = 1000;
 
 const PORT = 8080;
 export const SOCKET_URL = `ws://localhost:${PORT}/ws`;
-export const BASE_URL = `http://localhost:${PORT}`;
+export const BASE_URL = process.env.REACT_APP_API_URL || `http://localhost:${PORT}`;
 export const endpoint = {
 	TAGS: '/tags',
 	LOGIN: '/auth/login',

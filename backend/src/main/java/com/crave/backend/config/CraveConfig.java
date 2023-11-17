@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,8 +24,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.IntStream;
 
 @Configuration
@@ -34,15 +35,19 @@ public class CraveConfig {
 
     @Bean
     CommandLineRunner commandLineRunner(
+            Environment environment,
             RestaurantRepository restaurantRepository,
             IngredientRepository ingredientRepository,
             DishRepository dishRepository,
             AuthenticationService authenticationService) {
         return args -> {
-            seedRestaurants(restaurantRepository);
-            seedIngredients(ingredientRepository);
-            seedDishes(ingredientRepository, dishRepository);
-            seedAccounts(authenticationService);
+            if (Arrays.asList(environment.getActiveProfiles()).contains("local")
+                    || Arrays.asList(environment.getActiveProfiles()).contains("docker")) {
+                seedRestaurants(restaurantRepository);
+                seedIngredients(ingredientRepository);
+                seedDishes(ingredientRepository, dishRepository);
+                seedAccounts(authenticationService);
+            }
         };
     }
 
