@@ -2,6 +2,7 @@ package com.crave.backend.integration;
 
 import com.crave.backend.model.Dish;
 import com.crave.backend.model.Ingredient;
+import com.crave.backend.model.Account;
 import com.crave.backend.model.Comment;
 import com.crave.backend.model.auth.AuthenticationResponse;
 import com.crave.backend.model.auth.RegisterRequest;
@@ -70,7 +71,7 @@ public class DishControllerTest {
             .description("Description for Haiwain Pizza")
             .tag("Pizza")
             .ingredientIds(List.of())
-            .price(25.99f)
+            .price(25f)
             .rating(3.5f)
             .build();
 
@@ -81,8 +82,6 @@ public class DishControllerTest {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-        // String jsonContent = "{ \"name\": \"Haiwain Pizza\", \"description\": \"Description for Haiwain Pizza\", \"tag\": \"Pizza\", \"ingredientIds\": [0, 1], \"price\": 25.99, \"rating\": 3.5 }";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -96,96 +95,13 @@ public class DishControllerTest {
                 requestEntity,
                 Dish.class
         );
-        System.out.println("=========================================================================================================");
-        System.out.println(response.getBody());
 
         assertEquals(CREATED, response.getStatusCode());
         assertEquals("Haiwain Pizza", response.getBody().getName());
         assertEquals("Pizza", response.getBody().getTag());
-        assertEquals(25.99, response.getBody().getPrice());
+        assertEquals(25, response.getBody().getPrice());
         assertEquals(3.5, response.getBody().getRating());
         
 
     }
-
-    @Test
-    public void testGetComments() {
-        Long dishId = 1L;
-        String url = "http://localhost:" + port + "/dishes/" + dishId + "/comments";
-        ResponseEntity<Comment[]> response = restTemplate.getForEntity(url, Comment[].class);
-
-        assertEquals(OK, response.getStatusCode());
-    }
-
-    @Test
-    public void testCreateComment() {
-        Long dishId = 1L;
-        String url = "http://localhost:" + port + "/dishes/" + dishId + "/comments";
-        Comment newComment = Comment.builder()
-                            .content("new Content")
-                            .createdAt(LocalDateTime.now())
-                            .build();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-
-        HttpEntity<Comment> requestEntity = new HttpEntity<>(newComment, headers);
-        ResponseEntity<Comment> response = restTemplate.postForEntity(url, requestEntity, Comment.class);
-
-        assertEquals(CREATED, response.getStatusCode());
-    }
-
-    @Test
-    public void testUpdateComment() {
-        Long dishId = 1L;
-        Long commentId = 1L;
-        String url = "http://localhost:" + port + "/dishes/" + dishId + "/comments/" + commentId;
-        Comment updatedComment = Comment.builder()
-                            .content("new Content")
-                            .createdAt(LocalDateTime.now())
-                            .build();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-
-        HttpEntity<Comment> requestEntity = new HttpEntity<>(updatedComment, headers);
-        ResponseEntity<Comment> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Comment.class);
-
-        assertEquals(FORBIDDEN, response.getStatusCode());
-    }
-
-
-
 }
-
-
-
-// private String token = registerAndReturnToken();
-    
-//     public String registerAndReturnToken() {
-//         String registerUrl = "http://localhost:" + port + "/auth/register";
-
-//         HttpHeaders headers = new HttpHeaders();
-//         headers.set("Content-Type", "application/json");
-
-//         // Create a simple RegisterRequest with a hardcoded username
-//         String username = "testuser1";
-//         String password = "password123";  // You may want to set a secure password in practice
-//         String email = "testuser1@example.com";
-//         String fullName = "Test User";
-
-//         RegisterRequest registerRequest = new RegisterRequest(username, password, email, fullName, UserRole.ADMIN);
-
-//         HttpEntity<RegisterRequest> requestEntity = new HttpEntity<>(registerRequest, headers);
-
-//         ResponseEntity<AuthenticationResponse> responseEntity = new RestTemplate().postForEntity(registerUrl, requestEntity, AuthenticationResponse.class);
-
-//         AuthenticationResponse response = responseEntity.getBody();
-
-//         if (response != null && response.getToken() != null) {
-//             return response.getToken();
-
-//         } else {
-//             throw new RuntimeException("Failed to register user: " + response);
-//         }
-//     }

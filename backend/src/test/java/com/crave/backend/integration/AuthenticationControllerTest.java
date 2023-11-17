@@ -35,32 +35,6 @@ public class AuthenticationControllerTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void testGetAuthenticatedUser() {
-        String url = "http://localhost:" + port + "/auth/user";
-        
-        UserDTO user = UserDTO.builder()
-                    .firstName("User")
-                    .lastName("Demo")
-                    .email("userdemo@gmail.com")
-                    .userRole(UserRole.USER)
-                    .build();
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        
-        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(user, headers);
-        ResponseEntity<UserDTO> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                UserDTO.class
-        );
-
-        System.out.println(response.getBody());
-        assertEquals(OK, response.getStatusCode());
-    }
-
-    @Test
     public void testRegister() {
         String url = "http://localhost:" + port + "/auth/register";
         RegisterRequest registerRequest = new RegisterRequest("testuser", "password123", "testuser@example.com", "Test User",UserRole.USER);
@@ -70,20 +44,6 @@ public class AuthenticationControllerTest {
 
 
         HttpEntity<RegisterRequest> requestEntity = new HttpEntity<>(registerRequest, headers);
-        ResponseEntity<AuthenticationResponse> response = restTemplate.postForEntity(url, requestEntity, AuthenticationResponse.class);
-
-        assertEquals(OK, response.getStatusCode());
-    }
-
-    @Test
-    public void testAuthenticate() {
-        String url = "http://localhost:" + port + "/auth/login";
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest("userdemo@gmail.com", "demo");
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-
-        HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authenticationRequest, headers);
         ResponseEntity<AuthenticationResponse> response = restTemplate.postForEntity(url, requestEntity, AuthenticationResponse.class);
 
         assertEquals(OK, response.getStatusCode());

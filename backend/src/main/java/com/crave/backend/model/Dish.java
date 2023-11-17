@@ -43,7 +43,7 @@ public class Dish {
             joinColumns = @JoinColumn(name = "dish_id")
     )
     @Column(name = "ingredient_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Long> ingredientIds;
 
     // Transient field to load ingredients during retrieval
