@@ -1,4 +1,4 @@
-package com.crave.backend.unit;
+package com.crave.backend.unit.repository;
 
 import com.crave.backend.model.Dish;
 import com.crave.backend.repository.DishRepository;

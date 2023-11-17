@@ -1,4 +1,4 @@
-package com.crave.backend.unit;
+package com.crave.backend.unit.service;
 
 import com.crave.backend.model.Restaurant;
 import com.crave.backend.repository.RestaurantRepository;
@@ -139,7 +139,7 @@ class RestaurantServiceTest {
         assertNotNull(foundRestaurant);
         assertEquals(restaurant, foundRestaurant);
     }
-    
+
     @Test
     void testRestaurantExists() {
         Long restaurantId = 1L;

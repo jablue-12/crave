@@ -1,4 +1,4 @@
-package com.crave.backend.unit;
+package com.crave.backend.unit.model;
 
 import com.crave.backend.model.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IngredientTest {
     private Ingredient ingredient;
-    
+
     @BeforeEach
     public void setUp() {
 
