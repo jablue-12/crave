@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import './App.css';
 import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
-import Footer from './components/nav/Footer';
-import Header from './components/nav/Header';
-import { CartProvider } from './contexts/CartContext';
-import { RestaurantsProvider } from './contexts/RestaurantsContext';
+import ShoppingCart from './components/features/cart/ShoppingCart';
+import Footer from './components/features/nav/Footer';
+import Header from './components/features/nav/Header';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider, useCart } from './contexts/CartContext';
+import OrderProvider from './contexts/OrderContext';
 
 function App () {
-	return <RestaurantsProvider>
+	const { dishesInCart } = useCart();
+	const [isSliderOn, setIsSliderOn] = useState(false);
+
+	return <AuthProvider>
 		<CartProvider>
-			<Header />
-			<main>
-				<Container>
-					<Outlet />
+			<OrderProvider>
+				<Container className="py-2">
+					<Header setIsSliderOn={setIsSliderOn} />
+					<ShoppingCart
+						isSliderOn={isSliderOn}
+						setIsSliderOn={setIsSliderOn}
+						dishesInCart={dishesInCart}
+					/>
+					<main className="my-4">
+						{useMemo(() => <Outlet />, [])}
+					</main>
+					<Footer />
 				</Container>
-			</main>
-			<Footer />
+			</OrderProvider>
 		</CartProvider>
-	</RestaurantsProvider>;
+	</AuthProvider>;
 }
 
 export default App;

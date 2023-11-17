@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  frontend:
+    container_name: crave-frontend-container
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    container_name: crave-backend-container
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
+    volumes:
+      - backend-data:/app/data
+
+  postgres:
+    container_name: crave-postgres-container
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: crave
+      POSTGRES_DB: crave
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  backend-data:
+  postgres_data:

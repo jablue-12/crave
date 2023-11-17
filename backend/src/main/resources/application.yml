@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/crave
-    username: postgres
-    password: crave
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop # Change to update when you want to main the data
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:

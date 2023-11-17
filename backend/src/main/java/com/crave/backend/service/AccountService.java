@@ -1,59 +1,35 @@
 package com.crave.backend.service;
 
+import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.repository.AccountRepository;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
 
-    @Autowired
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+    public List<UserDTO> getAccounts() {
+        List<UserDTO> users = new ArrayList<>();
+        List<Account> accounts = accountRepository.findAll();
 
-    public List<Account> getAccounts() {
-        return accountRepository.findAll();
-    }
-
-    public Optional<Account> getAccountById(Long id) {
-        return accountRepository.findById(id);
-    }
-
-    public Account createAccount(Account account) {
-        return accountRepository.save(account);
-    }
-
-    public Account updateAccount(Account existingAccount, Account updatedAccount) {
-
-        if (existingAccount != null) {
-            existingAccount.setFirstName(updatedAccount.getFirstName());
-            existingAccount.setLastName(updatedAccount.getLastName());
-            existingAccount.setEmail(updatedAccount.getEmail());
-            existingAccount.setPassword(updatedAccount.getPassword());
-
-
-            accountRepository.save(existingAccount);
+        for (Account account : accounts) {
+            users.add(UserDTO.of(account));
         }
 
-        return existingAccount;
+        return users;
     }
 
-    public void deleteAccountById(Long id) {
-        accountRepository.deleteById(id);
-    }
-
-    public Account findById(Long id) {
-        Optional<Account> account = accountRepository.findById(id);
-        return account.orElse(null);
-    }
-
-    public boolean exists(Long id) {
-        return accountRepository.findById(id).isPresent();
+    public Account findByEmail(String email) {
+        Account account = accountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("email " + email + " is not found"));
+        return account;
     }
 }

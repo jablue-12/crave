@@ -8,10 +8,9 @@ import lombok.*;
 @Table
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+@Builder
 public class UserOrder {
     @Id
     @SequenceGenerator(
@@ -24,11 +23,8 @@ public class UserOrder {
             generator = "order_sequence"
     )
     private Long id;
-    @NonNull
     private Long user_id;
-    @NonNull
     private Long restaurant_id;
-    @NonNull
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }
