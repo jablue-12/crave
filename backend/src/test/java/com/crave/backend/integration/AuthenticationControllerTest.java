@@ -36,22 +36,28 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testGetAuthenticatedUser() {
-        // String url = "http://localhost:" + port + "/auth/user";
+        String url = "http://localhost:" + port + "/auth/user";
         
-        // UserDetails user;
-        // user.
+        UserDTO user = UserDTO.builder()
+                    .firstName("User")
+                    .lastName("Demo")
+                    .email("userdemo@gmail.com")
+                    .userRole(UserRole.USER)
+                    .build();
         
-        // HttpHeaders headers = new HttpHeaders();
-        // headers.set("Content-Type", "application/json");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
         
-        // HttpEntity<UserDTO> requestEntity = new HttpEntity<>(user, headers);
-        // ResponseEntity<UserDTO> response = restTemplate.exchange(
-        //         url,
-        //         HttpMethod.GET,
-        //         requestEntity,
-        //         UserDTO.class
-        // );
-        // assertEquals(OK, response.getStatusCode());
+        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(user, headers);
+        ResponseEntity<UserDTO> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                requestEntity,
+                UserDTO.class
+        );
+
+        System.out.println(response.getBody());
+        assertEquals(OK, response.getStatusCode());
     }
 
     @Test
@@ -71,15 +77,15 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testAuthenticate() {
-        // String url = "http://localhost:" + port + "/auth/login";
-        // AuthenticationRequest authenticationRequest = new AuthenticationRequest("userdemo@gmail.com", "demo");
+        String url = "http://localhost:" + port + "/auth/login";
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest("userdemo@gmail.com", "demo");
 
-        // HttpHeaders headers = new HttpHeaders();
-        // headers.set("Content-Type", "application/json");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
 
-        // HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authenticationRequest, headers);
-        // ResponseEntity<AuthenticationResponse> response = restTemplate.postForEntity(url, requestEntity, AuthenticationResponse.class);
+        HttpEntity<AuthenticationRequest> requestEntity = new HttpEntity<>(authenticationRequest, headers);
+        ResponseEntity<AuthenticationResponse> response = restTemplate.postForEntity(url, requestEntity, AuthenticationResponse.class);
 
-        // assertEquals(OK, response.getStatusCode());
+        assertEquals(OK, response.getStatusCode());
     }
 }

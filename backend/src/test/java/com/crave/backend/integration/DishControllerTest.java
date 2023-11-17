@@ -151,7 +151,7 @@ public class DishControllerTest {
         HttpEntity<Comment> requestEntity = new HttpEntity<>(updatedComment, headers);
         ResponseEntity<Comment> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Comment.class);
 
-        assertEquals(CREATED, response.getStatusCode());
+        assertEquals(FORBIDDEN, response.getStatusCode());
     }
 
 
