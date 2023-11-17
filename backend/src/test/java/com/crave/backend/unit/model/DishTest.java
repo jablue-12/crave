@@ -1,4 +1,4 @@
-package com.crave.backend.unit;
+package com.crave.backend.unit.model;
 
 import com.crave.backend.model.Comment;
 import com.crave.backend.model.Dish;

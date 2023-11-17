@@ -1,4 +1,4 @@
-package com.crave.backend.unit;
+package com.crave.backend.unit.dto;
 
 import com.crave.backend.dto.CommentDTO;
 import com.crave.backend.enums.UserRole;
