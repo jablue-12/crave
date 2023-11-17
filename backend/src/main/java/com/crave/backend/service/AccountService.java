@@ -33,7 +33,13 @@ public class AccountService {
         return account;
     }
 
+<<<<<<< HEAD
     public Optional<Account> findByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
+=======
+    // public Optional<Account> findByEmail(String email) {
+    //     return accountRepository.findByEmail(email);
+    // }
+>>>>>>> 3d2bcf1d0c8d4ae0c84f810867b46db12a52c8e9
 }
