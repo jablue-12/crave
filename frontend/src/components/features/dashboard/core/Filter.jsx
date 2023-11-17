@@ -1,4 +1,4 @@
-import { includes, union, without } from 'lodash';
+import { includes, orderBy, union, without } from 'lodash';
 import React, { useState } from 'react';
 import { Row, Col, Badge } from 'react-bootstrap';
 import { agent } from '../../../../common/api';
@@ -17,7 +17,7 @@ const Filter = ({ setDishes }) => {
 		(async () => {
 			try {
 				const { data } = await agent.get(`/dishes?tags=${updatedTags.join(',')}`);
-				setDishes(data);
+				setDishes(orderBy(data, ['rating'], ['desc']));
 			} catch (e) {
 				console.error(e);
 			}

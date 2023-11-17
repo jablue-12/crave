@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import api from '../common/api';
+import api, { agent } from '../common/api';
 import { TOKEN_KEY, endpoint } from '../common/constants';
 
 const OrderContext = createContext();
@@ -40,16 +40,12 @@ export const OrderProvider = ({ children }) => {
 
 	const placeOrder = async order => {
 		try {
-			const { data } = await api.post(endpoint.ORDERS, order, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
-				}
-			});
+			const { data } = await agent.postTokenized(endpoint.ORDERS, order);
 
 			console.log('Logging - placeOrder');
 			console.log(data);
 
-			setOrders((prevOrders) => [...prevOrders, order]);
+			setOrders((prevOrders) => [order, ...prevOrders]);
 			setError(null);
 		} catch (e) {
 			setError(e);
