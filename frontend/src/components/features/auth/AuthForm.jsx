@@ -1,19 +1,27 @@
 import React from 'react';
 import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useAuth } from '../../../contexts/AuthContext';
+import { FeedbackMessage } from '../../common/FeedbackMessage';
 import Submit from '../../common/Submit';
 import { formGroupStyle, inputStyle } from './AuthFormStyle';
 
-export default function AuthForm ({ children, onSubmit }) {
+export default function AuthForm ({
+	children,
+	onSubmit
+}) {
 	const {
 		email,
 		password,
+		verificationSuccess,
 		setPassword,
 		setEmail
 	} = useAuth();
 
 	return (
-		<div className="text-center" style={{ width: '100%', height: '100%' }}>
+		<div className="text-center" style={{
+			width: '100%',
+			height: '100%'
+		}}>
 			<Form data-cy="auth-form" onSubmit={onSubmit} style={{ width: '100%' }}>
 				{children}
 				<Form.Group className="mb-2" controlid="email" style={formGroupStyle}>
@@ -34,7 +42,7 @@ export default function AuthForm ({ children, onSubmit }) {
 						placement="right"
 						overlay={
 							<Tooltip id="tooltip-bottom" style={{ opacity: 0.7 }}>
-                                Password Policy
+								Password Policy
 							</Tooltip>
 						}
 					>
@@ -55,6 +63,11 @@ export default function AuthForm ({ children, onSubmit }) {
 						password === 0}
 				/>
 			</Form>
+			{verificationSuccess &&
+				<FeedbackMessage
+					variant={verificationSuccess.variant}
+					messageHeader={verificationSuccess.messageHeader}
+					messageDescription={verificationSuccess.messageDescription}/>}
 		</div>
 	);
 }

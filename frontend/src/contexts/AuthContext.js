@@ -9,6 +9,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+	const [verificationSuccess, setVerificationSuccess] = useState(null);
 	const [user, setUser] = useState(null);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -31,6 +32,35 @@ export const AuthProvider = ({ children }) => {
 		}
 	}, []);
 
+	const getLoginSuccessFeedback = () => {
+		return {
+			variant: 'success',
+			messageHeader: 'Login Success',
+			messageDescription: 'Welcome back.'
+		};
+	};
+	const getLoginErrorFeedback = () => {
+		return {
+			variant: 'danger',
+			messageHeader: 'Error with Login',
+			messageDescription: 'Please try again.'
+		};
+	};
+	const getRegisterSuccessFeedback = () => {
+		return {
+			variant: 'success',
+			messageHeader: 'Registration Success',
+			messageDescription: 'Welcome to Crave.'
+		};
+	};
+	const getRegisterErrorFeedback = () => {
+		return {
+			variant: 'danger',
+			messageHeader: 'Error with Registration',
+			messageDescription: 'Please try again.'
+		};
+	};
+
 	const login = async (e) => {
 		e.preventDefault();
 
@@ -45,8 +75,15 @@ export const AuthProvider = ({ children }) => {
 
 			const userResult = await agent.getTokenized(endpoint.USER);
 			setUser(userResult.data);
+
+			setVerificationSuccess(getLoginSuccessFeedback);
 		} catch (e) {
-			alert(e);
+			console.error(e);
+			setVerificationSuccess(getLoginErrorFeedback());
+		} finally {
+			setTimeout(() => {
+				setVerificationSuccess(null);
+			}, 3000);
 		}
 	};
 
@@ -70,10 +107,17 @@ export const AuthProvider = ({ children }) => {
 				password
 			});
 
-			console.log('Logging - regsiter()');
+			console.log('Logging - register()');
 			console.log(registrationResult.data);
+
+			setVerificationSuccess(getRegisterSuccessFeedback);
 		} catch (e) {
-			alert(e);
+			console.error(e);
+			setVerificationSuccess(getRegisterErrorFeedback);
+		} finally {
+			setTimeout(() => {
+				setVerificationSuccess(null);
+			}, 3000);
 		}
 	};
 
@@ -86,11 +130,13 @@ export const AuthProvider = ({ children }) => {
 				lastName,
 				email,
 				password,
+				verificationSuccess,
 				setEmail,
 				setFirstName,
 				setLastName,
 				setPassword,
 				setToken,
+				setVerificationSuccess,
 				login,
 				logout,
 				register
