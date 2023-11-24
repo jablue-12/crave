@@ -54,4 +54,30 @@ public class DishServiceTest {
 
         dishRepository.delete(createdDish);
     }
+
+    @Test
+    public void testGetByTags() {
+        Dish dish1, dish2;
+
+        dish1 = Dish.builder()
+                .tag("Pizza")
+                .build();
+
+        dish2 = Dish.builder()
+                .tag("Burgers")
+                .build();
+
+        dishRepository.save(dish1);
+        dishRepository.save(dish2);
+
+        List<Dish> dishWithPizzaTag = dishService.getByTags(List.of("Pizza"));
+        List<Dish> dishWithBurgersTag = dishService.getByTags(List.of("Burgers"));
+        List<Dish> dishWithAllTags = dishService.getByTags(List.of("Pizza", "Burgers"));
+        List<Dish> dishWithNoTags = dishService.getByTags(new ArrayList<>());
+
+        assertEquals(1, dishWithPizzaTag.size());
+        assertEquals(1, dishWithBurgersTag.size());
+        assertEquals(2, dishWithAllTags.size());
+        assertEquals(0, dishWithNoTags.size());
+    }
 }

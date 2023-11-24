@@ -25,6 +25,12 @@ export const agent = {
 			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			'Content-Type': 'application/json'
 		}
+	}),
+	postTokenizedFormData: (url, body) => api.post(url, body, {
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+			'Content-Type': 'multipart/form-data'
+		}
 	})
 };
 

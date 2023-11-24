@@ -33,9 +33,11 @@ public class Dish {
     private float price;
     private float rating;
 
+    private String imageName;
+    private String imageUrl;
+    @JsonIgnore
     @Lob // Store as Large object in db
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+    private byte[] imageBytes;
 
     @ElementCollection
     @CollectionTable(
