@@ -21,8 +21,6 @@ export const AuthProvider = ({ children }) => {
 		if (token) {
 			(async () => {
 				try {
-					console.log('Logging - AuthProvider');
-					console.log(localStorage.getItem(TOKEN_KEY));
 					const { data } = await agent.getTokenized(endpoint.USER);
 					setUser(data);
 				} catch (e) {
@@ -72,6 +70,7 @@ export const AuthProvider = ({ children }) => {
 
 			setToken(loginResult.data.token);
 			localStorage.setItem(TOKEN_KEY, loginResult.data.token);
+			localStorage.setItem('user', email);
 
 			const userResult = await agent.getTokenized(endpoint.USER);
 			setUser(userResult.data);
@@ -88,12 +87,16 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const logout = () => {
+		localStorage.removeItem(TOKEN_KEY);
+		localStorage.removeItem('user');
+		localStorage.setItem('cart_default', localStorage.getItem(`cart_${user.email}`) ?? []);
+		localStorage.removeItem(`cart_${user.email}`);
+
 		setUser(null);
 		setFirstName('');
 		setLastName('');
 		setPassword('');
 		setToken(null);
-		localStorage.removeItem(TOKEN_KEY);
 	};
 
 	const register = async e => {
@@ -124,6 +127,7 @@ export const AuthProvider = ({ children }) => {
 	return (
 		<AuthContext.Provider
 			value={{
+				isAdmin: user && user.userRole === 'ADMIN',
 				token,
 				user,
 				firstName,

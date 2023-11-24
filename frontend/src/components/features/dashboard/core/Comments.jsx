@@ -2,7 +2,7 @@ import { orderBy } from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { BiSolidCommentAdd, BiSolidEditAlt } from 'react-icons/bi';
+import { BiSolidCommentAdd } from 'react-icons/bi';
 import { agent } from '../../../../common/api';
 import { endpoint } from '../../../../common/constants';
 import { splitDate } from '../../../../common/utils';
@@ -11,12 +11,10 @@ import Loader from '../../../common/Loader';
 import Scrollable from './../../../common/Scrollable';
 
 const Comments = ({ dishId }) => {
-	const [isEditing, setIsEditing] = useState(false);
 	const [isAdding, setIsAdding] = useState(false);
 	const [comments, setComments] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [contentOnChange, setContentOnChange] = useState('');
-	const [commentIdOnEdit, setCommentIdOnEdit] = useState(-1);
 
 	const { user } = useAuth();
 
@@ -32,33 +30,6 @@ const Comments = ({ dishId }) => {
 			}
 		})();
 	}, [dishId]);
-
-	const onSelect = ({ id, content }) => {
-		setContentOnChange(content);
-		setCommentIdOnEdit(id);
-		setIsEditing(true);
-	};
-
-	const onUnSelect = () => {
-		setContentOnChange('');
-		setCommentIdOnEdit(-1);
-		setIsEditing(false);
-	};
-
-	const onEdit = async () => {
-		try {
-			const { data } = await agent.putTokenized(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}/${commentIdOnEdit}`, {
-				content: contentOnChange
-			});
-			setComments(prev => prev.map(x => x.id === commentIdOnEdit ? data : x));
-		} catch (e) {
-			console.error(e);
-		}
-
-		setIsEditing(false);
-		setContentOnChange('');
-		setCommentIdOnEdit(-1);
-	};
 
 	const onAdd = async () => {
 		try {
@@ -82,15 +53,6 @@ const Comments = ({ dishId }) => {
 		<ListGroup variant="flush">
 			{comments.map(x => (
 				<ListGroup.Item key={x.id}>
-					{user && user.email === x.email &&
-					<BiSolidEditAlt
-						style={{
-							position: 'absolute',
-							top: 5,
-							right: 5
-						}}
-						onClick={() => onSelect(x)}
-					/>}
 					<p data-cy="comment-content" style={{
 						fontSize: '14px',
 						wordWrap: 'break-word'
@@ -112,37 +74,11 @@ const Comments = ({ dishId }) => {
 					alignItems: 'center'
 				}}
 			>
-				<BiSolidCommentAdd />
+				<span className="add-comment">
+					<BiSolidCommentAdd />
+				</span>
 			</ListGroup.Item>}
 		</ListGroup>
-		<Modal show={isEditing} onHide={onUnSelect}>
-			<Modal.Header closeButton>
-				<Modal.Title>Edit</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<Form>
-					<Form.Group
-						className="mb-3"
-						controlId="exampleForm.ControlTextarea1"
-					>
-						<Form.Control
-							as="textarea"
-							rows={3}
-							value={contentOnChange}
-							onChange={e => setContentOnChange(e.target.value)}
-						/>
-					</Form.Group>
-				</Form>
-			</Modal.Body>
-			<Modal.Footer>
-				<Button variant="secondary" onClick={onUnSelect}>
-					Cancel
-				</Button>
-				<Button variant="secondary" onClick={onEdit}>
-					Save
-				</Button>
-			</Modal.Footer>
-		</Modal>
 		<Modal show={isAdding} onHide={() => setIsAdding(false)}>
 			<Modal.Header closeButton>
 				<Modal.Title>Add</Modal.Title>

@@ -1,14 +1,20 @@
 [
 	{
-		"id": 1,
-		"name": "HAIWAIN PIZZA",
-		"price": 25.99,
+		"id": 10,
+        "name": "Greek Dish 9",
+        "price": 10.5,
 		"quantity": 1
 	},
 	{
-		"id": 2,
-		"name": "CHOW MEIN",
-		"price": 25.99,
+		"id": 9,
+        "name": "Japanese Dish 8",
+        "price": 9.5,
+		"quantity": 1
+	},
+	{
+		"id": 8,
+        "name": "Thai Dish 7",
+        "price": 8.5,
 		"quantity": 1
 	}
 ]

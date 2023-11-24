@@ -9,6 +9,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider, useCart } from './contexts/CartContext';
 import { DishCreationProvider } from './contexts/DishCreationContext';
 import OrderProvider from './contexts/OrderContext';
+import SaleProvider from './contexts/SaleContext';
 
 function App () {
 	const { dishesInCart } = useCart();
@@ -18,18 +19,20 @@ function App () {
 		<CartProvider>
 			<OrderProvider>
 				<DishCreationProvider>
-					<Container className="py-2">
-						<Header setIsSliderOn={setIsSliderOn} />
-						<ShoppingCart
-							isSliderOn={isSliderOn}
-							setIsSliderOn={setIsSliderOn}
-							dishesInCart={dishesInCart}
-						/>
-						<main className="my-4">
-							{useMemo(() => <Outlet />, [])}
-						</main>
-						<Footer />
-					</Container>
+					<SaleProvider>
+						<Container className="py-2">
+							<Header setIsSliderOn={setIsSliderOn} />
+							<ShoppingCart
+								isSliderOn={isSliderOn}
+								setIsSliderOn={setIsSliderOn}
+								dishesInCart={dishesInCart}
+							/>
+							<main className="my-4">
+								{useMemo(() => <Outlet />, [])}
+							</main>
+							<Footer />
+						</Container>
+					</SaleProvider>
 				</DishCreationProvider>
 			</OrderProvider>
 		</CartProvider>

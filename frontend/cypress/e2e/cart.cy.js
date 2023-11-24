@@ -3,10 +3,18 @@ import { range } from 'lodash';
 describe('cart spec', () => {
 	beforeEach(() => {
 		cy.visit('http://localhost:3000');
-		range(2).forEach(i => {
+		range(3).forEach(i => {
 			cy.get('[data-cy="dish-image"]').eq(i).click();
 			cy.get('[data-cy="add-to-cart"]').click();
 		});
+	});
+
+	it('should add dish to cart', () => {
+		cy.get('[data-cy="dish-image"]').eq(4).click();
+		cy.get('[data-cy="add-to-cart"]').click();
+
+		cy.get('[data-cy="shopping-cart"]').click();
+		cy.get('[data-cy="cart-items-count"]').contains(4).should('exist');
 	});
 
 	it('should display correct cart items count', () => {
@@ -25,13 +33,5 @@ describe('cart spec', () => {
 				result + item.quantity * item.price, 0);
 			cy.get('[data-cy="subtotal"]').contains(subtotal).should('exist');
 		});
-	});
-
-	it('should add dish to cart', () => {
-		cy.get('[data-cy="dish-image"]').eq(0).click();
-		cy.get('[data-cy="add-to-cart"]').click();
-
-		cy.get('[data-cy="shopping-cart"]').click();
-		cy.get('[data-cy="cart-items-count"]').contains(3).should('exist');
 	});
 });

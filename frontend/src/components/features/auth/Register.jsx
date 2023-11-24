@@ -4,7 +4,7 @@ import { useAuth } from './../../../contexts/AuthContext';
 import AuthForm from './AuthForm';
 import { formGroupStyle, inputStyle } from './AuthFormStyle';
 
-export default function Register () {
+export default function Register ({ setIsRegistering }) {
 	const {
 		firstName,
 		lastName,
@@ -13,7 +13,10 @@ export default function Register () {
 		register
 	} = useAuth();
 
-	return <AuthForm onSubmit={register}>
+	return <AuthForm onSubmit={e => {
+		register(e);
+		setIsRegistering(false);
+	}}>
 		<Form.Group className="mb-2" controlid="name" style={formGroupStyle}>
 			<Form.Control
 				data-cy="first-name"

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { REQUEST_TIMEOUT, endpoint } from '../common/constants';
+import { endpoint } from '../common/constants';
 import { agent } from './../common/api';
 
 const DishCreationContext = createContext();
@@ -9,8 +9,6 @@ export const useDishCreation = () => {
 };
 
 export const DishCreationProvider = ({ children }) => {
-	const controller = new AbortController();
-
 	const placeholderDish = {
 		name: 'e.g. Chicken Alfredo',
 		description: 'e.g. Chicken Alfredo is a delectable Italian-American dish featuring grilled chicken atop fettuccine pasta, bathed in a luxuriously creamy Alfredo sauce.',
@@ -155,13 +153,7 @@ export const DishCreationProvider = ({ children }) => {
 	const initIngredientOptions = async () => {
 		setIsIngredientOptionLoading(true);
 		try {
-			const timer = setTimeout(() => {
-				controller.abort();
-			}, REQUEST_TIMEOUT);
-
-			const { data } = await agent.get(endpoint.INGREDIENTS, controller.signal);
-
-			clearTimeout(timer);
+			const { data } = await agent.get(endpoint.INGREDIENTS);
 			setIngredientOptions(data);
 		} catch (e) {
 			console.error(e);
