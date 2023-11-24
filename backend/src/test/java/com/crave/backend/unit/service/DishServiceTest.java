@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -61,7 +60,7 @@ class DishServiceTest {
     void testCreateDish_SuccessfulCreation() {
         // Create a dish
         Dish dishToCreate = new Dish();
-        List <Long> ingredients = new ArrayList<>();
+        List<Long> ingredients = new ArrayList<>();
         ingredients.add(1L);
         ingredients.add(2L);
         ingredients.add(3L);

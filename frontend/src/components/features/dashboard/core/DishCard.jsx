@@ -9,7 +9,7 @@ const DishCard = ({ dish, setSelectedDish }) => {
 				<Image
 					data-cy="dish-image"
 					onClick={() => setSelectedDish(dish)}
-					src={dish.photos ? dish.photos[0].getUrl() : '/images/1.jpg'}
+					src={dish.imageUrl || '/images/1.jpg'}
 					fluid
 					style={{
 						width: '100%',

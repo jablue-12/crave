@@ -30,7 +30,7 @@ const Dish = ({ dish }) => {
 						</Tooltip>
 					}
 				>
-					<Image rounded fluid src="/images/1.jpg" />
+					<Image rounded fluid src={dish.imageUrl || '/images/1.jpg'} />
 				</OverlayTrigger>
 			</Col>
 			<Col md={6}>

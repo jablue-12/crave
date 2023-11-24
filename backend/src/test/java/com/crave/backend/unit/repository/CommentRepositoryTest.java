@@ -29,7 +29,7 @@ public class CommentRepositoryTest {
                 .name("Burger")
                 .description("Burger description")
                 .tag("beef")
-                .image("some-image-url".getBytes())
+                .imageBytes("some-image-url".getBytes())
                 .price(14.99f)
                 .rating(4.5f)
                 .build();

@@ -7,6 +7,7 @@ import Footer from './components/features/nav/Footer';
 import Header from './components/features/nav/Header';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider, useCart } from './contexts/CartContext';
+import { DishCreationProvider } from './contexts/DishCreationContext';
 import OrderProvider from './contexts/OrderContext';
 
 function App () {
@@ -16,18 +17,20 @@ function App () {
 	return <AuthProvider>
 		<CartProvider>
 			<OrderProvider>
-				<Container className="py-2">
-					<Header setIsSliderOn={setIsSliderOn} />
-					<ShoppingCart
-						isSliderOn={isSliderOn}
-						setIsSliderOn={setIsSliderOn}
-						dishesInCart={dishesInCart}
-					/>
-					<main className="my-4">
-						{useMemo(() => <Outlet />, [])}
-					</main>
-					<Footer />
-				</Container>
+				<DishCreationProvider>
+					<Container className="py-2">
+						<Header setIsSliderOn={setIsSliderOn} />
+						<ShoppingCart
+							isSliderOn={isSliderOn}
+							setIsSliderOn={setIsSliderOn}
+							dishesInCart={dishesInCart}
+						/>
+						<main className="my-4">
+							{useMemo(() => <Outlet />, [])}
+						</main>
+						<Footer />
+					</Container>
+				</DishCreationProvider>
 			</OrderProvider>
 		</CartProvider>
 	</AuthProvider>;

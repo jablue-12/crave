@@ -35,7 +35,9 @@ public class CommentTest {
                 .name("Burger")
                 .description("Burger description")
                 .tag("beef")
-                .image("some-image-url".getBytes())
+                .imageName("some-image.png")
+                .imageUrl("some-image-url")
+                .imageBytes("some-image-url".getBytes())
                 .price(14.99f)
                 .ingredientIds(new ArrayList<>())
                 .build();

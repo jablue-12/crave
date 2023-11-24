@@ -26,7 +26,9 @@ public class DishRepositoryTest {
                 .name("Burger")
                 .description("dish1 description")
                 .tag("beef")
-                .image("dish1-image-url".getBytes())
+                .imageName("dish1-image-url.png")
+                .imageUrl("dish1-image-url")
+                .imageBytes("dish1-image-url".getBytes())
                 .price(9.99f)
                 .rating(4.1f)
                 .build();
@@ -35,7 +37,9 @@ public class DishRepositoryTest {
                 .name("Beef Wellington")
                 .description("dish2 description")
                 .tag("beef")
-                .image("dish2-image-url".getBytes())
+                .imageName("dish2-image-url.png")
+                .imageUrl("dish2-image-url")
+                .imageBytes("dish2-image-url".getBytes())
                 .price(14.99f)
                 .rating(4.5f)
                 .build();
@@ -44,7 +48,9 @@ public class DishRepositoryTest {
                 .name("Burger Steak")
                 .description("dish3 description")
                 .tag("beef")
-                .image("dish3-image-url".getBytes())
+                .imageName("dish3-image-url.png")
+                .imageUrl("dish3-image-url")
+                .imageBytes("dish3-image-url".getBytes())
                 .price(12.99f)
                 .rating(4.4f)
                 .build();
@@ -53,7 +59,9 @@ public class DishRepositoryTest {
                 .name("Chicken Alfredo")
                 .description("dish4 description")
                 .tag("chicken")
-                .image("dish4-image-url".getBytes())
+                .imageName("dish4-image-url.png")
+                .imageUrl("dish4-image-url")
+                .imageBytes("dish4-image-url".getBytes())
                 .price(16.99f)
                 .rating(3.5f)
                 .build();
@@ -75,7 +83,7 @@ public class DishRepositoryTest {
         assertEquals("Burger", dish1.getName());
         assertEquals("dish1 description", dish1.getDescription());
         assertEquals("beef", dish1.getTag());
-        assertArrayEquals("dish1-image-url".getBytes(), dish1.getImage());
+        assertArrayEquals("dish1-image-url".getBytes(), dish1.getImageBytes());
         assertEquals(9.99f, dish1.getPrice());
         assertEquals(4.1f, dish1.getRating());
 
@@ -83,7 +91,7 @@ public class DishRepositoryTest {
         assertEquals("Beef Wellington", dish2.getName());
         assertEquals("dish2 description", dish2.getDescription());
         assertEquals("beef", dish2.getTag());
-        assertArrayEquals("dish2-image-url".getBytes(), dish2.getImage());
+        assertArrayEquals("dish2-image-url".getBytes(), dish2.getImageBytes());
         assertEquals(14.99f, dish2.getPrice());
         assertEquals(4.5f, dish2.getRating());
 
@@ -91,7 +99,7 @@ public class DishRepositoryTest {
         assertEquals("Burger Steak", dish3.getName());
         assertEquals("dish3 description", dish3.getDescription());
         assertEquals("beef", dish3.getTag());
-        assertArrayEquals("dish3-image-url".getBytes(), dish3.getImage());
+        assertArrayEquals("dish3-image-url".getBytes(), dish3.getImageBytes());
         assertEquals(12.99f, dish3.getPrice());
         assertEquals(4.4f, dish3.getRating());
     }
@@ -106,7 +114,7 @@ public class DishRepositoryTest {
         assertEquals("Chicken Alfredo", dish.getName());
         assertEquals("dish4 description", dish.getDescription());
         assertEquals("chicken", dish.getTag());
-        assertArrayEquals("dish4-image-url".getBytes(), dish.getImage());
+        assertArrayEquals("dish4-image-url".getBytes(), dish.getImageBytes());
         assertEquals(16.99f, dish.getPrice());
         assertEquals(3.5f, dish.getRating());
     }
@@ -122,7 +130,7 @@ public class DishRepositoryTest {
         assertEquals("Burger", dish1.getName());
         assertEquals("dish1 description", dish1.getDescription());
         assertEquals("beef", dish1.getTag());
-        assertArrayEquals("dish1-image-url".getBytes(), dish1.getImage());
+        assertArrayEquals("dish1-image-url".getBytes(), dish1.getImageBytes());
         assertEquals(9.99f, dish1.getPrice());
         assertEquals(4.1f, dish1.getRating());
 
@@ -130,7 +138,7 @@ public class DishRepositoryTest {
         assertEquals("Beef Wellington", dish2.getName());
         assertEquals("dish2 description", dish2.getDescription());
         assertEquals("beef", dish2.getTag());
-        assertArrayEquals("dish2-image-url".getBytes(), dish2.getImage());
+        assertArrayEquals("dish2-image-url".getBytes(), dish2.getImageBytes());
         assertEquals(14.99f, dish2.getPrice());
         assertEquals(4.5f, dish2.getRating());
 
@@ -138,7 +146,7 @@ public class DishRepositoryTest {
         assertEquals("Burger Steak", dish3.getName());
         assertEquals("dish3 description", dish3.getDescription());
         assertEquals("beef", dish3.getTag());
-        assertArrayEquals("dish3-image-url".getBytes(), dish3.getImage());
+        assertArrayEquals("dish3-image-url".getBytes(), dish3.getImageBytes());
         assertEquals(12.99f, dish3.getPrice());
         assertEquals(4.4f, dish3.getRating());
 
@@ -146,7 +154,7 @@ public class DishRepositoryTest {
         assertEquals("Chicken Alfredo", dish4.getName());
         assertEquals("dish4 description", dish4.getDescription());
         assertEquals("chicken", dish4.getTag());
-        assertArrayEquals("dish4-image-url".getBytes(), dish4.getImage());
+        assertArrayEquals("dish4-image-url".getBytes(), dish4.getImageBytes());
         assertEquals(16.99f, dish4.getPrice());
         assertEquals(3.5f, dish4.getRating());
     }

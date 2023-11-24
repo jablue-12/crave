@@ -47,7 +47,9 @@ public class DishTest {
                 .name("Burger")
                 .description("Burger description")
                 .tag("beef")
-                .image("some-image-url".getBytes())
+                .imageName("some-image-url.png")
+                .imageUrl("some-image-url")
+                .imageBytes("some-image-url".getBytes())
                 .price(14.99f)
                 .rating(4.5f)
                 .ingredientIds(List.of(beefIngredient.getId(), garlicIngredient.getId()))
@@ -63,7 +65,9 @@ public class DishTest {
         assertEquals("Burger", dish.getName());
         assertEquals("Burger description", dish.getDescription());
         assertEquals("beef", dish.getTag());
-        assertArrayEquals("some-image-url".getBytes(), dish.getImage());
+        assertArrayEquals("some-image-url".getBytes(), dish.getImageBytes());
+        assertEquals("some-image-url", dish.getImageUrl());
+        assertEquals("some-image-url.png", dish.getImageName());
         assertEquals(14.99f, dish.getPrice());
         assertEquals(4.5f, dish.getRating());
 
@@ -91,7 +95,9 @@ public class DishTest {
         dish.setName("Chicken Alfredo");
         dish.setDescription("Chicken Alfredo description");
         dish.setTag("chicken");
-        dish.setImage("updated".getBytes());
+        dish.setImageBytes("updated".getBytes());
+        dish.setImageUrl("updated.png-url");
+        dish.setImageName("updated.png");
         dish.setPrice(18.88f);
         dish.setRating(3.8f);
         dish.setIngredientIds(new ArrayList<>());
@@ -102,7 +108,9 @@ public class DishTest {
         assertEquals("Chicken Alfredo", dish.getName());
         assertEquals("Chicken Alfredo description", dish.getDescription());
         assertEquals("chicken", dish.getTag());
-        assertArrayEquals("updated".getBytes(), dish.getImage());
+        assertArrayEquals("updated".getBytes(), dish.getImageBytes());
+        assertEquals("updated.png-url", dish.getImageUrl());
+        assertEquals("updated.png", dish.getImageName());
         assertEquals(18.88f, dish.getPrice());
         assertEquals(3.8f, dish.getRating());
 
