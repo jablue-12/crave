@@ -34,6 +34,7 @@ public class SecurityConfig {
             "/accounts",
             "/restaurants",
             "/dishes/**",
+            "/chat/**",
             "/ingredients/**"
     };
 

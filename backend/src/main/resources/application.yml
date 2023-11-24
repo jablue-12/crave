@@ -13,3 +13,7 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+ai:
+  secret: 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
+  url: https://api.openai.com/v1/chat/completions

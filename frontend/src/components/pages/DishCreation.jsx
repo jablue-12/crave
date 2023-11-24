@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Col, Container, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
 import { agent } from '../../common/api';
-import { REQUEST_TIMEOUT, endpoint } from '../../common/constants';
+import { endpoint } from '../../common/constants';
 import { FeedbackMessage } from '../common/FeedbackMessage';
 import Loader from '../common/Loader';
 import Ingredient from '../features/dashboard/core/Ingredient';
 
 export default function DishCreation () {
-	const controller = new AbortController();
-
 	const placeholderDish = {
 		name: 'e.g. Chicken Alfredo',
 		description: 'e.g. Chicken Alfredo is a delectable Italian-American dish featuring grilled chicken atop fettuccine pasta, bathed in a luxuriously creamy Alfredo sauce.',
@@ -209,13 +207,7 @@ export default function DishCreation () {
 	const initIngredientOptions = async () => {
 		setIsIngredientOptionLoading(true);
 		try {
-			const timer = setTimeout(() => {
-				controller.abort();
-			}, REQUEST_TIMEOUT);
-
-			const { data } = await agent.get(endpoint.INGREDIENTS, controller.signal);
-
-			clearTimeout(timer);
+			const { data } = await agent.get(endpoint.INGREDIENTS);
 			setIngredientOptions(data);
 		} catch (e) {
 			console.error(e);
@@ -353,18 +345,27 @@ export default function DishCreation () {
 							onChange={handleImageChange}/>
 					</InputGroup>
 
-					<Button
-						type="submit"
-						className="w-100 mt-1"
+					<div
+						className="bubble submit w-25 mt-1 mx-auto"
 						onClick={() => createDish()}
-						disabled={isDishLoading}>
-						{isDishLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Create Dish'}
-					</Button>
+						disabled={isDishLoading}
+					>
+						<span style={{
+							height: '100%',
+							width: '100%',
+							display: 'flex',
+							justifyContent: 'center',
+							alignContent: 'center',
+							fontSize: '14px'
+						}}>
+							{isDishLoading
+								? (
+									<>
+										<Spinner size="sm"/> Loading...
+									</>)
+								: 'Add Dish'}
+						</span>
+					</div>
 
 				</Form>
 

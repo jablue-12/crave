@@ -6,10 +6,10 @@ import DishCard from './DishCard';
 const DishesList = ({ dishes, setSelectedDish }) => {
 	return <Container className="px-4">
 		<Scrollable height={425}>
-			{dishes.map(restaurant => (
+			{dishes.map(dish => (
 				<DishCard
-					key={restaurant.id}
-					dish={restaurant}
+					key={dish.id}
+					dish={dish}
 					setSelectedDish={setSelectedDish}
 				/>
 			))}

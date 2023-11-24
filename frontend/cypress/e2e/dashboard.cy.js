@@ -38,4 +38,17 @@ describe('tags spec', () => {
 			cy.get('.dish-tag').should('contain', 'Pizza');
 		});
 	});
+
+	it('should filter dishes by tags', () => {
+		cy.get('[data-cy="filter-tag"]').contains('Pizza').click();
+		cy.get('[data-cy="filter-tag"]').contains('Chinese').click();
+
+		cy.get('[data-cy="dish-image"]').each((img) => {
+			cy.wrap(img).click();
+			cy.get('.dish-tag').should('satisfy', (elements) => {
+				const text = elements.text();
+				return text.includes('Pizza') || text.includes('Chinese');
+			});
+		});
+	});
 });

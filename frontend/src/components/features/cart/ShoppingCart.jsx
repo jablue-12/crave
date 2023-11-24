@@ -2,10 +2,11 @@ import { sum, sumBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { BsCartPlusFill, BsFillCartDashFill, BsTrash3Fill } from 'react-icons/bs';
 import { GiPayMoney } from 'react-icons/gi';
 import { GrMap } from 'react-icons/gr';
-import { color } from '../../../common/constants';
+import { IoMdAdd, IoMdRemove } from 'react-icons/io';
+import { IoSkullSharp } from 'react-icons/io5';
+import { getNearbyPlaces } from '../../../common/utils';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import { useOrders } from '../../../contexts/OrderContext';
@@ -20,8 +21,7 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 	const { placeOrder } = useOrders();
 	const { user } = useAuth();
 
-	console.log('Logging - ShoppingCart');
-	console.log(location);
+	const closest = getNearbyPlaces(location.lat, location.lng);
 
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -62,11 +62,11 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 					<ListGroup.Item className="text-center">
 						{user
 							? <GiPayMoney onClick={onPlaceOrder} style={{ cursor: 'pointer' }} />
-							: <h6><strong>Please login to place order</strong></h6>
+							: <h6><strong>Log in to place order</strong></h6>
 						}
 					</ListGroup.Item>
 					<ListGroup.Item>
-						{isMapOn ? <Map /> : <GrMap onClick={() => setIsMapOn(true)} />}
+						{isMapOn ? <Map from={location} to={closest} /> : <GrMap onClick={() => setIsMapOn(true)} />}
 					</ListGroup.Item>
 				</ListGroup>
 			</Card>
@@ -94,13 +94,19 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 										<ListGroup.Item>
 											<Row>
 												<Col>
-													<BsCartPlusFill onClick={() => add(dish)} color={color.ICON} />
+													<span className="cart-plus" onClick={() => add(dish)}>
+														<IoMdAdd />
+													</span>
 												</Col>
 												<Col>
-													<BsFillCartDashFill onClick={() => removeOne(dish.id)} />
+													<span className="cart-minus" onClick={() => removeOne(dish.id)}>
+														<IoMdRemove />
+													</span>
 												</Col>
 												<Col>
-													<BsTrash3Fill color="red" onClick={() => remove(dish.id)} />
+													<span className="cart-remove" onClick={() => remove(dish.id)}>
+														<IoSkullSharp />
+													</span>
 												</Col>
 											</Row>
 										</ListGroup.Item>
