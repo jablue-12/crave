@@ -19,9 +19,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     // NOTE: Password is encoded using HS256
-    // Key generator: https://randomgenerate.io/encryption-key-generator
     // Decode the token: https://jwt.io/
-    private static final String SECRET_KEY = "a16c6728e5d93473c6b898b5a073638cbcce2fdf79a9c33fda8fe688e14b0f3a";
+    String SECRET_KEY = System.getenv("SECRET_KEY");
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -50,7 +49,6 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        int validTime = 1000 * 60 * 24;
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
