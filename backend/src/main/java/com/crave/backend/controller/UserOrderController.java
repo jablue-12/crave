@@ -3,8 +3,11 @@ package com.crave.backend.controller;
 import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.model.UserOrder;
+import com.crave.backend.model.OrderItem;
+import com.crave.backend.model.Dish;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.UserOrderService;
+import com.crave.backend.service.OrderItemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,7 @@ import java.util.Optional;
 public class UserOrderController {
     private final UserOrderService userOrderService;
     private final AccountService accountService;
-
+    private final OrderItemService orderItemService;
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
@@ -45,13 +48,25 @@ public class UserOrderController {
         return userOrderService.getOrderById(id);
     }
 
+    // @PostMapping
+    // public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder userOrder) {
+    //     System.out.println(userOrder.toString());
+    //     UserOrder newUserOrder = userOrderService.createOrder(userOrder);
+    //     return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
+
+    // }
+
     @PostMapping
-    public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder userOrder) {
-        System.out.println(userOrder.toString());
-        UserOrder newUserOrder = userOrderService.createOrder(userOrder);
+    public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder orderInfo, List<Dish> orderItems) {
+        UserOrder newUserOrder = userOrderService.createOrder(orderInfo);
+        for (Dish orderitem : orderItems){
+            OrderItem newOrderItem = new OrderItem(newUserOrder.getId(), );
+        }
+
         return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
 
     }
+//OrderItem(Long id, Long order_id, Long dish_id, int quantity, String name, float price)
 
     @PutMapping("/{id}")
     public ResponseEntity<UserOrder> updateOrder(@PathVariable Long id, @RequestBody UserOrder updatedUserOrder) {

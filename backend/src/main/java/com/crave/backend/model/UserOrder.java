@@ -25,6 +25,7 @@ public class UserOrder {
     private Long id;
     private Long user_id;
     private Long restaurant_id;
+    
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }

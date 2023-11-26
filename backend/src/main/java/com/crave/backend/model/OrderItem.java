@@ -22,9 +22,11 @@ public class OrderItem {
             generator = "orderItem_sequence"
     )
     private Long id;
+    
+    @NonNull
     private Long order_id;
+    @NonNull
     private Long dish_id;
+    @NonNull
     private int quantity;
-    private String name;
-    private float price;
 }
