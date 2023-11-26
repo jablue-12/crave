@@ -223,7 +223,7 @@ const Dish = ({ dish }) => {
 		<Row className="my-3">
 			<h6>{dish.name}</h6>
 			<Col md={7}>
-				<Image rounded fluid src="/images/1.jpg" />
+				<Image rounded fluid src={dish.imageUrl || '/images/1.jpg'} />
 			</Col>
 			<Col md={5}>
 				<ListGroup variant="flush">
