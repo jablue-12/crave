@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class OrderItem {
@@ -22,7 +23,14 @@ public class OrderItem {
             generator = "orderItem_sequence"
     )
     private Long id;
-    private Long order_id;
+    
+    @NonNull
+    private Long orderId;
+    @NonNull
+    private Long dishId;
+    @NonNull
+    private Long quantity;
+
     private String name;
     private float price;
 }

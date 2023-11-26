@@ -3,12 +3,17 @@ package com.crave.backend.controller;
 import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
 import com.crave.backend.model.UserOrder;
+import com.crave.backend.model.OrderItem;
+import com.crave.backend.model.Dish;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.UserOrderService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.crave.backend.service.OrderItemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "userOrders")
@@ -23,7 +30,7 @@ import java.util.Optional;
 public class UserOrderController {
     private final UserOrderService userOrderService;
     private final AccountService accountService;
-
+    private final OrderItemService orderItemService;
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
@@ -31,14 +38,34 @@ public class UserOrderController {
             // userDetails contains information about the authenticated user
             try {
                 Account account = accountService.findByEmail(userDetails.getUsername());
-                UserDTO user = UserDTO.of(account);
-                return ResponseEntity.ok(user);
+                // UserDTO user = UserDTO.of(account);
+                // return ResponseEntity.ok(user);
             } catch (EntityNotFoundException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }
-        return ResponseEntity.badRequest().body("Unable to get the orders since user is not authenticated.");
+        
+        return new ResponseEntity<>(userOrderService.getOrders(), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/getByUser/{email}")
+    public ResponseEntity<?> getOrders(@PathVariable String email) {
+        System.out.println("got here");
+        System.out.println(email);
+        if (email != null) {
+            // userDetails contains information about the authenticated user
+            try {
+                Account account = accountService.findByEmail(email);
+                // UserDTO user = UserDTO.of(account);
+                // return ResponseEntity.ok(user);
+            } catch (EntityNotFoundException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }
+        
+        return new ResponseEntity<>(userOrderService.getOrdersByEmail(email), HttpStatus.OK);
+    }
+    
 
     @GetMapping(path = "/{id}")
     public Optional<UserOrder> getOrderById(@PathVariable Long id) {
@@ -46,11 +73,41 @@ public class UserOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder userOrder) {
-        System.out.println(userOrder.toString());
-        UserOrder newUserOrder = userOrderService.createOrder(userOrder);
+    public ResponseEntity<?> createOrder(@RequestBody Map<String, Object> requestBody) {
+        Map<String, Object> orderMap = (Map<String, Object>) requestBody.get("orderInfo");
+        UserOrder orderInfo = mapToOrder(orderMap);
+
+        List<Map<String, Object>> orderItemsMaps = (List<Map<String, Object>>) requestBody.get("orderItems");
+        List<OrderItem> orderItems = orderItemsMaps.stream()
+                .map(this::mapToOrderItem)
+                .collect(Collectors.toList());
+        
+        try {
+                Account account = accountService.findByEmail(orderInfo.getEmail());
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        
+        UserOrder newUserOrder = userOrderService.createOrder(orderInfo);
+        for (OrderItem orderItem : orderItems){
+            orderItem.setOrderId(newUserOrder.getId());
+            orderItemService.createOrderItem(orderItem);
+        }
         return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
 
+    }
+
+    private UserOrder mapToOrder(Map<String, Object> orderMap) {
+        UserOrder order = new UserOrder((String)orderMap.get("email"), (String)orderMap.get("placedAt"));
+        return order;
+    }
+
+    private OrderItem mapToOrderItem(Map<String, Object> orderItemMap) {   
+        long dishId = (int)orderItemMap.get("dish_id");
+        long quantity =(int)orderItemMap.get("quantity");
+        
+        OrderItem orderItem = new OrderItem(-1L, dishId, quantity);
+        return orderItem;
     }
 
     @PutMapping("/{id}")
