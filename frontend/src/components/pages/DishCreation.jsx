@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Col, Container, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
 import { useDishCreation } from '../../contexts/DishCreationContext';
 import { FeedbackMessage } from '../common/FeedbackMessage';
 import Loader from '../common/Loader';
@@ -213,18 +213,27 @@ export default function DishCreation () {
 							onChange={handleImageChange}/>
 					</InputGroup>
 
-					<Button
-						type="submit"
-						className="w-100 mt-1"
+					<div
+						className="bubble submit w-25 mt-1 mx-auto"
 						onClick={() => createDish()}
-						disabled={isDishLoading}>
-						{isDishLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Create Dish'}
-					</Button>
+						disabled={isDishLoading}
+					>
+						<span style={{
+							height: '100%',
+							width: '100%',
+							display: 'flex',
+							justifyContent: 'center',
+							alignContent: 'center',
+							fontSize: '14px'
+						}}>
+							{isDishLoading
+								? (
+									<>
+										<Spinner size="sm"/> Loading...
+									</>)
+								: 'Add Dish'}
+						</span>
+					</div>
 
 				</Form>
 

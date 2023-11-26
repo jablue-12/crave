@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useAuth } from '../../../contexts/AuthContext';
 import { FeedbackMessage } from '../../common/FeedbackMessage';
-import Submit from '../../common/Submit';
+import SubmitButton from '../../common/SubmitButton';
 import { formGroupStyle, inputStyle } from './AuthFormStyle';
 
 export default function AuthForm ({
@@ -57,11 +57,10 @@ export default function AuthForm ({
 						/>
 					</OverlayTrigger>
 				</Form.Group>
-				<Submit
-					disabled={
-						email.length === 0 ||
-						password === 0}
-				/>
+				<SubmitButton
+					onSubmit={onSubmit}
+					disabled={email.length === 0 || password === 0}
+				>Submit</SubmitButton>
 			</Form>
 			{verificationSuccess &&
 				<FeedbackMessage

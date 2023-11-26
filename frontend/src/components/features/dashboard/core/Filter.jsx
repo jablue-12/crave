@@ -4,7 +4,7 @@ import { Row, Col, Badge } from 'react-bootstrap';
 import { agent } from '../../../../common/api';
 import { tags } from './../../../../common/dishTags';
 
-const Filter = ({ setDishes }) => {
+const Filter = ({ setDishes, setSelectedDish }) => {
 	const [selectedTags, setSelectedTags] = useState([]);
 
 	const onSelectTag = (tag) => {
@@ -22,6 +22,8 @@ const Filter = ({ setDishes }) => {
 				console.error(e);
 			}
 		})();
+
+		setSelectedDish(null);
 	};
 
 	return <Row>

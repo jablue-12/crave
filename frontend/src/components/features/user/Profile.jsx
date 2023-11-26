@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { sumBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Row, Table, Tabs, Tab } from 'react-bootstrap';
+import { Col, Form, Row, Table, Tabs, Tab } from 'react-bootstrap';
 import {
 	Radar,
 	RadarChart,
@@ -12,9 +12,9 @@ import {
 import { splitDate } from '../../../common/utils';
 import { useOrders } from '../../../contexts/OrderContext';
 import { mockOrders } from '../../../sample/orders';
-import ActivePieChart from '../../common/ActivePieChart';
+import { formGroupStyle, inputStyle } from '../auth/AuthFormStyle';
 
-const data = [
+const preferencesScores = [
 	'Pizza',
 	'Sushi',
 	'Burgers',
@@ -76,112 +76,117 @@ export default function Profile () {
 		className="mb-3"
 	>
 		<Tab eventKey="profile" title="User Profile">
-			<Container>
-				<Row>
-					<Col md={6}>
-						<Form onSubmit={handleSubmit}>
-							<Row>
-								<Col>
-									<Form.Group controlId="firstName">
-										<Form.Label>Update User</Form.Label>
-										<Form.Control
-											type="text"
-											name="firstName"
-											value={userDetails.firstName}
-											onChange={handleChange}
-											placeholder="First Name"
-										/>
-									</Form.Group>
-								</Col>
-							</Row>
-							<Row>
-								<Col>
-									<Form.Group controlId="lastName">
-										<Form.Control
-											type="text"
-											name="lastName"
-											value={userDetails.lastName}
-											onChange={handleChange}
-											placeholder="Last Name"
-										/>
-									</Form.Group>
-								</Col>
-							</Row>
-							<Row>
-								<Col>
-									<Form.Group controlId="email">
-										<Form.Control
-											type="email"
-											name="email"
-											value={userDetails.email}
-											onChange={handleChange}
-											placeholder="Email"
-										/>
-									</Form.Group>
-								</Col>
-							</Row>
-							<Row>
-								<Col>
-									<Form.Group controlId="password">
-										<Form.Control
-											type="password"
-											name="password"
-											value={userDetails.password}
-											onChange={handleChange}
-											placeholder="Password"
-										/>
-									</Form.Group>
-								</Col>
-							</Row>
-							<Button variant="primary" type="submit">
-								Save Changes
-							</Button>
-						</Form>
-					</Col>
-				</Row>
-			</Container>
+			<div style={{ display: 'flex', justifyContent: 'center' }}>
+				<Form>
+					<Row className="my-2">
+						<Col>
+							<Form.Group controlId="firstName" style={formGroupStyle}>
+								<Form.Control
+									type="text"
+									name="firstName"
+									value={userDetails.firstName}
+									onChange={handleChange}
+									placeholder="First Name"
+									style={inputStyle}
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+					<Row className="my-2">
+						<Col>
+							<Form.Group controlId="lastName">
+								<Form.Control
+									type="text"
+									name="lastName"
+									value={userDetails.lastName}
+									onChange={handleChange}
+									placeholder="Last Name"
+									style={inputStyle}
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+					<Row className="my-2">
+						<Col>
+							<Form.Group controlId="email">
+								<Form.Control
+									type="email"
+									name="email"
+									value={userDetails.email}
+									onChange={handleChange}
+									placeholder="Email"
+									style={inputStyle}
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+					<Row className="my-1">
+						<Col>
+							<Form.Group controlId="password">
+								<Form.Control
+									type="password"
+									name="password"
+									value={userDetails.password}
+									onChange={handleChange}
+									placeholder="Password"
+									style={inputStyle}
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+					<Row>
+						<Col>
+							<div
+								className="bubble submit mx-auto my-3"
+								style={{ cursor: 'pointer' }}
+								onClick={handleSubmit}
+							>Update</div>
+						</Col>
+					</Row>
+				</Form>
+			</div>
 		</Tab>
 		<Tab eventKey="orders" title="Past Orders">
 			<Row>
-				<Col md={6}>
-					<Table className="table-sm" striped hover responsive style={{ fontSize: '13px' }}>
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>DATE</th>
-								<th>TOTAL</th>
-							</tr>
-						</thead>
-						<tbody>
-							{(orders.length > 0
-								? orders.map(o => ({
-									...o.orderInfo,
-									total: sumBy(o.orderItems, i => i.price)
-								}))
-								: mockOrders).map(order =>
-								<tr key={order.id}>
-									<td>{order.id}</td>
-									<td>{splitDate(order.placedAt)}</td>
-									<td>${order.total}</td>
-								</tr>)}
-						</tbody>
-					</Table>
+				<Col>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<Table className="table-sm" striped hover responsive style={{ fontSize: '13px' }}>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>DATE</th>
+									<th>TOTAL</th>
+								</tr>
+							</thead>
+							<tbody>
+								{(orders.length > 0
+									? orders.map(o => ({
+										...o.orderInfo,
+										total: sumBy(o.orderItems, i => i.price)
+									}))
+									: mockOrders).map(order =>
+									<tr key={order.id}>
+										<td>{order.id}</td>
+										<td>{splitDate(order.placedAt)}</td>
+										<td>${order.total}</td>
+									</tr>)}
+							</tbody>
+						</Table>
+					</div>
 				</Col>
-				<Col md={6}>
-					<ActivePieChart/>
-				</Col>
-				<Col md={6}>
-					<div style={{
-						display: 'flex',
-						justifyContent: 'center'
-					}}>
+			</Row>;
+		</Tab>
+		<Tab eventKey="preferences" title="Preferences">
+			<Row>
+				<Col>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<RadarChart
 							cx={300}
 							cy={300}
 							outerRadius={150}
 							width={500}
 							height={500}
-							data={data}
+							data={preferencesScores}
 						>
 							<PolarGrid/>
 							<PolarAngleAxis dataKey="category"/>
@@ -196,7 +201,7 @@ export default function Profile () {
 						</RadarChart>
 					</div>
 				</Col>
-			</Row>;
+			</Row>
 		</Tab>
 	</Tabs>;
 }
