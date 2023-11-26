@@ -23,6 +23,8 @@ public class OrderItem {
     )
     private Long id;
     private Long order_id;
+    private Long dish_id;
+    private int quantity;
     private String name;
     private float price;
 }
