@@ -25,6 +25,10 @@ public class UserOrderService {
         return userOrderRepository.findById(id);
     }
 
+    public List<UserOrder> getOrdersByEmail(String email) {
+        return userOrderRepository.findByEmail(email);
+    }
+
     public UserOrder createOrder(UserOrder userOrder) {
         return userOrderRepository.save(userOrder);
     }

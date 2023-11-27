@@ -38,14 +38,34 @@ public class UserOrderController {
             // userDetails contains information about the authenticated user
             try {
                 Account account = accountService.findByEmail(userDetails.getUsername());
-                UserDTO user = UserDTO.of(account);
-                return ResponseEntity.ok(user);
+                // UserDTO user = UserDTO.of(account);
+                // return ResponseEntity.ok(user);
             } catch (EntityNotFoundException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }
-        return ResponseEntity.badRequest().body("Unable to get the orders since user is not authenticated.");
+        
+        return new ResponseEntity<>(userOrderService.getOrders(), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/getByUser/{email}")
+    public ResponseEntity<?> getOrders(@PathVariable String email) {
+        System.out.println("got here");
+        System.out.println(email);
+        if (email != null) {
+            // userDetails contains information about the authenticated user
+            try {
+                Account account = accountService.findByEmail(email);
+                // UserDTO user = UserDTO.of(account);
+                // return ResponseEntity.ok(user);
+            } catch (EntityNotFoundException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }
+        
+        return new ResponseEntity<>(userOrderService.getOrdersByEmail(email), HttpStatus.OK);
+    }
+    
 
     @GetMapping(path = "/{id}")
     public Optional<UserOrder> getOrderById(@PathVariable Long id) {
