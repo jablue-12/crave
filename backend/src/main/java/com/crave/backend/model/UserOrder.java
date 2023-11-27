@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 public class UserOrder {
     @Id
@@ -23,9 +24,25 @@ public class UserOrder {
             generator = "order_sequence"
     )
     private Long id;
-    private Long user_id;
+
+    //NOTE: idk what this is or why we have it
+    // @NonNull
+    String username;
+
+    //unique identifier for users
+    @NonNull
+    String email;
+
+    @NonNull
+    String placedAt;
+
+    //why we need the role for our users, idk
+    // @NonNull
+    String role;
+
+
     private Long restaurant_id;
-    
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }

@@ -7,11 +7,13 @@ import com.crave.backend.model.OrderItem;
 import com.crave.backend.model.Dish;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.UserOrderService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.crave.backend.service.OrderItemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "userOrders")
@@ -48,25 +52,43 @@ public class UserOrderController {
         return userOrderService.getOrderById(id);
     }
 
-    // @PostMapping
-    // public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder userOrder) {
-    //     System.out.println(userOrder.toString());
-    //     UserOrder newUserOrder = userOrderService.createOrder(userOrder);
-    //     return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
-
-    // }
-
     @PostMapping
-    public ResponseEntity<UserOrder> createOrder(@RequestBody UserOrder orderInfo, List<Dish> orderItems) {
-        UserOrder newUserOrder = userOrderService.createOrder(orderInfo);
-        for (Dish orderitem : orderItems){
-            OrderItem newOrderItem = new OrderItem(newUserOrder.getId(), );
-        }
+    public ResponseEntity<?> createOrder(@RequestBody Map<String, Object> requestBody) {
+        Map<String, Object> orderMap = (Map<String, Object>) requestBody.get("orderInfo");
+        UserOrder orderInfo = mapToOrder(orderMap);
 
+        List<Map<String, Object>> orderItemsMaps = (List<Map<String, Object>>) requestBody.get("orderItems");
+        List<OrderItem> orderItems = orderItemsMaps.stream()
+                .map(this::mapToOrderItem)
+                .collect(Collectors.toList());
+        
+        try {
+                Account account = accountService.findByEmail(orderInfo.getEmail());
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        
+        UserOrder newUserOrder = userOrderService.createOrder(orderInfo);
+        for (OrderItem orderItem : orderItems){
+            orderItem.setOrder_id(newUserOrder.getId());
+            orderItemService.createOrderItem(orderItem);
+        }
         return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
 
     }
-//OrderItem(Long id, Long order_id, Long dish_id, int quantity, String name, float price)
+
+    private UserOrder mapToOrder(Map<String, Object> orderMap) {
+        UserOrder order = new UserOrder((String)orderMap.get("email"), (String)orderMap.get("placedAt"));
+        return order;
+    }
+
+    private OrderItem mapToOrderItem(Map<String, Object> orderItemMap) {   
+        long dishId = (int)orderItemMap.get("dish_id");
+        long quantity =(int)orderItemMap.get("quantity");
+        
+        OrderItem orderItem = new OrderItem(-1L, dishId, quantity);
+        return orderItem;
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserOrder> updateOrder(@PathVariable Long id, @RequestBody UserOrder updatedUserOrder) {

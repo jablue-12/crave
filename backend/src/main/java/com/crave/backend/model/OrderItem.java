@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class OrderItem {
@@ -28,5 +29,8 @@ public class OrderItem {
     @NonNull
     private Long dish_id;
     @NonNull
-    private int quantity;
+    private Long quantity;
+    
+    private String name;
+    private float price;
 }
