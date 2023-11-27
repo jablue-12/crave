@@ -33,8 +33,9 @@ const Header = ({ setIsSliderOn }) => {
 								options={{
 									strings: [
 										'RAVE',
-										'COMPUTER SCIENCE',
-										'SUCKS !'
+										'OMPUTER SCIENCE',
+										'OMP4350',
+										'HRISTMAS SEASON!'
 									],
 									autoStart: true,
 									loop: true
@@ -82,6 +83,11 @@ const Header = ({ setIsSliderOn }) => {
 									</span>
 								</span>
 							</Link>}
+							{user &&
+								<span style={{ textTransform: 'none', marginLeft: '25px' }}>
+									Hi {user.firstName}
+								</span>
+							}
 							<NavDropdown
 								title={
 									<ImUser

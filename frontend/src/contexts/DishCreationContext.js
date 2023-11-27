@@ -29,6 +29,8 @@ export const DishCreationProvider = ({ children }) => {
 		}
 	);
 
+	const [newIngredientResponse, setNewIngredientResponse] = useState(null);
+
 	const [touched, setTouched] = useState(
 		{
 			name: false,
@@ -140,7 +142,7 @@ export const DishCreationProvider = ({ children }) => {
 				resetDish();
 				resetTouch();
 				setIsDishLoading(false);
-				// Set dishCreationFeedback to null after 2 seconds
+				// Set dishCreationFeedback to null after 3 seconds disappear
 				setTimeout(() => {
 					setDishCreationFeedback(null);
 				}, 3000);
@@ -167,6 +169,10 @@ export const DishCreationProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
+		initIngredientOptions();
+	}, [newIngredientResponse]);
+
+	useEffect(() => {
 		updateIngredientIds();
 	}, [ingredients]);
 
@@ -188,7 +194,9 @@ export const DishCreationProvider = ({ children }) => {
 		setIsDishLoading,
 		dishCreationFeedback,
 		setDishCreationFeedback,
-		createDish
+		createDish,
+		newIngredientResponse,
+		setNewIngredientResponse
 	};
 
 	return (

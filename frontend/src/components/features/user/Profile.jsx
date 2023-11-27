@@ -74,6 +74,7 @@ export default function Profile () {
 		defaultActiveKey="profile"
 		id="profile-tabs"
 		className="mb-3"
+		variant="underline"
 	>
 		<Tab eventKey="profile" title="User Profile">
 			<div style={{ display: 'flex', justifyContent: 'center' }}>
