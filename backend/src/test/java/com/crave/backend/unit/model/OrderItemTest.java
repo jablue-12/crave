@@ -15,6 +15,7 @@ public class OrderItemTest {
                 .id(1L)
                 .order_id(1L)
                 .name("large fries")
+                .dish_id(1L)
                 .price(3.99f)
                 .build();
     }
@@ -32,6 +33,7 @@ public class OrderItemTest {
         orderItem.setId(2L);
         orderItem.setOrder_id(2L);
         orderItem.setName("chicken sandwich");
+        orderItem.setDish_id(1L);
         orderItem.setPrice(4.99f);
 
 
