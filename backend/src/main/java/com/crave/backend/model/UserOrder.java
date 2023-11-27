@@ -40,6 +40,7 @@ public class UserOrder {
     // @NonNull
     String role;
 
+    Long user_id;
 
     private Long restaurant_id;
 
