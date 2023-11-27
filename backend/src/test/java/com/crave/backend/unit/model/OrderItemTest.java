@@ -17,6 +17,7 @@ public class OrderItemTest {
                 .name("large fries")
                 .dish_id(1L)
                 .price(3.99f)
+                .quantity(3L)
                 .build();
     }
 

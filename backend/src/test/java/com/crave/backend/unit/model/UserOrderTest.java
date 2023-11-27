@@ -15,6 +15,8 @@ public class UserOrderTest {
         userOrder = UserOrder.builder()
                 .id(1L)
                 .user_id(1L)
+                .email("test.email@hotmail.com")
+                .placedAt("now")
                 .restaurant_id(1L)
                 .status(OrderStatus.START)
                 .build();
