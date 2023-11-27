@@ -9,7 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -23,8 +24,8 @@ jobs:
 
     - name: Build with Maven
       working-directory: ./backend
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -DSECRET_KEY=${SECRET_KEY} --file pom.xml
 
     - name: Test
       working-directory: ./backend
-      run: mvn test --file pom.xml
+      run: mvn test -DSECRET_KEY=${SECRET_KEY} --file pom.xml
