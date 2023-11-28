@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test-application.properties")
 public class AuthenticationServiceTest {
     @Autowired
     private AuthenticationService authenticationService;
