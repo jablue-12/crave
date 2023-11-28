@@ -2,9 +2,7 @@ package com.crave.backend.controller;
 
 import com.crave.backend.dto.UserDTO;
 import com.crave.backend.model.Account;
-import com.crave.backend.model.auth.AuthenticationRequest;
-import com.crave.backend.model.auth.AuthenticationResponse;
-import com.crave.backend.model.auth.RegisterRequest;
+import com.crave.backend.model.auth.*;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.AuthenticationService;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,7 +29,6 @@ public class AuthenticationController {
     private final AccountService accountService;
 
     @GetMapping("/user")
-    @ResponseBody
     public ResponseEntity<?> getAuthenticatedUser(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             // userDetails contains information about the authenticated user
@@ -39,6 +36,20 @@ public class AuthenticationController {
                 Account account = accountService.findByEmail(userDetails.getUsername());
                 UserDTO user = UserDTO.of(account);
                 return ResponseEntity.ok(user);
+            } catch (EntityNotFoundException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }
+        return ResponseEntity.badRequest().body("User is not authenticated.");
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<?> updateAuthenticatedUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateRequest updateRequest) {
+        if (userDetails != null) {
+            // userDetails contains information about the authenticated user
+            try {
+                AuthenticationResponse updateResponse = authenticationService.updateAuthenticatedUser(userDetails.getUsername(), updateRequest);
+                return ResponseEntity.ok(updateResponse);
             } catch (EntityNotFoundException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
