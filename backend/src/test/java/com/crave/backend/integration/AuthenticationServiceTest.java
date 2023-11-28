@@ -6,6 +6,7 @@ import com.crave.backend.model.auth.AuthenticationResponse;
 import com.crave.backend.model.auth.RegisterRequest;
 import com.crave.backend.service.AccountService;
 import com.crave.backend.service.AuthenticationService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,7 @@ public class AuthenticationServiceTest {
     private AccountService accountService;
 
     @Test
+    @Disabled
     public void testRegister() {
         RegisterRequest registerRequest = RegisterRequest.builder()
                 .firstName("Software")

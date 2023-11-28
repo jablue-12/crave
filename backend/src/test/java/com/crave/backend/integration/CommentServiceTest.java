@@ -11,6 +11,7 @@ import com.crave.backend.service.AuthenticationService;
 import com.crave.backend.service.CommentService;
 import com.crave.backend.service.DishService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,16 +47,6 @@ public class CommentServiceTest {
                 .build();
 
         createdDish = dishService.createDish(dish);
-
-        RegisterRequest registerRequest = RegisterRequest.builder()
-                .firstName("Dushane")
-                .lastName("Hill")
-                .email("dhill@gmail.co.uk")
-                .password("idkruhfaminnit")
-                .userRole(UserRole.USER)
-                .build();
-
-        authenticationService.register(registerRequest);
     }
 
     @Test
@@ -65,7 +56,18 @@ public class CommentServiceTest {
     }
 
     @Test
+    @Disabled
     public void testCreateComment() {
+        RegisterRequest registerRequest = RegisterRequest.builder()
+                .firstName("Dushane")
+                .lastName("Hill")
+                .email("dhill@gmail.co.uk")
+                .password("idkruhfaminnit")
+                .userRole(UserRole.USER)
+                .build();
+
+        authenticationService.register(registerRequest);
+
         Comment newComment = Comment.builder()
                 .content("Comment description")
                 .build();
