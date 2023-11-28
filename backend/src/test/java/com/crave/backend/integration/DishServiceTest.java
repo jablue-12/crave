@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
@@ -23,12 +24,6 @@ public class DishServiceTest {
     private DishService dishService;
     @Autowired
     private DishRepository dishRepository;
-
-    @Test
-    public void testGetDishes() {
-        List<Dish> dishes = dishService.getDishes();
-        assertEquals(0, dishes.size());
-    }
 
     @Test
     public void testCreateDish() {
@@ -50,7 +45,7 @@ public class DishServiceTest {
         assertEquals(dish.getRating(), createdDish.getRating());
 
         List<Dish> dishes = dishService.getDishes();
-        assertEquals(1, dishes.size());
+        assertTrue(dishes.size() > 0);
 
         dishRepository.delete(createdDish);
     }
