@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Modal, Spinner } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { BiSolidCommentAdd } from 'react-icons/bi';
-import { agent } from '../../../../common/api';
+import { restful } from '../../../../common/api';
 import { endpoint } from '../../../../common/constants';
 import { splitDate } from '../../../../common/utils';
 import { useAuth } from '../../../../contexts/AuthContext';
@@ -40,7 +40,7 @@ const Comments = ({ dishId }) => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const { data } = await agent.get(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`);
+				const { data } = await restful.get(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`);
 				setComments(orderBy(data, ['createdAt'], ['desc']));
 				setIsLoading(false);
 			} catch (e) {
@@ -53,7 +53,7 @@ const Comments = ({ dishId }) => {
 	const onAdd = async () => {
 		setIsContentOnChangeLoading(true);
 		try {
-			const { data } = await agent.postTokenized(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`, {
+			const { data } = await restful.auth.json.post(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`, {
 				content: contentOnChange
 			});
 			setComments(prev => [data, ...prev]);
@@ -110,7 +110,7 @@ const Comments = ({ dishId }) => {
 				</span>
 			</ListGroup.Item>}
 		</ListGroup>
-		<Modal show={isAdding} onHide={() => setIsAdding(false)}>
+		<Modal size="sm" show={isAdding} onHide={() => setIsAdding(false)}>
 			<Modal.Header closeButton>
 				<Modal.Title>Add</Modal.Title>
 			</Modal.Header>
@@ -131,9 +131,6 @@ const Comments = ({ dishId }) => {
 				</Form>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button variant="secondary" onClick={() => setIsAdding(false)}>
-					Cancel
-				</Button>
 				<Button data-cy="add-comment-submit" variant="secondary" onClick={onAdd} disabled={isContentOnChangeLoading}>
 					{isContentOnChangeLoading
 						? (
@@ -141,6 +138,9 @@ const Comments = ({ dishId }) => {
 								<Spinner size="sm"/> Loading...
 							</>)
 						: 'Add'}
+				</Button>
+				<Button variant="secondary" onClick={() => setIsAdding(false)}>
+					Cancel
 				</Button>
 			</Modal.Footer>
 		</Modal>

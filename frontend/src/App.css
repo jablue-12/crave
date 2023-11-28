@@ -81,6 +81,7 @@
     font-weight: 600 !important;
     transition: background 0.3s ease, box-shadow 0.3s ease !important;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
+    white-space: 'nowrap';
 }
 
 .add-to-bag,
@@ -111,7 +112,7 @@
 .submit,
 .submit-disabled {
     height: 30px !important;
-    width: 75px !important;
+    width: fit-content !important;
 }
 
 .submit {

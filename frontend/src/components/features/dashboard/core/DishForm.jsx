@@ -251,7 +251,6 @@ export const DishForm = () => {
 							: 'Add Dish'}
 					</span>
 				</Button>
-
 			</Form>
 
 			{dishCreationFeedback &&

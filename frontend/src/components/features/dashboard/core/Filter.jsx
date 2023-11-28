@@ -1,7 +1,7 @@
 import { includes, orderBy, union, without } from 'lodash';
 import React, { useState } from 'react';
 import { Row, Col, Badge } from 'react-bootstrap';
-import { agent } from '../../../../common/api';
+import { restful } from '../../../../common/api';
 import { tags } from './../../../../common/dishTags';
 
 const Filter = ({ setDishes, setSelectedDish }) => {
@@ -16,7 +16,7 @@ const Filter = ({ setDishes, setSelectedDish }) => {
 
 		(async () => {
 			try {
-				const { data } = await agent.get(`/dishes?tags=${updatedTags.join(',')}`);
+				const { data } = await restful.get(`/dishes?tags=${updatedTags.join(',')}`);
 				setDishes(orderBy(data, ['rating'], ['desc']));
 			} catch (e) {
 				console.error(e);

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { endpoint } from '../common/constants';
-import { agent } from './../common/api';
+import { restful } from './../common/api';
 
 const DishCreationContext = createContext();
 
@@ -123,15 +123,10 @@ export const DishCreationProvider = ({ children }) => {
 			setIsDishLoading(true);
 			setDishCreationFeedback(null);
 			try {
-				const { data } = await agent.postTokenized(
-					`${endpoint.DISHES}`,
-					newDish);
+				const { data } = await restful.auth.json.post(`${endpoint.DISHES}`, newDish);
 
 				if (newDish.image) {
-					await agent.postTokenizedFormData(
-						`${endpoint.DISHES}/${data.id}/image`,
-						newDish.image
-					);
+					await restful.auth.form.post(`${endpoint.DISHES}/${data.id}/image`, newDish.image);
 				}
 
 				setDishCreationFeedback(getSuccessFeedback);
@@ -155,7 +150,7 @@ export const DishCreationProvider = ({ children }) => {
 	const initIngredientOptions = async () => {
 		setIsIngredientOptionLoading(true);
 		try {
-			const { data } = await agent.get(endpoint.INGREDIENTS);
+			const { data } = await restful.get(endpoint.INGREDIENTS);
 			setIngredientOptions(data);
 		} catch (e) {
 			console.error(e);
