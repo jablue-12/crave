@@ -1,12 +1,13 @@
 import { orderBy } from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, Spinner } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { BiSolidCommentAdd } from 'react-icons/bi';
 import { agent } from '../../../../common/api';
 import { endpoint } from '../../../../common/constants';
 import { splitDate } from '../../../../common/utils';
 import { useAuth } from '../../../../contexts/AuthContext';
+import { FeedbackMessage } from '../../../common/FeedbackMessage';
 import Loader from '../../../common/Loader';
 import Scrollable from './../../../common/Scrollable';
 
@@ -15,8 +16,26 @@ const Comments = ({ dishId }) => {
 	const [comments, setComments] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [contentOnChange, setContentOnChange] = useState('');
+	const [isContentOnChangeLoading, setIsContentOnChangeLoading] = useState(false);
+	const [feedbackMessage, setFeedbackMessage] = useState('');
 
 	const { user } = useAuth();
+
+	const getSuccessFeedback = () => {
+		return {
+			variant: 'success',
+			messageHeader: '',
+			messageDescription: 'New Comment has been added'
+		};
+	};
+
+	const getErrorFeedback = () => {
+		return {
+			variant: 'danger',
+			messageHeader: '',
+			messageDescription: 'Failed to add your comment. Please try again.'
+		};
+	};
 
 	useEffect(() => {
 		(async () => {
@@ -32,17 +51,25 @@ const Comments = ({ dishId }) => {
 	}, [dishId]);
 
 	const onAdd = async () => {
+		setIsContentOnChangeLoading(true);
 		try {
 			const { data } = await agent.postTokenized(`${endpoint.DISHES}/${dishId}${endpoint.COMMENTS}`, {
 				content: contentOnChange
 			});
 			setComments(prev => [data, ...prev]);
+			setFeedbackMessage(getSuccessFeedback);
 		} catch (e) {
 			console.error(e);
-		}
+			setFeedbackMessage(getErrorFeedback);
+		} finally {
+			setIsAdding(false);
+			setContentOnChange('');
+			setIsContentOnChangeLoading(false);
 
-		setIsAdding(false);
-		setContentOnChange('');
+			setTimeout(() => {
+				setFeedbackMessage(null);
+			}, 3000);
+		}
 	};
 
 	if (isLoading) {
@@ -62,7 +89,11 @@ const Comments = ({ dishId }) => {
 						fontSize: '12px',
 						marginBottom: 0,
 						textAlign: 'right'
-					}}>{splitDate(x.createdAt)}</p>
+					}}>
+						<strong>Author:</strong> {x.fullName}
+						<br/>
+						{splitDate(x.createdAt)}
+					</p>
 				</ListGroup.Item>
 			))}
 			{user && <ListGroup.Item
@@ -103,11 +134,21 @@ const Comments = ({ dishId }) => {
 				<Button variant="secondary" onClick={() => setIsAdding(false)}>
 					Cancel
 				</Button>
-				<Button data-cy="add-comment-submit" variant="secondary" onClick={onAdd}>
-					Add
+				<Button data-cy="add-comment-submit" variant="secondary" onClick={onAdd} disabled={isContentOnChangeLoading}>
+					{isContentOnChangeLoading
+						? (
+							<>
+								<Spinner size="sm"/> Loading...
+							</>)
+						: 'Add'}
 				</Button>
 			</Modal.Footer>
 		</Modal>
+		{feedbackMessage &&
+			<FeedbackMessage
+				variant={feedbackMessage.variant}
+				messageHeader={feedbackMessage.messageHeader}
+				messageDescription={feedbackMessage.messageDescription}/>}
 	</Scrollable>;
 };
 
