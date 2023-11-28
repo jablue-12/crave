@@ -75,14 +75,23 @@ public class DishService {
     public List<Dish> getByTags(List<String> tags) {
         List<Dish> dishes = dishRepository.findAll();
         List<Dish> dishesWithTags = new ArrayList<>();
+        List<Ingredient> ingredients;
+
         for (Dish dish : dishes) {
             for (String tag : tags) {
                 if (tag.equals(dish.getTag())) {
+                    if (dish.getIngredientIds() != null && !dish.getIngredientIds().isEmpty()) {
+                        ingredients = ingredientRepository.findAllById(dish.getIngredientIds());
+
+                        if (!ingredients.isEmpty()) {
+                            dish.setIngredients(ingredients);
+                        }
+                    }
+
                     dishesWithTags.add(dish);
                 }
             }
         }
-
         return dishesWithTags;
     }
 }
