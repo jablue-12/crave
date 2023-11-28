@@ -1,12 +1,13 @@
 import { sum } from 'lodash';
 import React, { useState, memo } from 'react';
-import { Container, Image, Nav, NavDropdown, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { FaChartPie, FaPlus, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
-import { SlBasket } from 'react-icons/sl';
-import { Link } from 'react-router-dom';
-
+import { Container, Image, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { FaGifts } from 'react-icons/fa';
+import { GiBeachBag } from 'react-icons/gi';
+import { ImUser } from 'react-icons/im';
+import { IoFastFoodSharp } from 'react-icons/io5';
+import { Link, useNavigate } from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
-import { color, iconColor } from '../../../common/constants';
+import { color, iconSize } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import Popup from './../../common/Popup';
@@ -15,13 +16,11 @@ import Register from './../auth/Register';
 
 const Header = ({ setIsSliderOn }) => {
 	const { dishesInCart } = useCart();
-	const { user, logout } = useAuth();
+	const { user, logout, isAdmin } = useAuth();
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-	const isUserAdmin = () => {
-		return user && user.userRole === 'ADMIN';
-	};
+	const nav = useNavigate();
 
 	return (
 		<header className="my-1">
@@ -34,8 +33,9 @@ const Header = ({ setIsSliderOn }) => {
 								options={{
 									strings: [
 										'RAVE',
-										'COMPUTER SCIENCE',
-										'SUCKS !'
+										'OMPUTER SCIENCE',
+										'OMP4350',
+										'HRISTMAS SEASON!'
 									],
 									autoStart: true,
 									loop: true
@@ -46,37 +46,53 @@ const Header = ({ setIsSliderOn }) => {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto" style={{ display: 'flex', alignItems: 'center' }}>
-							{isUserAdmin() &&
-									<Link to="dish-creation" style={{ textDecoration: 'none' }}>
-										<FaPlus color={iconColor} />
-									</Link>}
-							{user &&
-								<Link to="profile" style={{ textDecoration: 'none', marginLeft: '20px' }}>
-									<FaChartPie color={iconColor} />
-								</Link>}
-							<OverlayTrigger
-								key="bottom"
-								placement="bottom"
-								overlay={
-									<Tooltip id="tooltip-bottom" style={{ opacity: 0.7 }}>
-										{sum(dishesInCart.map(x => x.quantity))}
-									</Tooltip>}
-							>
-								<Link
-									style={{ textDecoration: 'none', marginLeft: '20px' }}
-									onClick={() => setIsSliderOn(true)}
-								>
-									<span data-cy="shopping-cart">
-										{dishesInCart.length === 0
-											? <SlBasket />
-											: <FaShoppingCart color={iconColor} />}
+							{isAdmin && <Link to="/sales" style={{ textDecoration: 'none' }}>
+								<span className="add-discount">
+									<FaGifts size={iconSize} />
+								</span>
+							</Link>}
+							{isAdmin &&
+								<Link to="dish-creation" style={{ textDecoration: 'none', marginLeft: '25px' }}>
+									<span className="add-dish">
+										<IoFastFoodSharp size={iconSize} />
 									</span>
-								</Link>
-							</OverlayTrigger>
+								</Link>}
+							{!isAdmin && <Link
+								style={{ textDecoration: 'none', marginLeft: '25px' }}
+								onClick={() => setIsSliderOn(true)}
+							>
+								<span
+									data-cy="shopping-cart"
+									style={{
+										position: 'relative',
+										display: 'inline-block'
+									}}
+								>
+									<span className="shopping-bag">
+										<GiBeachBag size={iconSize} />
+									</span>
+									<span
+										style={{
+											position: 'absolute',
+											top: -3,
+											right: -7,
+											fontSize: '10px'
+										}}
+									>
+										{sum(dishesInCart.map(x => x.quantity))}
+									</span>
+								</span>
+							</Link>}
+							{user &&
+								<span style={{ textTransform: 'none', marginLeft: '25px' }}>
+									Hi {user.firstName}
+								</span>
+							}
 							<NavDropdown
 								title={
-									<FaUserCircle
+									<ImUser
 										data-cy="user"
+										size={iconSize}
 										style={{
 											textDecoration: 'none',
 											marginLeft: '15px',
@@ -86,9 +102,26 @@ const Header = ({ setIsSliderOn }) => {
 								menuVariant="light"
 							>
 								{user
-									? <NavDropdown.Item data-cy="logout" onClick={() => logout(user)}>
-										Logout
-									</NavDropdown.Item>
+									? <>
+										<NavDropdown.Item>
+											<Link
+												to="profile"
+												style={{
+													display: 'flex',
+													justifyContent: 'around',
+													textDecoration: 'none'
+												}}
+											>
+												Profile
+											</Link>
+										</NavDropdown.Item>
+										<NavDropdown.Item data-cy="logout" onClick={() => {
+											logout(user);
+											nav('/');
+										}}>
+											Logout
+										</NavDropdown.Item>
+									</>
 									: <>
 										<NavDropdown.Item data-cy="register" onClick={() => setIsRegistering(true)}>
 											Register
@@ -104,7 +137,7 @@ const Header = ({ setIsSliderOn }) => {
 								close={() => setIsRegistering(false)}
 								title="Registration"
 							>
-								<Register />
+								<Register setIsRegistering={setIsRegistering} />
 							</Popup>
 							<Popup
 								size="md"
@@ -112,7 +145,7 @@ const Header = ({ setIsSliderOn }) => {
 								close={() => setIsLoggingIn(false)}
 								title="Login"
 							>
-								<Login />
+								<Login setIsLoggingIn={setIsLoggingIn} />
 							</Popup>
 						</Nav>
 					</Navbar.Collapse>

@@ -9,7 +9,7 @@ const DishCard = ({ dish, setSelectedDish }) => {
 				<Image
 					data-cy="dish-image"
 					onClick={() => setSelectedDish(dish)}
-					src={dish.photos ? dish.photos[0].getUrl() : '/images/1.jpg'}
+					src={dish.imageUrl || '/images/1.jpg'}
 					fluid
 					style={{
 						width: '100%',
@@ -27,7 +27,12 @@ const DishCard = ({ dish, setSelectedDish }) => {
 						<h6>{dish.name}</h6>
 					</ListGroup.Item>
 					{<ListGroup.Item>
-						${dish.price}
+						${dish.isOnSale
+							? <>
+								<del className="mx-1">{dish.regularPrice}</del>
+								<span style={{ color: 'red' }}>{dish.price}</span>
+							</>
+							: dish.price}
 					</ListGroup.Item>}
 					<ListGroup.Item>
 						<Row>

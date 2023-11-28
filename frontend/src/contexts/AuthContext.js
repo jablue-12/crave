@@ -9,6 +9,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+	const [verificationSuccess, setVerificationSuccess] = useState(null);
 	const [user, setUser] = useState(null);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -20,8 +21,6 @@ export const AuthProvider = ({ children }) => {
 		if (token) {
 			(async () => {
 				try {
-					console.log('Logging - AuthProvider');
-					console.log(localStorage.getItem(TOKEN_KEY));
 					const { data } = await agent.getTokenized(endpoint.USER);
 					setUser(data);
 				} catch (e) {
@@ -30,6 +29,35 @@ export const AuthProvider = ({ children }) => {
 			})();
 		}
 	}, []);
+
+	const getLoginSuccessFeedback = () => {
+		return {
+			variant: 'success',
+			messageHeader: 'Login Success',
+			messageDescription: 'Welcome back.'
+		};
+	};
+	const getLoginErrorFeedback = () => {
+		return {
+			variant: 'danger',
+			messageHeader: 'Error with Login',
+			messageDescription: 'Please try again.'
+		};
+	};
+	const getRegisterSuccessFeedback = () => {
+		return {
+			variant: 'success',
+			messageHeader: 'Registration Success',
+			messageDescription: 'Welcome to Crave.'
+		};
+	};
+	const getRegisterErrorFeedback = () => {
+		return {
+			variant: 'danger',
+			messageHeader: 'Error with Registration',
+			messageDescription: 'Please try again.'
+		};
+	};
 
 	const login = async (e) => {
 		e.preventDefault();
@@ -42,21 +70,33 @@ export const AuthProvider = ({ children }) => {
 
 			setToken(loginResult.data.token);
 			localStorage.setItem(TOKEN_KEY, loginResult.data.token);
+			localStorage.setItem('user', email);
 
 			const userResult = await agent.getTokenized(endpoint.USER);
 			setUser(userResult.data);
+
+			setVerificationSuccess(getLoginSuccessFeedback);
 		} catch (e) {
-			alert(e);
+			console.error(e);
+			setVerificationSuccess(getLoginErrorFeedback());
+		} finally {
+			setTimeout(() => {
+				setVerificationSuccess(null);
+			}, 3000);
 		}
 	};
 
 	const logout = () => {
+		localStorage.removeItem(TOKEN_KEY);
+		localStorage.removeItem('user');
+		localStorage.setItem('cart_default', localStorage.getItem(`cart_${user.email}`) ?? []);
+		localStorage.removeItem(`cart_${user.email}`);
+
 		setUser(null);
 		setFirstName('');
 		setLastName('');
 		setPassword('');
 		setToken(null);
-		localStorage.removeItem(TOKEN_KEY);
 	};
 
 	const register = async e => {
@@ -70,27 +110,37 @@ export const AuthProvider = ({ children }) => {
 				password
 			});
 
-			console.log('Logging - regsiter()');
+			console.log('Logging - register()');
 			console.log(registrationResult.data);
+
+			setVerificationSuccess(getRegisterSuccessFeedback);
 		} catch (e) {
-			alert(e);
+			console.error(e);
+			setVerificationSuccess(getRegisterErrorFeedback);
+		} finally {
+			setTimeout(() => {
+				setVerificationSuccess(null);
+			}, 3000);
 		}
 	};
 
 	return (
 		<AuthContext.Provider
 			value={{
+				isAdmin: user && user.userRole === 'ADMIN',
 				token,
 				user,
 				firstName,
 				lastName,
 				email,
 				password,
+				verificationSuccess,
 				setEmail,
 				setFirstName,
 				setLastName,
 				setPassword,
 				setToken,
+				setVerificationSuccess,
 				login,
 				logout,
 				register

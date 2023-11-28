@@ -1,12 +1,10 @@
 import React, { createContext, useContext, useState } from 'react';
 import api, { agent } from '../common/api';
-import { TOKEN_KEY, endpoint } from '../common/constants';
+import { endpoint } from '../common/constants';
 
 const OrderContext = createContext();
 
-export const useOrders = () => {
-	return useContext(OrderContext);
-};
+export const useOrders = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }) => {
 	const [orders, setOrders] = useState([]);
@@ -17,14 +15,7 @@ export const OrderProvider = ({ children }) => {
 		setLoading(true);
 
 		try {
-			const { data } = await api.get(endpoint.ORDERS, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
-				}
-			});
-
-			console.log('Logging - getOrders()');
-			console.log(data);
+			const { data } = await agent.get(endpoint.ORDERS);
 
 			setOrders(data);
 			setError(null);
