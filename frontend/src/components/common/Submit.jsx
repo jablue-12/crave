@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 
-const Submit = ({ onClick, isLoading, label }) => {
+const Submit = ({ onClick, isDisabled, isLoading, label }) => {
 	const buttonText = label || 'Submit';
 
 	return (
 		<Button
 			className="bubble submit w-auto mt-1 mx-auto px-3"
 			onClick={onClick}
-			disabled={isLoading}
+			disabled={isDisabled}
 		>
 			<span style={{
 				height: '100%',

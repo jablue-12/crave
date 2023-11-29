@@ -8,6 +8,7 @@ import {
 	PolarRadiusAxis
 } from 'recharts';
 import { splitDate } from '../../../common/utils';
+import { useAuth } from '../../../contexts/AuthContext';
 import { useOrders } from '../../../contexts/OrderContext';
 import { ProfileForm } from '../auth/ProfileForm';
 
@@ -29,6 +30,7 @@ const preferencesScores = [
 }));
 
 export default function Profile () {
+	const { isAdmin } = useAuth();
 	const {
 		orders,
 		getOrders
@@ -43,6 +45,15 @@ export default function Profile () {
 	useEffect(() => {
 		getOrders();
 	}, []);
+
+	if (isAdmin) {
+		return <Container>
+			<Row className="mx-1">
+				<h4>Update your account</h4>
+			</Row>
+			<ProfileForm/>
+		</Container>;
+	}
 
 	return <Tabs
 		defaultActiveKey="profile"

@@ -102,14 +102,15 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 				} catch (e) {
 					console.error(e);
 				}
+
+				resetTouch();
+				resetLoginField();
 			} catch (e) {
 				if (e && e.response && e.response.data) {
 					setLoginFeedback(getErrorFeedback(e.response.data.statusMessage));
 				}
 				console.error(`Error login user: ${e}`);
 			} finally {
-				resetTouch();
-				resetLoginField();
 				setIsLoginLoading(false);
 
 				setTimeout(() => {
@@ -163,6 +164,7 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 
 				<Submit
 					onClick={loginUser}
+					isDisabled={isLoginLoading}
 					isLoading={isLoginLoading}
 					label="Login"/>
 

@@ -172,7 +172,7 @@ export const DishForm = () => {
 					</option>
 					{ingredientOptions.map((ingredient) => (
 						<option key={ingredient.id} value={ingredient.id}>
-							{ingredient.name}
+							{`${ingredient.name} (${ingredient.quantity}g)`}
 						</option>
 					))}
 				</Form.Select>
@@ -233,6 +233,7 @@ export const DishForm = () => {
 
 				<Submit
 					onClick={createDish}
+					isDisabled={isDishLoading}
 					isLoading={isDishLoading}
 					label="Add Dish"/>
 			</Form>

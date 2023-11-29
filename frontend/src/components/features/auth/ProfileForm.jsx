@@ -104,9 +104,6 @@ export const ProfileForm = () => {
 			try {
 				const { data } = await restful.auth.json.put(endpoint.USER, profileField);
 
-				console.log('update user log');
-				console.log(data);
-
 				if (data && data.token) {
 					setUpdateProfileFeedback(getSuccessFeedback);
 					setToken(data.token);
@@ -234,6 +231,7 @@ export const ProfileForm = () => {
 
 				<Submit
 					onClick={updateUser}
+					isDisabled={isUpdateLoading}
 					isLoading={isUpdateLoading}
 					label="Update Profile"/>
 			</Form>
