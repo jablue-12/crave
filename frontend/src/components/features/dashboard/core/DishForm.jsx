@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { tags } from '../../../../common/dishTags';
 import { useDishCreation } from '../../../../contexts/DishCreationContext';
 import { FeedbackMessage } from '../../../common/FeedbackMessage';
 import Loader from '../../../common/Loader';
@@ -26,6 +27,11 @@ export const DishForm = () => {
 	const handleTextChange = (e, key) => {
 		setNewDish({ ...newDish, [key]: e.target.value });
 		setTouched({ ...touched, [key]: true });
+	};
+
+	const handleTagChange = (e) => {
+		setNewDish({ ...newDish, tag: e.target.value });
+		setTouched({ ...touched, tag: true });
 	};
 
 	const handlePriceChange = (e) => {
@@ -132,24 +138,31 @@ export const DishForm = () => {
 				</InputGroup>
 
 				<InputGroup className="mb-3">
-					<InputGroup.Text className="rounded-2 mx-1">Dish Tag</InputGroup.Text>
-					<Form.Control
-						placeholder={placeholderDish.tag}
-						required
+					<Form.Select
+						aria-label="Select Tag"
 						className="rounded-3"
-						value={newDish.tag}
-						onChange={(e) => handleTextChange(e, 'tag')}
+						value={newDish.tag ? newDish.tag : ''}
 						isValid={touched.tag && newDish.tag !== ''}
 						isInvalid={touched.tag && newDish.tag === ''}
-					/>
+						onChange={(e) => handleTagChange(e)}
+					>
+						<option value="">
+						Select Dish Tag
+						</option>
+						{tags.map((tag, i) => (
+							<option key={`${tag}-${i}`} value={tag}>
+								{tag}
+							</option>
+						))}
+					</Form.Select>
 					<Form.Control.Feedback type="invalid">
-						Please provide a tag
+						Please provide a dish tag
 					</Form.Control.Feedback>
 				</InputGroup>
 
 				<Form.Select
 					aria-label="Select ingredients"
-					className="mb-3"
+					className="mb-3 rounded-3"
 					value={selectedIngredient ? selectedIngredient.id : ''}
 					onChange={(e) => handleIngredientChange(e)}
 				>

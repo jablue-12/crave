@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { TOKEN_KEY, endpoint } from '../common/constants';
-import api, { agent } from './../common/api';
+import { agent } from './../common/api';
 
 const AuthContext = createContext();
 
@@ -9,12 +9,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-	const [verificationSuccess, setVerificationSuccess] = useState(null);
 	const [user, setUser] = useState(null);
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const [token, setToken] = useState(localStorage.getItem(TOKEN_KEY) || null);
 
 	useEffect(() => {
@@ -30,61 +25,18 @@ export const AuthProvider = ({ children }) => {
 		}
 	}, []);
 
-	const getLoginSuccessFeedback = () => {
-		return {
-			variant: 'success',
-			messageHeader: 'Login Success',
-			messageDescription: 'Welcome back.'
-		};
-	};
-	const getLoginErrorFeedback = () => {
-		return {
-			variant: 'danger',
-			messageHeader: 'Error with Login',
-			messageDescription: 'Please try again.'
-		};
-	};
-	const getRegisterSuccessFeedback = () => {
-		return {
-			variant: 'success',
-			messageHeader: 'Registration Success',
-			messageDescription: 'Welcome to Crave.'
-		};
-	};
-	const getRegisterErrorFeedback = () => {
-		return {
-			variant: 'danger',
-			messageHeader: 'Error with Registration',
-			messageDescription: 'Please try again.'
-		};
-	};
-
-	const login = async (e) => {
-		e.preventDefault();
-
-		try {
-			const loginResult = await api.post(endpoint.LOGIN, {
-				email,
-				password
-			});
-
-			setToken(loginResult.data.token);
-			localStorage.setItem(TOKEN_KEY, loginResult.data.token);
-			localStorage.setItem('user', email);
-
-			const userResult = await agent.getTokenized(endpoint.USER);
-			setUser(userResult.data);
-
-			setVerificationSuccess(getLoginSuccessFeedback);
-		} catch (e) {
-			console.error(e);
-			setVerificationSuccess(getLoginErrorFeedback());
-		} finally {
-			setTimeout(() => {
-				setVerificationSuccess(null);
-			}, 3000);
+	useEffect(() => {
+		if (token) {
+			(async () => {
+				try {
+					const { data } = await agent.getTokenized(endpoint.USER);
+					setUser(data);
+				} catch (e) {
+					console.error(e);
+				}
+			})();
 		}
-	};
+	}, [token]);
 
 	const logout = () => {
 		localStorage.removeItem(TOKEN_KEY);
@@ -93,35 +45,12 @@ export const AuthProvider = ({ children }) => {
 		localStorage.removeItem(`cart_${user.email}`);
 
 		setUser(null);
-		setFirstName('');
-		setLastName('');
-		setPassword('');
 		setToken(null);
 	};
 
-	const register = async e => {
-		e.preventDefault();
-
-		try {
-			const registrationResult = await agent.post(endpoint.REGISTRATION, {
-				firstName,
-				lastName,
-				email,
-				password
-			});
-
-			console.log('Logging - register()');
-			console.log(registrationResult.data);
-
-			setVerificationSuccess(getRegisterSuccessFeedback);
-		} catch (e) {
-			console.error(e);
-			setVerificationSuccess(getRegisterErrorFeedback);
-		} finally {
-			setTimeout(() => {
-				setVerificationSuccess(null);
-			}, 3000);
-		}
+	const isEmailValid = (email) => {
+		const emailRegex = /^[a-zA-Z0-9._-]+@(gmail\.com|yahoo\.com|yahoo\.ca|umanitoba\.ca|hotmail\.com|hotmail\.ca|gmail\.ca)$/;
+		return emailRegex.test(email);
 	};
 
 	return (
@@ -130,20 +59,10 @@ export const AuthProvider = ({ children }) => {
 				isAdmin: user && user.userRole === 'ADMIN',
 				token,
 				user,
-				firstName,
-				lastName,
-				email,
-				password,
-				verificationSuccess,
-				setEmail,
-				setFirstName,
-				setLastName,
-				setPassword,
 				setToken,
-				setVerificationSuccess,
-				login,
+				setUser,
 				logout,
-				register
+				isEmailValid
 			}}
 		>
 			{children}
