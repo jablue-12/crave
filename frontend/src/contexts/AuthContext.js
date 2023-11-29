@@ -9,6 +9,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+	const formFieldStyle = { boxShadow: 'none' };
 	const [user, setUser] = useState(null);
 	const [token, setToken] = useState(localStorage.getItem(TOKEN_KEY) || null);
 
@@ -25,31 +26,24 @@ export const AuthProvider = ({ children }) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (token) {
-			(async () => {
-				try {
-					const { data } = await restful.auth.json.get(endpoint.USER);
-					setUser(data);
-				} catch (e) {
-					console.error(e);
-				}
-			})();
+	const logout = async () => {
+		try {
+			await restful.auth.json.post(endpoint.LOGOUT);
+		} catch (e) {
+			console.error(e);
+		} finally {
+			localStorage.removeItem(TOKEN_KEY);
+			localStorage.removeItem('user');
+			localStorage.setItem('cart_default', localStorage.getItem(`cart_${user.email}`) ?? []);
+			localStorage.removeItem(`cart_${user.email}`);
+
+			setUser(null);
+			setToken(null);
 		}
-	}, [token]);
-
-	const logout = () => {
-		localStorage.removeItem(TOKEN_KEY);
-		localStorage.removeItem('user');
-		localStorage.setItem('cart_default', localStorage.getItem(`cart_${user.email}`) ?? []);
-		localStorage.removeItem(`cart_${user.email}`);
-
-		setUser(null);
-		setToken(null);
 	};
 
 	const isEmailValid = (email) => {
-		const emailRegex = /^[a-zA-Z0-9._-]+@(gmail\.com|yahoo\.com|yahoo\.ca|umanitoba\.ca|hotmail\.com|hotmail\.ca|gmail\.ca)$/;
+		const emailRegex = /^[a-zA-Z0-9._-]+@(gmail\.com|yahoo\.com|yahoo\.ca|myumanitoba\.ca|hotmail\.com|hotmail\.ca|gmail\.ca)$/;
 		return emailRegex.test(email);
 	};
 
@@ -62,7 +56,8 @@ export const AuthProvider = ({ children }) => {
 				setToken,
 				setUser,
 				logout,
-				isEmailValid
+				isEmailValid,
+				formFieldStyle
 			}}
 		>
 			{children}

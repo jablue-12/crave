@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { sumBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Col, Form, Row, Table, Tabs, Tab } from 'react-bootstrap';
 import {
@@ -11,7 +10,6 @@ import {
 } from 'recharts';
 import { splitDate } from '../../../common/utils';
 import { useOrders } from '../../../contexts/OrderContext';
-import { mockOrders } from '../../../sample/orders';
 import { formGroupStyle, inputStyle } from '../auth/AuthFormStyle';
 
 const preferencesScores = [
@@ -47,6 +45,9 @@ export default function Profile () {
 	useEffect(() => {
 		getOrders();
 	}, []);
+
+	console.log('Logging - Profile');
+	console.log(orders);
 
 	const handleChange = (e) => {
 		const {
@@ -160,17 +161,13 @@ export default function Profile () {
 								</tr>
 							</thead>
 							<tbody>
-								{(orders.length > 0
-									? orders.map(o => ({
-										...o.orderInfo,
-										total: sumBy(o.orderItems, i => i.price)
-									}))
-									: mockOrders).map(order =>
-									<tr key={order.id}>
+								{orders.length > 0 && orders.map((order, i) =>
+									<tr key={order.id + '-' + i}>
 										<td>{order.id}</td>
 										<td>{splitDate(order.placedAt)}</td>
 										<td>${order.total}</td>
-									</tr>)}
+									</tr>)
+								}
 							</tbody>
 						</Table>
 					</div>

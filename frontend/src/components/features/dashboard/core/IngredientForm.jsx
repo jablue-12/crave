@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { restful } from '../../../../common/api';
 import { endpoint } from '../../../../common/constants';
 import { useDishCreation } from '../../../../contexts/DishCreationContext';
 import { FeedbackMessage } from '../../../common/FeedbackMessage';
+import Submit from '../../../common/Submit';
 
 export const IngredientForm = () => {
 	const { setNewIngredientResponse } = useDishCreation();
@@ -176,27 +177,11 @@ export const IngredientForm = () => {
 						Please provide a quantity
 					</Form.Control.Feedback>
 				</InputGroup>
-				<Button
-					className="bubble submit w-auto mt-1 mx-auto px-3"
-					onClick={() => createIngredient()}
-					disabled={isIngredientLoading}
-				>
-					<span style={{
-						height: '100%',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignContent: 'center',
-						fontSize: '14px'
-					}}>
-						{isIngredientLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Add Ingredient'}
-					</span>
-				</Button>
+
+				<Submit
+					onClick={createIngredient}
+					isLoading={isIngredientLoading}
+					label="Add Ingredient"/>
 			</Form>
 
 			{ingredientCreationFeedback &&

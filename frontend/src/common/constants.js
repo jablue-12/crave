@@ -3,10 +3,11 @@ export const BASE_URL = process.env.REACT_APP_API_URL || `http://localhost:${POR
 export const endpoint = {
 	TAGS: '/tags',
 	LOGIN: '/auth/login',
+	LOGOUT: '/auth/logout',
 	REGISTRATION: '/auth/register',
 	USER: 'auth/user',
 	DISHES: '/dishes',
-	ORDERS: '/orders',
+	ORDERS: '/userOrders',
 	COMMENTS: '/comments',
 	INGREDIENTS: '/ingredients',
 	DISHES_ON_SALE: '/sale'

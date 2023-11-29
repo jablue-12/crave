@@ -23,7 +23,7 @@ public class OrderItem {
             generator = "orderItem_sequence"
     )
     private Long id;
-    
+
     @NonNull
     private Long orderId;
     @NonNull
@@ -32,5 +32,6 @@ public class OrderItem {
     private Long quantity;
 
     private String name;
+    @NonNull
     private float price;
 }

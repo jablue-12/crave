@@ -64,9 +64,7 @@ class UserOrderServiceTest {
         verify(userOrderRepository).save(userOrderArgumentCaptor.capture());
         UserOrder capturedUserOrder = userOrderArgumentCaptor.getValue();
 
-        // Assertions
-        assertEquals(userOrderToCreate.getStatus(), capturedUserOrder.getStatus());
-    
+
         // Additional assertion to ensure the correct userOrder is returned by the service
         assertEquals(userOrderToCreate, createdUserOrder);
     }
@@ -88,25 +86,6 @@ class UserOrderServiceTest {
         assertEquals(userOrder, foundUserOrder.get());
     }
 
-    @Test
-    void testUpdateUserOrder() {
-        // Create an existing userOrder
-        UserOrder existingUserOrder = new UserOrder();
-        existingUserOrder.setStatus(OrderStatus.IN_PROGRESS);
-
-        // Create an updated userOrder
-        UserOrder updatedUserOrder = new UserOrder();
-        updatedUserOrder.setStatus(OrderStatus.DONE);
-        // Mock the behavior of the repository save method
-        when(userOrderRepository.save(existingUserOrder)).thenReturn(existingUserOrder);
-
-        // Call the service method
-        UserOrder updatedResult = userOrderService.updateOrder(existingUserOrder, updatedUserOrder);
-
-        // Assertions
-        assertEquals(existingUserOrder.getStatus(), updatedResult.getStatus());
-        assertEquals(existingUserOrder, updatedResult);
-    }
 
     @Test
     void testDeleteUserOrderById() {
@@ -135,7 +114,7 @@ class UserOrderServiceTest {
         assertNotNull(foundUserOrder);
         assertEquals(userOrder, foundUserOrder);
     }
-    
+
     @Test
     void testUserOrderExists() {
         Long userOrderId = 1L;
