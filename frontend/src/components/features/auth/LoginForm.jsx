@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
-import { agent } from '../../../common/api';
+import { restful } from '../../../common/api';
 import { TOKEN_KEY, endpoint } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { FeedbackMessage } from '../../common/FeedbackMessage';
@@ -86,7 +86,7 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 			setIsLoginLoading(true);
 			setLoginFeedback(null);
 			try {
-				const loginResult = await agent.post(endpoint.LOGIN, loginField);
+				const loginResult = await restful.post(endpoint.LOGIN, loginField);
 				setLoginFeedback(getSuccessFeedback);
 
 				setToken(loginResult.data.token);

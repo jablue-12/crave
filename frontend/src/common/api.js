@@ -5,33 +5,47 @@ const api = axios.create({
 	baseURL: BASE_URL
 });
 
-export const agent = {
-	get: (url) => api.get(url),
-	post: (url, body) => api.post(url, body),
-	getTokenized: (url) => api.get(url, {
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-			'Content-Type': 'application/json'
-		}
+const header = {
+	auth: () => ({
+		Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
 	}),
-	putTokenized: (url, body) => api.put(url, body, {
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-			'Content-Type': 'application/json'
-		}
-	}),
-	postTokenized: (url, body) => api.post(url, body, {
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-			'Content-Type': 'application/json'
-		}
-	}),
-	postTokenizedFormData: (url, body) => api.post(url, body, {
-		headers: {
-			Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-			'Content-Type': 'multipart/form-data'
-		}
-	})
+	json: {
+		'Content-Type': 'application/json'
+	},
+	form: {
+		'Content-Type': 'multipart/form-data'
+	}
 };
 
-export default api;
+const headers = {
+	auth: {
+		json: () => ({
+			headers: {
+				...header.auth(),
+				...header.json
+			}
+		}),
+		form: () => ({
+			headers: {
+				...header.auth(),
+				...header.form
+			}
+		})
+	}
+};
+
+export const restful = {
+	get: url => api.get(url),
+	post: (url, body) => api.post(url, body),
+	put: (url, body) => api.post(url, body),
+	delete: url => api.delete(url),
+	auth: {
+		json: {
+			get: url => api.get(url, headers.auth.json()),
+			post: (url, body) => api.post(url, body, headers.auth.json())
+		},
+		form: {
+			post: (url, body) => api.post(url, body, headers.auth.form())
+		}
+	}
+};

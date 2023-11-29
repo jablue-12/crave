@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { TOKEN_KEY, endpoint } from '../common/constants';
-import { agent } from './../common/api';
+import { restful } from './../common/api';
 
 const AuthContext = createContext();
 
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 		if (token) {
 			(async () => {
 				try {
-					const { data } = await agent.getTokenized(endpoint.USER);
+					const { data } = await restful.auth.json.get(endpoint.USER);
 					setUser(data);
 				} catch (e) {
 					console.error(e);
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 		if (token) {
 			(async () => {
 				try {
-					const { data } = await agent.getTokenized(endpoint.USER);
+					const { data } = await restful.auth.json.get(endpoint.USER);
 					setUser(data);
 				} catch (e) {
 					console.error(e);

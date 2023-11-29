@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
-import { agent } from '../../../../common/api';
+import { restful } from '../../../../common/api';
 import { endpoint } from '../../../../common/constants';
 import { useDishCreation } from '../../../../contexts/DishCreationContext';
 import { FeedbackMessage } from '../../../common/FeedbackMessage';
@@ -104,10 +104,7 @@ export const IngredientForm = () => {
 			setIsIngredientLoading(true);
 			setIngredientCreationFeedback(null);
 			try {
-				const { data } = await agent.postTokenized(
-					`${endpoint.INGREDIENTS}`,
-					newIngredient);
-
+				const { data } = await restful.auth.json.post(`${endpoint.INGREDIENTS}`, newIngredient);
 				setNewIngredientResponse(data);
 				setIngredientCreationFeedback(getSuccessFeedback);
 			} catch (e) {
@@ -179,7 +176,6 @@ export const IngredientForm = () => {
 						Please provide a quantity
 					</Form.Control.Feedback>
 				</InputGroup>
-
 				<Button
 					className="bubble submit w-auto mt-1 mx-auto px-3"
 					onClick={() => createIngredient()}

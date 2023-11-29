@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
-import { agent } from '../../../common/api';
+import { restful } from '../../../common/api';
 import { endpoint } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { FeedbackMessage } from '../../common/FeedbackMessage';
@@ -97,7 +97,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 			setIsRegisterLoading(true);
 			setRegisterFeedback(null);
 			try {
-				await agent.post(endpoint.REGISTRATION, registerField);
+				await restful.post(endpoint.REGISTRATION, registerField);
 				setRegisterFeedback(getSuccessFeedback);
 			} catch (e) {
 				setRegisterFeedback(getErrorFeedback(e.response.data.statusMessage));
