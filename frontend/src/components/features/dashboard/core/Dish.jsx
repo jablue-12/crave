@@ -222,22 +222,20 @@ const Dish = ({ dish }) => {
 		</Row>}
 		<Row className="my-3">
 			<h6>{dish.name}</h6>
-			<Col md={7}>
+			<Col>
 				<Image rounded fluid src={dish.imageUrl || '/images/1.jpg'} />
 			</Col>
-			<Col md={5}>
-				<ListGroup variant="flush">
-					<ListGroup.Item style={{ fontSize: '12px', whiteSpace: 'nowrap' }}>
-						{dish.description}
-					</ListGroup.Item>
-				</ListGroup>
-			</Col>
 		</Row>
-		<Row className="my-3" style={{ height: 250 }}>
+		<Row className="my-3">
+			<ListGroup variant="flush">
+				<ListGroup.Item style={{ fontSize: '12px' }}>
+					{dish.description}
+				</ListGroup.Item>
+			</ListGroup>
+		</Row>
+		<Row className="my-3" style={{ height: 300 }}>
 			<h6 style={{ marginTop: '12px' }}>Ingredients</h6>
-			<Col>
-				<ActivePieChart ingredients={ingredients} />
-			</Col>
+			<ActivePieChart ingredients={ingredients} />
 		</Row>
 		<Row className="my-3">
 			<Col>

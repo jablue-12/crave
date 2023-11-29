@@ -28,7 +28,6 @@ export const IngredientForm = () => {
 		}
 	);
 
-	// eslint-disable-next-line no-unused-vars
 	const [isIngredientLoading, setIsIngredientLoading] = useState(false);
 
 	const [ingredientCreationFeedback, setIngredientCreationFeedback] = useState(null);
@@ -36,18 +35,16 @@ export const IngredientForm = () => {
 	const getSuccessFeedback = () => {
 		return {
 			variant: 'success',
-			messageHeader: 'Successful ingredient creation',
+			messageHeader: '',
 			messageDescription: `Ingredient ${newIngredient.name} has been added to the menu successfully.`
 		};
 	};
 
-	// TODO
-	// eslint-disable-next-line no-unused-vars
 	const getErrorFeedback = () => {
 		return {
 			variant: 'danger',
-			messageHeader: 'Error with ingredient creation',
-			messageDescription: `Ingredient ${newIngredient.name} has not been added to the menu.`
+			messageHeader: '',
+			messageDescription: `Error. Ingredient ${newIngredient.name} has not been added to the menu.`
 		};
 	};
 
@@ -167,7 +164,7 @@ export const IngredientForm = () => {
 				</InputGroup>
 
 				<InputGroup className="mb-3">
-					<InputGroup.Text className="rounded-3 mx-1">Ingredient Quantity</InputGroup.Text>
+					<InputGroup.Text className="rounded-3 mx-1">Ingredient Weight (g)</InputGroup.Text>
 					<Form.Control
 						placeholder={placeholderIngredient.quantity}
 						required

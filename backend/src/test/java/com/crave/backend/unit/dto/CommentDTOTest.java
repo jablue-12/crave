@@ -45,7 +45,7 @@ public class CommentDTOTest {
         assertEquals(1L, commentDTO.id());
         assertEquals("Comment description ......", commentDTO.content());
         assertEquals(LocalDateTime.of(2023, Month.NOVEMBER, 10, 12, 30), commentDTO.createdAt());
-        assertEquals("dhill@gmail.co.uk", commentDTO.email());
+        assertEquals("Dushane Hill", commentDTO.fullName());
     }
 
 }

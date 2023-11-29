@@ -58,7 +58,7 @@ export const DishCreationProvider = ({ children }) => {
 	const getSuccessFeedback = () => {
 		return {
 			variant: 'success',
-			messageHeader: 'Successful dish creation',
+			messageHeader: '',
 			messageDescription: `Dish ${newDish.name} has been added to the menu successfully.`
 		};
 	};
@@ -66,8 +66,8 @@ export const DishCreationProvider = ({ children }) => {
 	const getErrorFeedback = () => {
 		return {
 			variant: 'danger',
-			messageHeader: 'Error with dish creation',
-			messageDescription: `Dish ${newDish.name} has not been added to the menu.`
+			messageHeader: '',
+			messageDescription: `Error. Dish ${newDish.name} has not been added to the menu.`
 		};
 	};
 

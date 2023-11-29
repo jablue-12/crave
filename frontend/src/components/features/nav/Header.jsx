@@ -10,9 +10,9 @@ import Typewriter from 'typewriter-effect';
 import { color, iconSize } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
+import { LoginForm } from '../auth/LoginForm';
+import { RegisterForm } from '../auth/RegisterForm';
 import Popup from './../../common/Popup';
-import Login from './../auth/Login';
-import Register from './../auth/Register';
 
 const Header = ({ setIsSliderOn }) => {
 	const { dishesInCart } = useCart();
@@ -137,7 +137,7 @@ const Header = ({ setIsSliderOn }) => {
 								close={() => setIsRegistering(false)}
 								title="Registration"
 							>
-								<Register setIsRegistering={setIsRegistering} />
+								<RegisterForm setIsRegistering={setIsRegistering}/>
 							</Popup>
 							<Popup
 								size="md"
@@ -145,7 +145,7 @@ const Header = ({ setIsSliderOn }) => {
 								close={() => setIsLoggingIn(false)}
 								title="Login"
 							>
-								<Login setIsLoggingIn={setIsLoggingIn} />
+								<LoginForm setIsLoggingIn={setIsLoggingIn}/>
 							</Popup>
 						</Nav>
 					</Navbar.Collapse>

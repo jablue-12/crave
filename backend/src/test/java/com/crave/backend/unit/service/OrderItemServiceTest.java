@@ -33,6 +33,9 @@ class OrderItemServiceTest {
         OrderItem newItem = OrderItem.builder()
                 .name(name)
                 .price(price)
+                .dishId(1L)
+                .orderId(1L)
+                .quantity(1L)
                 .build();
         return newItem;
     }
@@ -80,7 +83,13 @@ class OrderItemServiceTest {
     @Test
     void testCreateOrderItem() {
         // Create an order item
-        OrderItem orderItemToCreate = createOrderItem("Pizza", 12.99f);
+        OrderItem orderItemToCreate = OrderItem.builder()
+                .name("testname")
+                .price(3.44f)
+                .dishId(1L)
+                .orderId(1L)
+                .quantity(1L)
+                .build();
 
         // Mock the behavior of the repository save method
         when(orderItemRepository.save(orderItemToCreate)).thenReturn(orderItemToCreate);
@@ -95,11 +104,21 @@ class OrderItemServiceTest {
     @Test
     void testUpdateOrderItem() {
         // Create an existing order item
-        OrderItem existingOrderItem = createOrderItem("Pizza", 12.99f);
-
+        OrderItem existingOrderItem = OrderItem.builder()
+                .name("testname")
+                .price(3.44f)
+                .dishId(1L)
+                .orderId(1L)
+                .quantity(1L)
+                .build();
         // Create an updated order item
-        OrderItem updatedOrderItem = createOrderItem("Pasta", 15.99f);
-
+        OrderItem updatedOrderItem = OrderItem.builder()
+                .name("testname")
+                .price(1555.44f)
+                .dishId(1L)
+                .orderId(1L)
+                .quantity(1L)
+                .build();
         // Mock the behavior of the repository save method
         when(orderItemRepository.save(existingOrderItem)).thenReturn(existingOrderItem);
 
@@ -126,7 +145,13 @@ class OrderItemServiceTest {
     @Test
     void testFindById() {
         // Create an order item
-        OrderItem orderItem = createOrderItem("Pizza", 12.99f);
+        OrderItem orderItem = OrderItem.builder()
+                .name("testname")
+                .price(3.44f)
+                .dishId(1L)
+                .orderId(1L)
+                .quantity(1L)
+                .build();
         Long orderItemId = 1L;
 
         // Mock the behavior of the repository findById method
