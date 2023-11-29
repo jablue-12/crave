@@ -42,7 +42,8 @@ export const restful = {
 	auth: {
 		json: {
 			get: url => api.get(url, headers.auth.json()),
-			post: (url, body) => api.post(url, body, headers.auth.json())
+			post: (url, body) => api.post(url, body, headers.auth.json()),
+			put: (url, body) => api.put(url, body, headers.auth.json())
 		},
 		form: {
 			post: (url, body) => api.post(url, body, headers.auth.form())
