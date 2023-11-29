@@ -103,9 +103,8 @@ const Header = ({ setIsSliderOn }) => {
 							>
 								{user
 									? <>
-										<NavDropdown.Item>
-											<Link
-												to="profile"
+										<NavDropdown.Item onClick={() => nav('/profile')}>
+											<span
 												style={{
 													display: 'flex',
 													justifyContent: 'around',
@@ -113,7 +112,7 @@ const Header = ({ setIsSliderOn }) => {
 												}}
 											>
 												Profile
-											</Link>
+											</span>
 										</NavDropdown.Item>
 										<NavDropdown.Item data-cy="logout" onClick={() => {
 											logout(user);

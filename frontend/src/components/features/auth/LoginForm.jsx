@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { restful } from '../../../common/api';
 import { TOKEN_KEY, endpoint } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { FeedbackMessage } from '../../common/FeedbackMessage';
+import Submit from '../../common/Submit';
 
 export const LoginForm = ({ setIsLoggingIn }) => {
 	const {
 		setToken,
-		isEmailValid
+		setUser,
+		isEmailValid,
+		formFieldStyle
 	} = useAuth();
 
 	const placeholderLogin = {
@@ -92,6 +95,13 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 				setToken(loginResult.data.token);
 				localStorage.setItem(TOKEN_KEY, loginResult.data.token);
 				localStorage.setItem('user', loginField.email);
+
+				try {
+					const { data } = await restful.auth.json.get(endpoint.USER);
+					setUser(data);
+				} catch (e) {
+					console.error(e);
+				}
 			} catch (e) {
 				if (e && e.response && e.response.data) {
 					setLoginFeedback(getErrorFeedback(e.response.data.statusMessage));
@@ -121,6 +131,7 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 						required
 						className="rounded-3"
 						value={loginField.email}
+						style={formFieldStyle}
 						onChange={(e) => handleTextChange(e, 'email')}
 						isValid={touched.email && isEmailValid(loginField.email)}
 						isInvalid={touched.email && !isEmailValid(loginField.email)}
@@ -139,6 +150,7 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 						type="password"
 						className="rounded-3"
 						value={loginField.password}
+						style={formFieldStyle}
 						onChange={(e) => handleTextChange(e, 'password')}
 						isValid={touched.password && loginField.password !== ''}
 						isInvalid={touched.password && loginField.password === ''}
@@ -149,27 +161,11 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 					</Form.Control.Feedback>
 				</InputGroup>
 
-				<Button
-					className="bubble submit w-auto mt-1 mx-auto px-3"
-					onClick={() => loginUser()}
-					disabled={isLoginLoading}
-				>
-					<span style={{
-						height: '100%',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignContent: 'center',
-						fontSize: '14px'
-					}}>
-						{isLoginLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Login'}
-					</span>
-				</Button>
+				<Submit
+					onClick={loginUser}
+					isLoading={isLoginLoading}
+					label="Login"/>
+
 			</Form>
 
 			{loginFeedback &&

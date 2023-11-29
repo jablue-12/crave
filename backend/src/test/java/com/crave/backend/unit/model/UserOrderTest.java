@@ -14,33 +14,31 @@ public class UserOrderTest {
     public void setUp() {
         userOrder = UserOrder.builder()
                 .id(1L)
-                .user_id(1L)
+                .total(20.00f)
                 .email("test.email@hotmail.com")
                 .placedAt("now")
-                .restaurant_id(1L)
-                .status(OrderStatus.START)
                 .build();
     }
 
     @Test
     void testGetters() {
         assertEquals(1L, userOrder.getId());
-        assertEquals(1L, userOrder.getUser_id());
-        assertEquals(1L, userOrder.getRestaurant_id());
-        assertEquals(OrderStatus.START, userOrder.getStatus());
+        assertEquals(20.00f, userOrder.getTotal());
+        assertEquals("test.email@hotmail.com", userOrder.getEmail());
+        assertEquals("now", userOrder.getPlacedAt());
     }
 
     @Test
     void testSetters() {
         userOrder.setId(2L);
-        userOrder.setUser_id(2L);
-        userOrder.setRestaurant_id(2L);
-        userOrder.setStatus(OrderStatus.IN_PROGRESS);
+        userOrder.setTotal(30.00f);
+        userOrder.setEmail("updated.email@hotmail.com");
+        userOrder.setPlacedAt("updated");
 
 
         assertEquals(2L, userOrder.getId());
-        assertEquals(2L, userOrder.getUser_id());
-        assertEquals(2L, userOrder.getRestaurant_id());
-        assertEquals(OrderStatus.IN_PROGRESS, userOrder.getStatus());
+        assertEquals(30.00f, userOrder.getTotal());
+        assertEquals("updated.email@hotmail.com", userOrder.getEmail());
+        assertEquals("updated", userOrder.getPlacedAt());
     }
 }

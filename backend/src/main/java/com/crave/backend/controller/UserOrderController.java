@@ -1,28 +1,25 @@
 package com.crave.backend.controller;
 
-import com.crave.backend.dto.UserDTO;
+import com.crave.backend.enums.UserRole;
 import com.crave.backend.model.Account;
-import com.crave.backend.model.UserOrder;
 import com.crave.backend.model.OrderItem;
-import com.crave.backend.model.Dish;
+import com.crave.backend.model.UserOrder;
 import com.crave.backend.service.AccountService;
-import com.crave.backend.service.UserOrderService;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.crave.backend.service.OrderItemService;
+import com.crave.backend.service.UserOrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "userOrders")
@@ -31,21 +28,22 @@ public class UserOrderController {
     private final UserOrderService userOrderService;
     private final AccountService accountService;
     private final OrderItemService orderItemService;
+
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
             // userDetails contains information about the authenticated user
             try {
-                Account account = accountService.findByEmail(userDetails.getUsername());
-                // UserDTO user = UserDTO.of(account);
-                // return ResponseEntity.ok(user);
+                Account user = accountService.findByEmail(userDetails.getUsername());
+                if (user.getUserRole() == UserRole.USER) {
+                    return new ResponseEntity<>(userOrderService.getOrdersByEmail(userDetails.getUsername()), HttpStatus.OK);
+                }
             } catch (EntityNotFoundException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }
-        
-        return new ResponseEntity<>(userOrderService.getOrders(), HttpStatus.OK);
+        return new ResponseEntity<>("The account is not authenticated.", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(path = "/getByUser/{email}")
@@ -62,10 +60,10 @@ public class UserOrderController {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }
-        
+
         return new ResponseEntity<>(userOrderService.getOrdersByEmail(email), HttpStatus.OK);
     }
-    
+
 
     @GetMapping(path = "/{id}")
     public Optional<UserOrder> getOrderById(@PathVariable Long id) {
@@ -73,7 +71,11 @@ public class UserOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOrder(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<?> createOrder(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, Object> requestBody) {
+        if (userDetails == null) {
+            return new ResponseEntity<>("The account is not authenticated.", HttpStatus.BAD_REQUEST);
+        }
+
         Map<String, Object> orderMap = (Map<String, Object>) requestBody.get("orderInfo");
         UserOrder orderInfo = mapToOrder(orderMap);
 
@@ -81,45 +83,32 @@ public class UserOrderController {
         List<OrderItem> orderItems = orderItemsMaps.stream()
                 .map(this::mapToOrderItem)
                 .collect(Collectors.toList());
-        
-        try {
-                Account account = accountService.findByEmail(orderInfo.getEmail());
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-        
+
         UserOrder newUserOrder = userOrderService.createOrder(orderInfo);
-        for (OrderItem orderItem : orderItems){
+        for (OrderItem orderItem : orderItems) {
             orderItem.setOrderId(newUserOrder.getId());
             orderItemService.createOrderItem(orderItem);
         }
-        return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
 
+        return new ResponseEntity<>(newUserOrder, HttpStatus.CREATED);
     }
 
     private UserOrder mapToOrder(Map<String, Object> orderMap) {
-        UserOrder order = new UserOrder((String)orderMap.get("email"), (String)orderMap.get("placedAt"));
+        String email = (String) orderMap.get("email");
+        String placedAt = (String) orderMap.get("placedAt");
+        Float total = ((Number) orderMap.get("total")).floatValue();
+
+        UserOrder order = new UserOrder(email, placedAt, total);
         return order;
     }
 
-    private OrderItem mapToOrderItem(Map<String, Object> orderItemMap) {   
-        long dishId = (int)orderItemMap.get("dish_id");
-        long quantity =(int)orderItemMap.get("quantity");
-        
-        OrderItem orderItem = new OrderItem(-1L, dishId, quantity);
+    private OrderItem mapToOrderItem(Map<String, Object> orderItemMap) {
+        long dishId = (int) orderItemMap.get("dish_id");
+        long quantity = (int) orderItemMap.get("quantity");
+        float price = ((Number) orderItemMap.get("price")).floatValue();
+
+        OrderItem orderItem = new OrderItem(-1L, dishId, quantity, price);
         return orderItem;
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserOrder> updateOrder(@PathVariable Long id, @RequestBody UserOrder updatedUserOrder) {
-        UserOrder existingUserOrder = userOrderService.findById(id);
-
-        if (existingUserOrder == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        UserOrder updated = userOrderService.updateOrder(existingUserOrder, updatedUserOrder);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

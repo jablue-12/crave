@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { restful } from '../../../common/api';
 import { endpoint } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { FeedbackMessage } from '../../common/FeedbackMessage';
+import Submit from '../../common/Submit';
 
 export const RegisterForm = ({ setIsRegistering }) => {
-	const { isEmailValid } = useAuth();
+	const { isEmailValid, formFieldStyle } = useAuth();
 
 	const placeholderRegister = {
 		firstName: 'e.g. Foo',
@@ -124,6 +125,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 						placeholder={placeholderRegister.firstName}
 						required
 						className="rounded-3"
+						style={formFieldStyle}
 						value={registerField.firstName}
 						onChange={(e) => handleTextChange(e, 'firstName')}
 						isValid={touched.firstName && registerField.firstName !== ''}
@@ -141,6 +143,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 						placeholder={placeholderRegister.lastName}
 						required
 						className="rounded-3"
+						style={formFieldStyle}
 						value={registerField.lastName}
 						onChange={(e) => handleTextChange(e, 'lastName')}
 						isValid={touched.lastName && registerField.lastName !== ''}
@@ -158,6 +161,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 						placeholder={placeholderRegister.email}
 						required
 						className="rounded-3"
+						style={formFieldStyle}
 						value={registerField.email}
 						onChange={(e) => handleTextChange(e, 'email')}
 						isValid={touched.email && isEmailValid(registerField.email)}
@@ -165,7 +169,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 					/>
 
 					<Form.Control.Feedback type="invalid">
-						Please provide a valid email that ends with either @gmail.com, @umanitoba.ca, @hotmail.com, @yahoo.com
+						Please provide a valid email that ends with @gmail.com, @myumanitoba.ca, @hotmail.com, @yahoo.com
 					</Form.Control.Feedback>
 				</InputGroup>
 
@@ -176,6 +180,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 						required
 						type="password"
 						className="rounded-3"
+						style={formFieldStyle}
 						value={registerField.password}
 						onChange={(e) => handleTextChange(e, 'password')}
 						isValid={touched.password && registerField.password !== ''}
@@ -187,27 +192,10 @@ export const RegisterForm = ({ setIsRegistering }) => {
 					</Form.Control.Feedback>
 				</InputGroup>
 
-				<Button
-					className="bubble submit w-auto mt-1 mx-auto px-3"
-					onClick={() => registerUser()}
-					disabled={isRegisterLoading}
-				>
-					<span style={{
-						height: '100%',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignContent: 'center',
-						fontSize: '14px'
-					}}>
-						{isRegisterLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Register'}
-					</span>
-				</Button>
+				<Submit
+					onClick={registerUser}
+					isLoading={isRegisterLoading}
+					label="Register"/>
 			</Form>
 
 			{registerFeedback &&
