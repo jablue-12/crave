@@ -28,7 +28,6 @@ export const IngredientForm = () => {
 		}
 	);
 
-	// eslint-disable-next-line no-unused-vars
 	const [isIngredientLoading, setIsIngredientLoading] = useState(false);
 
 	const [ingredientCreationFeedback, setIngredientCreationFeedback] = useState(null);
@@ -41,8 +40,6 @@ export const IngredientForm = () => {
 		};
 	};
 
-	// TODO
-	// eslint-disable-next-line no-unused-vars
 	const getErrorFeedback = () => {
 		return {
 			variant: 'danger',
