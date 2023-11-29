@@ -180,6 +180,7 @@ export const IngredientForm = () => {
 
 				<Submit
 					onClick={createIngredient}
+					isDisabled={isIngredientLoading}
 					isLoading={isIngredientLoading}
 					label="Add Ingredient"/>
 			</Form>

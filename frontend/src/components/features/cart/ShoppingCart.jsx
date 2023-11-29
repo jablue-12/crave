@@ -55,7 +55,6 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 				total: totalPrice
 			};
 
-			console.log(`onPlaceOrder: ${JSON.stringify(orderItems)}`);
 			placeOrder({ orderInfo, orderItems }, () => clear());
 		}
 	};
@@ -76,6 +75,7 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 							? <>
 								<Submit
 									onClick={onPlaceOrder}
+									isDisabled={dishesInCart.length === 0}
 									isLoading={isPlaceOrderLoading}
 									label="Pay Order"/>
 							</>

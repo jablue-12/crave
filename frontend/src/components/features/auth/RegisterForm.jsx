@@ -100,11 +100,11 @@ export const RegisterForm = ({ setIsRegistering }) => {
 			try {
 				await restful.post(endpoint.REGISTRATION, registerField);
 				setRegisterFeedback(getSuccessFeedback);
+				resetTouch();
+				resetRegisterField();
 			} catch (e) {
 				setRegisterFeedback(getErrorFeedback(e.response.data.statusMessage));
 			} finally {
-				resetTouch();
-				resetRegisterField();
 				setIsRegisterLoading(false);
 
 				setTimeout(() => {
@@ -194,6 +194,7 @@ export const RegisterForm = ({ setIsRegistering }) => {
 
 				<Submit
 					onClick={registerUser}
+					isDisabled={isRegisterLoading}
 					isLoading={isRegisterLoading}
 					label="Register"/>
 			</Form>

@@ -12,7 +12,7 @@ const Ingredient = (props) => {
 			<Container>
 				<Row className="p-1">
 					<Col className="text-bg-info">
-						{ingredient.name}
+						{`${ingredient.name} (${ingredient.quantity}g)`}
 					</Col>
 					<Col xs="auto">
 						<CloseButton onClick={deleteIngredient}/>
