@@ -1,7 +1,5 @@
-import axios from 'axios';
-import { sumBy } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { Col, Form, Row, Table, Tabs, Tab } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Col, Row, Table, Tabs, Tab, Container } from 'react-bootstrap';
 import {
 	Radar,
 	RadarChart,
@@ -10,9 +8,9 @@ import {
 	PolarRadiusAxis
 } from 'recharts';
 import { splitDate } from '../../../common/utils';
+import { useAuth } from '../../../contexts/AuthContext';
 import { useOrders } from '../../../contexts/OrderContext';
-import { mockOrders } from '../../../sample/orders';
-import { formGroupStyle, inputStyle } from '../auth/AuthFormStyle';
+import { ProfileForm } from '../auth/ProfileForm';
 
 const preferencesScores = [
 	'Pizza',
@@ -32,125 +30,47 @@ const preferencesScores = [
 }));
 
 export default function Profile () {
-	const [userDetails, setUserDetails] = useState({
-		firstname: '',
-		lastname: '',
-		email: '',
-		password: ''
-	});
-
+	const { isAdmin } = useAuth();
 	const {
 		orders,
 		getOrders
 	} = useOrders();
 
+	const containerStyle = {
+		display: 'flex',
+		justifyContent: 'center',
+		marginTop: '30px'
+	};
+
 	useEffect(() => {
 		getOrders();
 	}, []);
 
-	const handleChange = (e) => {
-		const {
-			name,
-			value
-		} = e.target;
-		setUserDetails({
-			...userDetails,
-			[name]: value
-		});
-	};
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-
-		try {
-			const response = await axios.post('your-api-endpoint', userDetails);
-			console.log('User updated successfully:', response.data);
-		} catch (error) {
-			console.error('Error updating user:', error);
-		}
-	};
+	if (isAdmin) {
+		return <Container>
+			<Row className="mx-1">
+				<h4>Update your account</h4>
+			</Row>
+			<ProfileForm/>
+		</Container>;
+	}
 
 	return <Tabs
 		defaultActiveKey="profile"
 		id="profile-tabs"
 		className="mb-3"
 		variant="underline"
+		fill
 	>
 		<Tab eventKey="profile" title="User Profile">
-			<div style={{ display: 'flex', justifyContent: 'center' }}>
-				<Form>
-					<Row className="my-2">
-						<Col>
-							<Form.Group controlId="firstName" style={formGroupStyle}>
-								<Form.Control
-									type="text"
-									name="firstName"
-									value={userDetails.firstName}
-									onChange={handleChange}
-									placeholder="First Name"
-									style={inputStyle}
-								/>
-							</Form.Group>
-						</Col>
-					</Row>
-					<Row className="my-2">
-						<Col>
-							<Form.Group controlId="lastName">
-								<Form.Control
-									type="text"
-									name="lastName"
-									value={userDetails.lastName}
-									onChange={handleChange}
-									placeholder="Last Name"
-									style={inputStyle}
-								/>
-							</Form.Group>
-						</Col>
-					</Row>
-					<Row className="my-2">
-						<Col>
-							<Form.Group controlId="email">
-								<Form.Control
-									type="email"
-									name="email"
-									value={userDetails.email}
-									onChange={handleChange}
-									placeholder="Email"
-									style={inputStyle}
-								/>
-							</Form.Group>
-						</Col>
-					</Row>
-					<Row className="my-1">
-						<Col>
-							<Form.Group controlId="password">
-								<Form.Control
-									type="password"
-									name="password"
-									value={userDetails.password}
-									onChange={handleChange}
-									placeholder="Password"
-									style={inputStyle}
-								/>
-							</Form.Group>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<div
-								className="bubble submit mx-auto my-3"
-								style={{ cursor: 'pointer' }}
-								onClick={handleSubmit}
-							>Update</div>
-						</Col>
-					</Row>
-				</Form>
-			</div>
+			<Container style={containerStyle}>
+				<ProfileForm/>
+			</Container>
 		</Tab>
 		<Tab eventKey="orders" title="Past Orders">
-			<Row>
-				<Col>
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
+			<Container style={containerStyle}>
+				<Row>
+					<Col>
 						<Table className="table-sm" striped hover responsive style={{ fontSize: '13px' }}>
 							<thead>
 								<tr>
@@ -160,27 +80,23 @@ export default function Profile () {
 								</tr>
 							</thead>
 							<tbody>
-								{(orders.length > 0
-									? orders.map(o => ({
-										...o.orderInfo,
-										total: sumBy(o.orderItems, i => i.price)
-									}))
-									: mockOrders).map(order =>
-									<tr key={order.id}>
+								{orders.length > 0 && orders.map((order, i) =>
+									<tr key={order.id + '-' + i}>
 										<td>{order.id}</td>
 										<td>{splitDate(order.placedAt)}</td>
 										<td>${order.total}</td>
-									</tr>)}
+									</tr>)
+								}
 							</tbody>
 						</Table>
-					</div>
-				</Col>
-			</Row>;
+					</Col>
+				</Row>
+			</Container>
 		</Tab>
 		<Tab eventKey="preferences" title="Preferences">
-			<Row>
-				<Col>
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
+			<Container style={containerStyle}>
+				<Row>
+					<Col>
 						<RadarChart
 							cx={300}
 							cy={300}
@@ -200,9 +116,9 @@ export default function Profile () {
 								fillOpacity={0.6}
 							/>
 						</RadarChart>
-					</div>
-				</Col>
-			</Row>
+					</Col>
+				</Row>
+			</Container>
 		</Tab>
 	</Tabs>;
 }

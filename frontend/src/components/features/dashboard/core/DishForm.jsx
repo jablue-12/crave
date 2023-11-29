@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { tags } from '../../../../common/dishTags';
 import { useDishCreation } from '../../../../contexts/DishCreationContext';
 import { FeedbackMessage } from '../../../common/FeedbackMessage';
 import Loader from '../../../common/Loader';
+import Submit from '../../../common/Submit';
 import Ingredient from './Ingredient';
 
 export const DishForm = () => {
@@ -171,7 +172,7 @@ export const DishForm = () => {
 					</option>
 					{ingredientOptions.map((ingredient) => (
 						<option key={ingredient.id} value={ingredient.id}>
-							{ingredient.name}
+							{`${ingredient.name} (${ingredient.quantity}g)`}
 						</option>
 					))}
 				</Form.Select>
@@ -230,28 +231,11 @@ export const DishForm = () => {
 						onChange={handleImageChange}/>
 				</InputGroup>
 
-				<Button
-					className="bubble submit w-auto mt-1 mx-auto px-3"
-					onClick={() => createDish()}
-					disabled={isDishLoading}
-				>
-					<span style={{
-						height: '100%',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignContent: 'center',
-						fontSize: '14px'
-					}}>
-						{isDishLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Add Dish'}
-					</span>
-				</Button>
-
+				<Submit
+					onClick={createDish}
+					isDisabled={isDishLoading}
+					isLoading={isDishLoading}
+					label="Add Dish"/>
 			</Form>
 
 			{dishCreationFeedback &&

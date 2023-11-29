@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import api, { agent } from '../common/api';
+import { restful } from '../common/api';
 import { endpoint } from '../common/constants';
 
 const OrderContext = createContext();
@@ -11,11 +11,30 @@ export const OrderProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
+	const [isPlaceOrderLoading, setIsPlaceOrderLoading] = useState(false);
+	const [placeOrderFeedback, setPlaceOrderFeedback] = useState(null);
+
+	const getSuccessFeedback = () => {
+		return {
+			variant: 'success',
+			messageHeader: '',
+			messageDescription: 'Your order has been placed.'
+		};
+	};
+
+	const getErrorFeedback = () => {
+		return {
+			variant: 'danger',
+			messageHeader: '',
+			messageDescription: 'There was something wrong with placing an order. Please try again.'
+		};
+	};
+
 	const getOrders = async () => {
 		setLoading(true);
 
 		try {
-			const { data } = await agent.get(endpoint.ORDERS);
+			const { data } = await restful.auth.json.get(endpoint.ORDERS);
 
 			setOrders(data);
 			setError(null);
@@ -29,23 +48,29 @@ export const OrderProvider = ({ children }) => {
 	const getOrder = id =>
 		orders.find(order => order.id === id);
 
-	const placeOrder = async order => {
+	const placeOrder = async (order, clearCart) => {
+		setIsPlaceOrderLoading(true);
 		try {
-			const { data } = await agent.postTokenized(endpoint.ORDERS, order);
-
-			console.log('Logging - placeOrder');
-			console.log(data);
+			await restful.auth.json.post(endpoint.ORDERS, order);
 
 			setOrders((prevOrders) => [order, ...prevOrders]);
 			setError(null);
+			clearCart();
+			setPlaceOrderFeedback(getSuccessFeedback);
 		} catch (e) {
 			setError(e);
+			setPlaceOrderFeedback(getErrorFeedback);
+		} finally {
+			setIsPlaceOrderLoading(false);
+			setTimeout(() => {
+				setPlaceOrderFeedback(null);
+			}, 3000);
 		}
 	};
 
 	const updateOrder = async (id, order) => {
 		try {
-			const response = await api.put(`/orders/${id}`, order);
+			const response = await restful.put(`/orders/${id}`, order);
 			setOrders((prevOrders) => {
 				const updatedOrders = prevOrders.map((order) =>
 					order.id === id ? response.data : order
@@ -60,7 +85,7 @@ export const OrderProvider = ({ children }) => {
 
 	const deleteOrder = async (id) => {
 		try {
-			await api.delete(`${endpoint.ORDERS}/${id}`);
+			await restful.delete(`${endpoint.ORDERS}/${id}`);
 			setOrders((prevOrders) => prevOrders.filter(o => o.id !== id));
 			setError(null);
 		} catch (e) {
@@ -78,7 +103,9 @@ export const OrderProvider = ({ children }) => {
 				getOrder,
 				placeOrder,
 				updateOrder,
-				deleteOrder
+				deleteOrder,
+				isPlaceOrderLoading,
+				placeOrderFeedback
 			}}
 		>
 			{children}

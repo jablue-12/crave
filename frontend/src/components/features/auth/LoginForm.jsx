@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
-import { agent } from '../../../common/api';
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { restful } from '../../../common/api';
 import { TOKEN_KEY, endpoint } from '../../../common/constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import { FeedbackMessage } from '../../common/FeedbackMessage';
+import Submit from '../../common/Submit';
 
 export const LoginForm = ({ setIsLoggingIn }) => {
 	const {
 		setToken,
-		isEmailValid
+		setUser,
+		isEmailValid,
+		formFieldStyle
 	} = useAuth();
 
 	const placeholderLogin = {
@@ -86,20 +89,28 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 			setIsLoginLoading(true);
 			setLoginFeedback(null);
 			try {
-				const loginResult = await agent.post(endpoint.LOGIN, loginField);
+				const loginResult = await restful.post(endpoint.LOGIN, loginField);
 				setLoginFeedback(getSuccessFeedback);
 
 				setToken(loginResult.data.token);
 				localStorage.setItem(TOKEN_KEY, loginResult.data.token);
 				localStorage.setItem('user', loginField.email);
+
+				try {
+					const { data } = await restful.auth.json.get(endpoint.USER);
+					setUser(data);
+				} catch (e) {
+					console.error(e);
+				}
+
+				resetTouch();
+				resetLoginField();
 			} catch (e) {
 				if (e && e.response && e.response.data) {
 					setLoginFeedback(getErrorFeedback(e.response.data.statusMessage));
 				}
 				console.error(`Error login user: ${e}`);
 			} finally {
-				resetTouch();
-				resetLoginField();
 				setIsLoginLoading(false);
 
 				setTimeout(() => {
@@ -121,6 +132,7 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 						required
 						className="rounded-3"
 						value={loginField.email}
+						style={formFieldStyle}
 						onChange={(e) => handleTextChange(e, 'email')}
 						isValid={touched.email && isEmailValid(loginField.email)}
 						isInvalid={touched.email && !isEmailValid(loginField.email)}
@@ -139,6 +151,7 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 						type="password"
 						className="rounded-3"
 						value={loginField.password}
+						style={formFieldStyle}
 						onChange={(e) => handleTextChange(e, 'password')}
 						isValid={touched.password && loginField.password !== ''}
 						isInvalid={touched.password && loginField.password === ''}
@@ -149,27 +162,12 @@ export const LoginForm = ({ setIsLoggingIn }) => {
 					</Form.Control.Feedback>
 				</InputGroup>
 
-				<Button
-					className="bubble submit w-auto mt-1 mx-auto px-3"
-					onClick={() => loginUser()}
-					disabled={isLoginLoading}
-				>
-					<span style={{
-						height: '100%',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignContent: 'center',
-						fontSize: '14px'
-					}}>
-						{isLoginLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Login'}
-					</span>
-				</Button>
+				<Submit
+					onClick={loginUser}
+					isDisabled={isLoginLoading}
+					isLoading={isLoginLoading}
+					label="Login"/>
+
 			</Form>
 
 			{loginFeedback &&

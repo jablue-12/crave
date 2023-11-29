@@ -5,11 +5,10 @@ import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { endpoint } from '../../common/constants';
 import { useSale } from '../../contexts/SaleContext';
-import { defaultDishes } from '../../sample/defaultDishes';
 import Dish from '../features/dashboard/core/Dish';
 import DishesList from '../features/dashboard/core/DishesList';
 import Filter from '../features/dashboard/core/Filter';
-import { agent } from './../../common/api';
+import { restful } from './../../common/api';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -18,7 +17,7 @@ import 'swiper/css/effect-coverflow';
 import Loader from './../common/Loader';
 
 export default function Dashboard () {
-	const [dishes, setDishes] = useState([...defaultDishes]);
+	const [dishes, setDishes] = useState([]);
 	const featuredDishes = take(orderBy(dishes, ['rating'], ['desc']), Math.min(dishes.length, 5));
 	const [selectedDish, setSelectedDish] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +30,7 @@ export default function Dashboard () {
 	useEffect(() => {
 		(async () => {
 			try {
-				const { data } = await agent.get(endpoint.DISHES);
+				const { data } = await restful.get(endpoint.DISHES);
 				setDishes(data);
 				setIsLoading(false);
 			} catch (e) {
@@ -56,7 +55,7 @@ export default function Dashboard () {
 		.map(dish => ({
 			...dish,
 			isOnSale: dish.discount > 0,
-			price: (dish.discount * dish.price).toFixed(2),
+			price: ((1 - dish.discount) * dish.price).toFixed(2),
 			regularPrice: dish.price.toFixed(2)
 		}));
 

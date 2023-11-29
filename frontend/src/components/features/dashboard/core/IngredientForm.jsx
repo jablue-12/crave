@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
-import { agent } from '../../../../common/api';
+import { Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { restful } from '../../../../common/api';
 import { endpoint } from '../../../../common/constants';
 import { useDishCreation } from '../../../../contexts/DishCreationContext';
 import { FeedbackMessage } from '../../../common/FeedbackMessage';
+import Submit from '../../../common/Submit';
 
 export const IngredientForm = () => {
 	const { setNewIngredientResponse } = useDishCreation();
@@ -104,10 +105,7 @@ export const IngredientForm = () => {
 			setIsIngredientLoading(true);
 			setIngredientCreationFeedback(null);
 			try {
-				const { data } = await agent.postTokenized(
-					`${endpoint.INGREDIENTS}`,
-					newIngredient);
-
+				const { data } = await restful.auth.json.post(`${endpoint.INGREDIENTS}`, newIngredient);
 				setNewIngredientResponse(data);
 				setIngredientCreationFeedback(getSuccessFeedback);
 			} catch (e) {
@@ -180,27 +178,11 @@ export const IngredientForm = () => {
 					</Form.Control.Feedback>
 				</InputGroup>
 
-				<Button
-					className="bubble submit w-auto mt-1 mx-auto px-3"
-					onClick={() => createIngredient()}
-					disabled={isIngredientLoading}
-				>
-					<span style={{
-						height: '100%',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignContent: 'center',
-						fontSize: '14px'
-					}}>
-						{isIngredientLoading
-							? (
-								<>
-									<Spinner size="sm"/> Loading...
-								</>)
-							: 'Add Ingredient'}
-					</span>
-				</Button>
+				<Submit
+					onClick={createIngredient}
+					isDisabled={isIngredientLoading}
+					isLoading={isIngredientLoading}
+					label="Add Ingredient"/>
 			</Form>
 
 			{ingredientCreationFeedback &&

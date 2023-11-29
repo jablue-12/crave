@@ -66,7 +66,7 @@ export const CartProvider = ({ children }) => {
 
 	const clear = () => {
 		setDishesInCart([]);
-		localStorage.removeItem(`cart_${email}`);
+		localStorage.removeItem(`cart_${email || 'default'}`);
 	};
 
 	const value = {

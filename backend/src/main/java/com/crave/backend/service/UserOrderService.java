@@ -33,16 +33,6 @@ public class UserOrderService {
         return userOrderRepository.save(userOrder);
     }
 
-    public UserOrder updateOrder(UserOrder existingUserOrder, UserOrder updatedUserOrder) {
-
-        if (existingUserOrder != null) {
-            existingUserOrder.setStatus(updatedUserOrder.getStatus());
-            userOrderRepository.save(existingUserOrder);
-        }
-
-        return existingUserOrder;
-    }
-
     public void deleteOrderById(Long id) {
         userOrderRepository.deleteById(id);
     }
