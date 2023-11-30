@@ -112,6 +112,7 @@ export const DishCreationProvider = ({ children }) => {
 	const isFormValid = () => {
 		return newDish.name !== '' &&
 			newDish.description !== '' &&
+			newDish.description.length <= 150 &&
 			newDish.tag !== '' &&
 			newDish.price !== '' &&
 			newDish.rating !== '';
