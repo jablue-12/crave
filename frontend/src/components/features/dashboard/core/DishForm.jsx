@@ -131,10 +131,10 @@ export const DishForm = () => {
 						value={newDish.description}
 						onChange={(e) => handleTextChange(e, 'description')}
 						isValid={touched.description && newDish.description !== ''}
-						isInvalid={touched.description && newDish.description === ''}
+						isInvalid={touched.description && (newDish.description === '' || newDish.description.length > 150)}
 					/>
 					<Form.Control.Feedback type="invalid">
-						Please provide a description
+						Please provide a description (150 character limit) - {newDish.description.length}
 					</Form.Control.Feedback>
 				</InputGroup>
 
