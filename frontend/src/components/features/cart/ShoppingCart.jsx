@@ -75,7 +75,7 @@ const ShoppingCart = ({ isSliderOn, setIsSliderOn }) => {
 							? <>
 								<Submit
 									onClick={onPlaceOrder}
-									isDisabled={dishesInCart.length === 0}
+									isDisabled={dishesInCart.length === 0 || isPlaceOrderLoading}
 									isLoading={isPlaceOrderLoading}
 									label="Pay Order"/>
 							</>

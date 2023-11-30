@@ -2,6 +2,7 @@ import { capitalize, truncate } from 'lodash';
 import React, { useState } from 'react';
 import { Badge, Col, Image, ListGroup, Modal, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { restful } from '../../../../common/api';
+import { endpoint } from '../../../../common/constants';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { useCart } from '../../../../contexts/CartContext';
 import ActivePieChart from '../../../common/ActivePieChart';
@@ -163,7 +164,7 @@ const Dish = ({ dish }) => {
 	const onSubmit = async () => {
 		setIsLoading(true);
 		try {
-			const { data } = await restful.post('http://localhost:8080/chat', {
+			const { data } = await restful.post(endpoint.CHAT, {
 				content: pre + 'Grilled Salmon' // dish.name
 			});
 
