@@ -10,7 +10,8 @@ export const endpoint = {
 	ORDERS: '/userOrders',
 	COMMENTS: '/comments',
 	INGREDIENTS: '/ingredients',
-	DISHES_ON_SALE: '/sale'
+	DISHES_ON_SALE: '/sale',
+	CHAT: '/chat'
 };
 
 export const TOKEN_KEY = 'token';

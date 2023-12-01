@@ -108,6 +108,15 @@
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2) !important;
 }
 
+.dish-description {
+    background: rgb(206, 172, 179) !important;
+}
+
+.dish-description:hover {
+    background: rgba(206, 172, 179) !important;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
 
 .submit,
 .submit-disabled {

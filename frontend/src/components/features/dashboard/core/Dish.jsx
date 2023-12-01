@@ -1,7 +1,8 @@
 import { capitalize, truncate } from 'lodash';
 import React, { useState } from 'react';
-import { Badge, Col, Image, ListGroup, Modal, Row } from 'react-bootstrap';
+import { Badge, Col, Image, ListGroup, Modal, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { restful } from '../../../../common/api';
+import { endpoint } from '../../../../common/constants';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { useCart } from '../../../../contexts/CartContext';
 import ActivePieChart from '../../../common/ActivePieChart';
@@ -163,7 +164,7 @@ const Dish = ({ dish }) => {
 	const onSubmit = async () => {
 		setIsLoading(true);
 		try {
-			const { data } = await restful.post('http://localhost:8080/chat', {
+			const { data } = await restful.post(endpoint.CHAT, {
 				content: pre + 'Grilled Salmon' // dish.name
 			});
 
@@ -222,16 +223,27 @@ const Dish = ({ dish }) => {
 		</Row>}
 		<Row className="my-3">
 			<h6>{dish.name}</h6>
-			<Col>
+			<Col md={6}>
 				<Image rounded fluid src={dish.imageUrl || '/images/1.jpg'} />
 			</Col>
-		</Row>
-		<Row className="my-3">
-			<ListGroup variant="flush">
-				<ListGroup.Item style={{ fontSize: '12px' }}>
-					{dish.description}
-				</ListGroup.Item>
-			</ListGroup>
+			<Col md={6}>
+				<ListGroup variant="flush">
+					<ListGroup.Item style={{ fontSize: '12px', wordWrap: 'break-word', textOverflow: 'ellipsis', paddingTop: '0' }}>
+						<OverlayTrigger
+							key="bottom,"
+							placement="bottom"
+							overlay={
+								<Tooltip id="tooltip-bottom" style={{ opacity: 0.8 }}>
+									{dish.description}
+								</Tooltip>
+							}>
+							<span className="bubble dish-description" >
+								Description
+							</span>
+						</OverlayTrigger>
+					</ListGroup.Item>
+				</ListGroup>
+			</Col>
 		</Row>
 		<Row className="my-3" style={{ height: 300 }}>
 			<h6 style={{ marginTop: '12px' }}>Ingredients</h6>
