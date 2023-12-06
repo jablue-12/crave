@@ -6,10 +6,13 @@ Frontend is deployed at ```https://crave-comp4350.netlify.app/``` using [Netlify
 
 Backend is deployed at ```https://crave-backend-api.onrender.com/``` using [Render](https://render.com/).
 
+> Note: Initial load may take a few minutes since we are using the free tier service on Render and the backend usually goes idle if its not used for a while.
+
 ## Wiki Page
 - [Home Page](https://github.com/xiaoran-MENG/crave/wiki)
 - [Coding Standard and Guidelines](https://github.com/xiaoran-MENG/crave/wiki/Coding-Standards-and-Guidelines)
 - [Diagrams/Mockups](https://github.com/xiaoran-MENG/crave/wiki/Diagrams)
+- [DockerHub](https://github.com/jablue-12/crave/wiki/DockerHub)
 - [Meetings](https://github.com/xiaoran-MENG/crave/wiki/Meetings)
 - [Project Setup](https://github.com/xiaoran-MENG/crave/wiki/Project-Setup)
 - [Workflow](https://github.com/jablue-12/crave/wiki/Workflow)
