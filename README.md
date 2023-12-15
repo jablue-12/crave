@@ -15,6 +15,7 @@ Backend is deployed at ```https://crave-backend-api.onrender.com/``` using [Rend
 - [DockerHub](https://github.com/jablue-12/crave/wiki/DockerHub)
 - [Meetings](https://github.com/xiaoran-MENG/crave/wiki/Meetings)
 - [Project Setup](https://github.com/xiaoran-MENG/crave/wiki/Project-Setup)
+- [User Manual](https://github.com/jablue-12/crave/wiki/User-Manual)
 - [Workflow](https://github.com/jablue-12/crave/wiki/Workflow)
 - [Acceptance Tests](https://github.com/jablue-12/crave/wiki/Acceptance-Tests)
 
